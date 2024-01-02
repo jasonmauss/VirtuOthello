@@ -1,0 +1,28 @@
+html, body{
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    height:100%;
+}
+
+body.dark-mode {
+
+}
+
+.page-container{
+    height:100%;
+    padding:0;
+    margin:0;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.board-container {
+    min-height:602px;
+    min-width:602px;
+    background-color:#000000;
+    
+}
