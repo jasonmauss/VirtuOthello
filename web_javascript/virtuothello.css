@@ -30,3 +30,33 @@ body.dark-mode {
 #board-table{
     background-color: #000000;
 }
+
+#board-table tbody tr td{
+    background-color:#2EAE52;
+    padding:4px;
+    min-height:70px;
+    min-width:70px;
+    height:70px;
+    width:70px;
+}
+
+#board-table tbody tr td.circle:before {
+    content: "";
+    display:inline-block;
+    width:60px;
+    height:60px;
+    line-height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    position:relative;
+    left:3px;
+}
+
+#board-table tbody tr td.white:before {
+    border:solid 2px white;
+}
+
+#board-table tbody tr td.black:before {
+    border:solid 2px black;
+}
