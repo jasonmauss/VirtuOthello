@@ -1,4 +1,4 @@
-import { newGameType, newGame, startNewGame } from "./virtuothello.tools" 
+import { newGameType, newGame, startNewGame } from "./virtuothello.tools.js" 
 
 const newGameHumanVsHumanClickHandler = (event:MouseEvent):void => {
     const game:newGame = {
