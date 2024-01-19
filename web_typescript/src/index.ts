@@ -13,12 +13,16 @@ const startNewGame = (gameTypeChoice: newGame):void => {
     switch(gameTypeChoice.type) {
         case newGameType.humanVsHuman:
             newHVHGame();
+            break;
         case newGameType.youAsBlack:
             newYABGame();
+            break;
         case newGameType.youAsWhite:
             newYAWGame();
+            break;
         case newGameType.selfplay:
             newSPLGame();
+            break;
         default:
             newHVHGame();
     }
