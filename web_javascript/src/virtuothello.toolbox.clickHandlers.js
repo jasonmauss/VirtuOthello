@@ -6,4 +6,4 @@ const newGameHumanVsHumanClickHandler = (event) => {
     startNewGame(game);
 };
 const hvhButton = document.getElementById('btnNewGameHumanVsHuman');
-hvhButton === null || hvhButton === void 0 ? void 0 : hvhButton.addEventListener('click', newGameHumanVsHumanClickHandler);
+hvhButton?.addEventListener('click', newGameHumanVsHumanClickHandler);
