@@ -28,20 +28,43 @@ const startNewGame = (gameTypeChoice: newGame):void => {
     }
 };
 
+const clearBoard = (): void => {
+    const tableCellElements: HTMLCollectionOf<Element> = document.getElementsByClassName('circle');
+    for(let cellElement of tableCellElements) {
+        cellElement.classList.remove('white');
+        cellElement.classList.remove('black');
+    }
+};
+
+const initializeNewGameBoard = (): void => {
+    const blackElementOne = document.getElementById('e4')?.classList.add('black');
+    const blackElementTwo = document.getElementById('d5')?.classList.add('black');
+    const whiteElementOne = document.getElementById('d4')?.classList.add('white');
+    const whiteElementTwo = document.getElementById('e5')?.classList.add('white');
+}
+
 const newHVHGame = ():void => {
     console.log('new Game Human vs Human');
+    clearBoard();
+    initializeNewGameBoard();
 };
 
 const newYABGame = ():void => {
     console.log('new Game You as Black');
+    clearBoard();
+    initializeNewGameBoard();
 };
 
 const newYAWGame = ():void => {
     console.log('new Game You as White');
+    clearBoard();
+    initializeNewGameBoard();
 };
 
 const newSPLGame = ():void => {
     console.log('new Game Selfplay');
+    clearBoard();
+    initializeNewGameBoard();
 };
 
 const newGameHumanVsHumanClickHandler = (event:MouseEvent):void => {
