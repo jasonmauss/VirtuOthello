@@ -25,17 +25,39 @@ const startNewGame = (gameTypeChoice) => {
             newHVHGame();
     }
 };
+const clearBoard = () => {
+    const tableCellElements = document.getElementsByClassName('circle');
+    for (let cellElement of tableCellElements) {
+        cellElement.classList.remove('white');
+        cellElement.classList.remove('black');
+    }
+};
+const initializeNewGameBoard = () => {
+    var _a, _b, _c, _d;
+    const blackElementOne = (_a = document.getElementById('e4')) === null || _a === void 0 ? void 0 : _a.classList.add('black');
+    const blackElementTwo = (_b = document.getElementById('d5')) === null || _b === void 0 ? void 0 : _b.classList.add('black');
+    const whiteElementOne = (_c = document.getElementById('d4')) === null || _c === void 0 ? void 0 : _c.classList.add('white');
+    const whiteElementTwo = (_d = document.getElementById('e5')) === null || _d === void 0 ? void 0 : _d.classList.add('white');
+};
 const newHVHGame = () => {
     console.log('new Game Human vs Human');
+    clearBoard();
+    initializeNewGameBoard();
 };
 const newYABGame = () => {
     console.log('new Game You as Black');
+    clearBoard();
+    initializeNewGameBoard();
 };
 const newYAWGame = () => {
     console.log('new Game You as White');
+    clearBoard();
+    initializeNewGameBoard();
 };
 const newSPLGame = () => {
     console.log('new Game Selfplay');
+    clearBoard();
+    initializeNewGameBoard();
 };
 const newGameHumanVsHumanClickHandler = (event) => {
     const game = {
