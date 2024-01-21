@@ -1,12 +1,7 @@
-"use strict";
-var newGameType;
-(function (newGameType) {
-    newGameType["humanVsHuman"] = "HVH";
-    newGameType["youAsBlack"] = "YAB";
-    newGameType["youAsWhite"] = "YAW";
-    newGameType["selfplay"] = "SPL";
-})(newGameType || (newGameType = {}));
-;
+import { OthelloGame } from "./OthelloGame.js";
+import { newGameType } from "./gameTypeEnum.js";
+// The startNewGame method is a method that can be called to
+// initiaite a new game
 const startNewGame = (gameTypeChoice) => {
     switch (gameTypeChoice.type) {
         case newGameType.humanVsHuman:
@@ -25,6 +20,7 @@ const startNewGame = (gameTypeChoice) => {
             newHVHGame();
     }
 };
+const othelloGame = new OthelloGame(newGameType.humanVsHuman);
 const clearBoard = () => {
     const tableCellElements = document.getElementsByClassName('circle');
     for (let cellElement of tableCellElements) {
@@ -32,32 +28,37 @@ const clearBoard = () => {
         cellElement.classList.remove('black');
     }
 };
+const clearMoveList = () => {
+    const movesListSelectElement = document.getElementById('moves-select');
+    while (movesListSelectElement.options.length > 0)
+        movesListSelectElement.options.remove(0);
+};
+const performAllNewGameActions = () => {
+    clearBoard();
+    clearMoveList();
+    initializeNewGameBoard();
+};
 const initializeNewGameBoard = () => {
-    var _a, _b, _c, _d;
-    const blackElementOne = (_a = document.getElementById('e4')) === null || _a === void 0 ? void 0 : _a.classList.add('black');
-    const blackElementTwo = (_b = document.getElementById('d5')) === null || _b === void 0 ? void 0 : _b.classList.add('black');
-    const whiteElementOne = (_c = document.getElementById('d4')) === null || _c === void 0 ? void 0 : _c.classList.add('white');
-    const whiteElementTwo = (_d = document.getElementById('e5')) === null || _d === void 0 ? void 0 : _d.classList.add('white');
+    const blackElementOne = document.getElementById('e4')?.classList.add('black');
+    const blackElementTwo = document.getElementById('d5')?.classList.add('black');
+    const whiteElementOne = document.getElementById('d4')?.classList.add('white');
+    const whiteElementTwo = document.getElementById('e5')?.classList.add('white');
 };
 const newHVHGame = () => {
     console.log('new Game Human vs Human');
-    clearBoard();
-    initializeNewGameBoard();
+    performAllNewGameActions();
 };
 const newYABGame = () => {
     console.log('new Game You as Black');
-    clearBoard();
-    initializeNewGameBoard();
+    performAllNewGameActions();
 };
 const newYAWGame = () => {
     console.log('new Game You as White');
-    clearBoard();
-    initializeNewGameBoard();
+    performAllNewGameActions();
 };
 const newSPLGame = () => {
     console.log('new Game Selfplay');
-    clearBoard();
-    initializeNewGameBoard();
+    performAllNewGameActions();
 };
 const newGameHumanVsHumanClickHandler = (event) => {
     const game = {
@@ -84,11 +85,11 @@ const newGameSelfPlayClickHandler = (event) => {
     startNewGame(game);
 };
 const hvhButton = document.getElementById('btnNewGameHumanVsHuman');
-hvhButton === null || hvhButton === void 0 ? void 0 : hvhButton.addEventListener('click', newGameHumanVsHumanClickHandler);
+hvhButton?.addEventListener('click', newGameHumanVsHumanClickHandler);
 const yabButton = document.getElementById('btnNewGameAsBlack');
-yabButton === null || yabButton === void 0 ? void 0 : yabButton.addEventListener('click', newGameYouAsBlackClickHandler);
+yabButton?.addEventListener('click', newGameYouAsBlackClickHandler);
 const yawButton = document.getElementById('btnNewGameAsWhite');
-yawButton === null || yawButton === void 0 ? void 0 : yawButton.addEventListener('click', newGameYouAsWhiteClickHandler);
+yawButton?.addEventListener('click', newGameYouAsWhiteClickHandler);
 const spButton = document.getElementById('btnNewGameSelfPlay');
-spButton === null || spButton === void 0 ? void 0 : spButton.addEventListener('click', newGameSelfPlayClickHandler);
+spButton?.addEventListener('click', newGameSelfPlayClickHandler);
 //# sourceMappingURL=index.js.map

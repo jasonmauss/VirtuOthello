@@ -1,14 +1,9 @@
-enum newGameType {
-    humanVsHuman = 'HVH',
-    youAsBlack = 'YAB',
-    youAsWhite = 'YAW',
-    selfplay = 'SPL'
-};
+import { OthelloGame } from "./OthelloGame.js";
+import { newGameType, newGame } from "./gameTypeEnum.js";
 
-interface newGame {
-    type: newGameType;
-}
 
+// The startNewGame method is a method that can be called to
+// initiaite a new game
 const startNewGame = (gameTypeChoice: newGame):void => {
     switch(gameTypeChoice.type) {
         case newGameType.humanVsHuman:
@@ -28,6 +23,9 @@ const startNewGame = (gameTypeChoice: newGame):void => {
     }
 };
 
+const othelloGame:OthelloGame = new OthelloGame(newGameType.humanVsHuman);
+
+
 const clearBoard = (): void => {
     const tableCellElements: HTMLCollectionOf<Element> = document.getElementsByClassName('circle');
     for(let cellElement of tableCellElements) {
@@ -35,6 +33,18 @@ const clearBoard = (): void => {
         cellElement.classList.remove('black');
     }
 };
+
+const clearMoveList = (): void => {
+    const movesListSelectElement: HTMLSelectElement = document.getElementById('moves-select') as HTMLSelectElement;
+    while(movesListSelectElement.options.length > 0)
+        movesListSelectElement.options.remove(0);
+}
+
+const performAllNewGameActions = (): void => {
+    clearBoard();
+    clearMoveList();
+    initializeNewGameBoard();
+}
 
 const initializeNewGameBoard = (): void => {
     const blackElementOne = document.getElementById('e4')?.classList.add('black');
@@ -45,26 +55,22 @@ const initializeNewGameBoard = (): void => {
 
 const newHVHGame = ():void => {
     console.log('new Game Human vs Human');
-    clearBoard();
-    initializeNewGameBoard();
+    performAllNewGameActions();
 };
 
 const newYABGame = ():void => {
     console.log('new Game You as Black');
-    clearBoard();
-    initializeNewGameBoard();
+    performAllNewGameActions();
 };
 
 const newYAWGame = ():void => {
     console.log('new Game You as White');
-    clearBoard();
-    initializeNewGameBoard();
+    performAllNewGameActions();
 };
 
 const newSPLGame = ():void => {
     console.log('new Game Selfplay');
-    clearBoard();
-    initializeNewGameBoard();
+    performAllNewGameActions();
 };
 
 const newGameHumanVsHumanClickHandler = (event:MouseEvent):void => {
