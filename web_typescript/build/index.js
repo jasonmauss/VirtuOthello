@@ -1,5 +1,6 @@
 import { OthelloGame } from "./OthelloGame.js";
 import { newGameType } from "./gameTypeEnum.js";
+import * as constants from "./constants.js";
 // The startNewGame method is a method that can be called to
 // initiaite a new game
 const startNewGame = (gameTypeChoice) => {
@@ -22,14 +23,14 @@ const startNewGame = (gameTypeChoice) => {
 };
 const othelloGame = new OthelloGame(newGameType.humanVsHuman);
 const clearBoard = () => {
-    const tableCellElements = document.getElementsByClassName('circle');
+    const tableCellElements = document.getElementsByClassName(constants.CSS_CLASS_NAME_CIRCLE);
     for (let cellElement of tableCellElements) {
-        cellElement.classList.remove('white');
-        cellElement.classList.remove('black');
+        cellElement.classList.remove(constants.CSS_CLASS_NAME_WHITE);
+        cellElement.classList.remove(constants.CSS_CLASS_NAME_BLACK);
     }
 };
 const clearMoveList = () => {
-    const movesListSelectElement = document.getElementById('moves-select');
+    const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
     while (movesListSelectElement.options.length > 0)
         movesListSelectElement.options.remove(0);
 };
@@ -39,10 +40,10 @@ const performAllNewGameActions = () => {
     initializeNewGameBoard();
 };
 const initializeNewGameBoard = () => {
-    const blackElementOne = document.getElementById('e4')?.classList.add('black');
-    const blackElementTwo = document.getElementById('d5')?.classList.add('black');
-    const whiteElementOne = document.getElementById('d4')?.classList.add('white');
-    const whiteElementTwo = document.getElementById('e5')?.classList.add('white');
+    const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+    const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+    const whiteElementOne = document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+    const whiteElementTwo = document.getElementById('e5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
 };
 const newHVHGame = () => {
     console.log('new Game Human vs Human');
@@ -84,12 +85,12 @@ const newGameSelfPlayClickHandler = (event) => {
     };
     startNewGame(game);
 };
-const hvhButton = document.getElementById('btnNewGameHumanVsHuman');
+const hvhButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_HVH);
 hvhButton?.addEventListener('click', newGameHumanVsHumanClickHandler);
-const yabButton = document.getElementById('btnNewGameAsBlack');
+const yabButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_YAB);
 yabButton?.addEventListener('click', newGameYouAsBlackClickHandler);
-const yawButton = document.getElementById('btnNewGameAsWhite');
+const yawButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_YAW);
 yawButton?.addEventListener('click', newGameYouAsWhiteClickHandler);
-const spButton = document.getElementById('btnNewGameSelfPlay');
+const spButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_SPL);
 spButton?.addEventListener('click', newGameSelfPlayClickHandler);
 //# sourceMappingURL=index.js.map
