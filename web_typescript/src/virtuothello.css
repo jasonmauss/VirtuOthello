@@ -6,7 +6,20 @@ html, body{
 }
 
 body.dark-mode {
+    background-color:#222222;
+}
 
+body.dark-mode #column-label-container span,
+body.dark-mode #row-label-container span,
+body.dark-mode .board-container div h1,
+body.dark-mode .tools-container,
+body.dark-mode .moves-container {
+    color: #CCC;
+}
+
+body.dark-mode .moves-container select {
+    background-color: #222;
+    color: #fff;
 }
 
 .page-container{
@@ -75,7 +88,6 @@ body.dark-mode {
 
 #column-label-container span,
 #row-label-container span {
-    background-color:#FFFFFF;
     text-align:center;
     font-size:1.1em;
     font-weight:bold;
