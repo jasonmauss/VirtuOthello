@@ -39,6 +39,11 @@ const performAllNewGameActions = () => {
     clearMoveList();
     initializeNewGameBoard();
 };
+const performInitialBlackPieceMove = () => {
+    document.getElementById('c4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+    document.getElementById('d4')?.classList.remove(constants.CSS_CLASS_NAME_WHITE);
+    document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+};
 const initializeNewGameBoard = () => {
     const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
     const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
@@ -56,6 +61,7 @@ const newYABGame = () => {
 const newYAWGame = () => {
     console.log('new Game You as White');
     performAllNewGameActions();
+    performInitialBlackPieceMove();
 };
 const newSPLGame = () => {
     console.log('new Game Selfplay');

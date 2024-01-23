@@ -185,10 +185,47 @@ body.dark-mode .moves-container select {
 
 #board-table tbody tr td.white:before {
     border:solid 2px white;
-    background-image: linear-gradient(225deg, #959696 10%, #FFFFFF);
+    background: linear-gradient(225deg, #959696 10%, #FFFFFF);
+    background-repeat: no-repeat;
 }
 
 #board-table tbody tr td.black:before {
     border:solid 2px black;
-    background-image: linear-gradient(225deg, #6c6c6c 10%, #000000);
+    background: linear-gradient(225deg, #6c6c6c 10%, #000000);
+    background-repeat: no-repeat;
 }
+
+#board-table tbody tr td.currently-playable {
+    background-color:rgb(46, 174, 82, 0.5);
+    cursor: pointer;
+}
+
+#board-table tbody tr td.currently-playable:before {
+    content: "";
+    display:inline-block;
+    width:60px;
+    height:60px;
+    line-height: 60px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 50%;
+    position:relative;
+    left:3px;
+    border:solid 1px black;
+}
+
+#board-table tbody tr td.white.most-recent-move:before {
+    border:solid 2px white;
+    background-repeat: no-repeat;
+    background: linear-gradient(225deg, #959696 10%, #FFFFFF);
+}
+
+#board-table tbody tr td.black.most-recent-move:before {
+    content: "";
+    border:solid 2px black;
+    background-repeat: no-repeat;
+    border-radius:50%;
+    background: radial-gradient(circle, red 20%,rgba(255,0,0,0) 10%) 100%,
+                linear-gradient(225deg, #6c6c6c 10%, #000000);
+}
+

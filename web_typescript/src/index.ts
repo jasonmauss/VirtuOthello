@@ -46,12 +46,18 @@ const performAllNewGameActions = (): void => {
     initializeNewGameBoard();
 }
 
+const performInitialBlackPieceMove = (): void => {
+    document.getElementById('c4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+    document.getElementById('d4')?.classList.remove(constants.CSS_CLASS_NAME_WHITE);
+    document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+};
+
 const initializeNewGameBoard = (): void => {
     const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
     const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
     const whiteElementOne = document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
     const whiteElementTwo = document.getElementById('e5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
-}
+};
 
 const newHVHGame = ():void => {
     console.log('new Game Human vs Human');
@@ -66,6 +72,7 @@ const newYABGame = ():void => {
 const newYAWGame = ():void => {
     console.log('new Game You as White');
     performAllNewGameActions();
+    performInitialBlackPieceMove();
 };
 
 const newSPLGame = ():void => {
@@ -78,28 +85,28 @@ const newGameHumanVsHumanClickHandler = (event:MouseEvent):void => {
         type: newGameType.humanVsHuman
     };
     startNewGame(game);
-}
+};
 
 const newGameYouAsBlackClickHandler = (event:MouseEvent):void => {
     const game:newGame = {
         type: newGameType.youAsBlack
     };
     startNewGame(game);
-}
+};
 
 const newGameYouAsWhiteClickHandler = (event:MouseEvent):void => {
     const game:newGame = {
         type: newGameType.youAsWhite
     };
     startNewGame(game);
-}
+};
 
 const newGameSelfPlayClickHandler = (event:MouseEvent):void => {
     const game:newGame = {
         type: newGameType.selfplay
     };
     startNewGame(game);
-}
+};
 
 const hvhButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_HVH);
 hvhButton?.addEventListener('click', newGameHumanVsHumanClickHandler);
