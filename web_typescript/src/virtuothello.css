@@ -137,23 +137,6 @@ body.dark-mode .moves-container select {
     border:solid 2px #000000;
 }
 
-#board-table tbody tr:nth-child(2) td:nth-child(2):before,
-#board-table tbody tr:nth-child(2) td:nth-child(6):before,
-#board-table tbody tr:nth-child(6) td:nth-child(2):before,
-#board-table tbody tr:nth-child(6) td:nth-child(6):before {
-    content: "";
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    text-align: center;
-    vertical-align: bottom;
-    border-radius: 50%;
-    position: relative;
-    background-color: #000000;
-    top: 39px;
-    left: 69px;
-}
-
 #board-table tbody tr:first-child td {
     border-top:solid 4px #000000;
 }
@@ -181,6 +164,19 @@ body.dark-mode .moves-container select {
     border-radius: 50%;
     position:relative;
     left:3px;
+}
+
+#board-table:before{
+    content:"";
+    display:inline-block;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    vertical-align: bottom;
+    border-radius: 50%;
+    position: relative;
+    background-repeat: no-repeat;
+    background: radial-gradient(circle at top left, red 80px, #58a 0) bottom right;
 }
 
 #board-table tbody tr td.white:before {
@@ -217,15 +213,31 @@ body.dark-mode .moves-container select {
 #board-table tbody tr td.white.most-recent-move:before {
     border:solid 2px white;
     background-repeat: no-repeat;
-    background: linear-gradient(225deg, #959696 10%, #FFFFFF);
+    background: radial-gradient(circle, red 15%,rgba(255,0,0,0) 10%) 100%,
+                linear-gradient(225deg, #959696 10%, #FFFFFF);
 }
 
 #board-table tbody tr td.black.most-recent-move:before {
     content: "";
     border:solid 2px black;
     background-repeat: no-repeat;
-    border-radius:50%;
-    background: radial-gradient(circle, red 20%,rgba(255,0,0,0) 10%) 100%,
+    background: radial-gradient(circle, red 15%,rgba(255,0,0,0) 10%) 100%,
                 linear-gradient(225deg, #6c6c6c 10%, #000000);
 }
 
+#board-table tbody tr td.circle.star-point:before,
+#board-table tbody tr td.circle.white.star-point:before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    vertical-align: bottom;
+    border-radius: 50%;
+    position: relative;
+    background-repeat: no-repeat;
+    top: 39px;
+    left: 69px;
+    background: linear-gradient(225deg, #959696 10%, #FFFFFF) 50%,
+                radial-gradient(circle, black 15%,rgba(255,0,0,0) 10%) 100%;
+}
