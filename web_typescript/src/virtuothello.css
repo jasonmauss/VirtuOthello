@@ -166,7 +166,7 @@ body.dark-mode .moves-container select {
     left:3px;
 }
 
-#board-table:before{
+#board-table tbody tr td.star-points{
     content:"";
     display:inline-block;
     width: 14px;
@@ -176,7 +176,7 @@ body.dark-mode .moves-container select {
     border-radius: 50%;
     position: relative;
     background-repeat: no-repeat;
-    background: radial-gradient(circle at top left, red 80px, #58a 0) bottom right;
+    background: radial-gradient(circle at bottom right, red 10px);
 }
 
 #board-table tbody tr td.white:before {
@@ -225,8 +225,7 @@ body.dark-mode .moves-container select {
                 linear-gradient(225deg, #6c6c6c 10%, #000000);
 }
 
-#board-table tbody tr td.circle.star-point:before,
-#board-table tbody tr td.circle.white.star-point:before {
+#board-table tbody tr td.circle.star-point:before {
     content: "";
     display: inline-block;
     width: 14px;
@@ -239,5 +238,6 @@ body.dark-mode .moves-container select {
     top: 39px;
     left: 69px;
     background: linear-gradient(225deg, #959696 10%, #FFFFFF) 50%,
-                radial-gradient(circle, black 15%,rgba(255,0,0,0) 10%) 100%;
+                radial-gradient(circle, black 15%,rgba(255,0,0,0) 10%) 100%,
+                radial-gradient(circle at bottom right, rgba(255,0,0,1) 0%, rgba(255,0,0,1) 50%) bottom right;
 }
