@@ -27,10 +27,14 @@ const othelloGame:OthelloGame = new OthelloGame(newGameType.humanVsHuman);
 
 
 const clearBoard = (): void => {
-    const tableCellElements: HTMLCollectionOf<Element> = document.getElementsByClassName(constants.CSS_CLASS_NAME_CIRCLE);
-    for(let cellElement of tableCellElements) {
-        cellElement.classList.remove(constants.CSS_CLASS_NAME_WHITE);
-        cellElement.classList.remove(constants.CSS_CLASS_NAME_BLACK);
+    const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
+    const boardElements: HTMLCollectionOf<Element> = 
+        board?.children as HTMLCollectionOf<Element>;
+    for(let divElement of boardElements) {
+        divElement.classList.remove(constants.CSS_CLASS_NAME_WHITE);
+        divElement.classList.remove(constants.CSS_CLASS_NAME_BLACK);
+        divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE);
+        divElement.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
     }
 };
 
