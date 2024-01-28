@@ -54,6 +54,13 @@ const performInitialBlackPieceMove = (): void => {
     document.getElementById('c4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
     document.getElementById('d4')?.classList.remove(constants.CSS_CLASS_NAME_WHITE);
     document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+    
+};
+
+const performInitialWhitePieceMove = (): void => {
+    document.getElementById('c5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+    document.getElementById('d5')?.classList.remove(constants.CSS_CLASS_NAME_BLACK);
+    document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
 };
 
 const initializeNewGameBoard = (): void => {
@@ -61,6 +68,10 @@ const initializeNewGameBoard = (): void => {
     const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
     const whiteElementOne = document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
     const whiteElementTwo = document.getElementById('e5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+};
+
+const displayPlayableIndicators = (): void => {
+
 };
 
 const newHVHGame = ():void => {
@@ -77,6 +88,7 @@ const newYAWGame = ():void => {
     console.log('new Game You as White');
     performAllNewGameActions();
     performInitialBlackPieceMove();
+    displayPlayableIndicators();
 };
 
 const newSPLGame = ():void => {

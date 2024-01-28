@@ -47,11 +47,18 @@ const performInitialBlackPieceMove = () => {
     document.getElementById('d4')?.classList.remove(constants.CSS_CLASS_NAME_WHITE);
     document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
 };
+const performInitialWhitePieceMove = () => {
+    document.getElementById('c5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+    document.getElementById('d5')?.classList.remove(constants.CSS_CLASS_NAME_BLACK);
+    document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+};
 const initializeNewGameBoard = () => {
     const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
     const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
     const whiteElementOne = document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
     const whiteElementTwo = document.getElementById('e5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+};
+const displayPlayableIndicators = () => {
 };
 const newHVHGame = () => {
     console.log('new Game Human vs Human');
@@ -65,6 +72,7 @@ const newYAWGame = () => {
     console.log('new Game You as White');
     performAllNewGameActions();
     performInitialBlackPieceMove();
+    displayPlayableIndicators();
 };
 const newSPLGame = () => {
     console.log('new Game Selfplay');
