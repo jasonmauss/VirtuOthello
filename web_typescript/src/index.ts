@@ -1,30 +1,30 @@
 import { OthelloGame } from "./OthelloGame.js";
-import { newGameType, newGame } from "./gameTypeEnum.js";
+import { gameType } from "./gameTypeEnum.js";
 import * as constants from "./constants.js"
+
+const _othelloGame:OthelloGame = new OthelloGame(gameType.humanVsHuman);
 
 // The startNewGame method is a method that can be called to
 // initiaite a new game
-const startNewGame = (gameTypeChoice: newGame):void => {
-    switch(gameTypeChoice.type) {
-        case newGameType.humanVsHuman:
+const startNewGame = (game: OthelloGame):void => {
+
+    switch(game.gameType) {
+        case gameType.humanVsHuman:
             newHVHGame();
             break;
-        case newGameType.youAsBlack:
+        case gameType.youAsBlack:
             newYABGame();
             break;
-        case newGameType.youAsWhite:
+        case gameType.youAsWhite:
             newYAWGame();
             break;
-        case newGameType.selfplay:
+        case gameType.selfplay:
             newSPLGame();
             break;
         default:
             newHVHGame();
     }
 };
-
-const othelloGame:OthelloGame = new OthelloGame(newGameType.humanVsHuman);
-
 
 const clearBoard = (): void => {
     const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
@@ -54,7 +54,7 @@ const performInitialBlackPieceMove = (): void => {
     document.getElementById('c4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
     document.getElementById('d4')?.classList.remove(constants.CSS_CLASS_NAME_WHITE);
     document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
-    
+    // 
 };
 
 const performInitialWhitePieceMove = (): void => {
@@ -97,30 +97,22 @@ const newSPLGame = ():void => {
 };
 
 const newGameHumanVsHumanClickHandler = (event:MouseEvent):void => {
-    const game:newGame = {
-        type: newGameType.humanVsHuman
-    };
+    const game:OthelloGame = new OthelloGame(gameType.humanVsHuman);
     startNewGame(game);
 };
 
 const newGameYouAsBlackClickHandler = (event:MouseEvent):void => {
-    const game:newGame = {
-        type: newGameType.youAsBlack
-    };
+    const game:OthelloGame = new OthelloGame(gameType.youAsBlack);
     startNewGame(game);
 };
 
 const newGameYouAsWhiteClickHandler = (event:MouseEvent):void => {
-    const game:newGame = {
-        type: newGameType.youAsWhite
-    };
+    const game:OthelloGame = new OthelloGame(gameType.youAsWhite);
     startNewGame(game);
 };
 
 const newGameSelfPlayClickHandler = (event:MouseEvent):void => {
-    const game:newGame = {
-        type: newGameType.selfplay
-    };
+    const game:OthelloGame = new OthelloGame(gameType.selfplay);
     startNewGame(game);
 };
 
