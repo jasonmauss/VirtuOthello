@@ -22,24 +22,9 @@ const startNewGame = (game) => {
             newHVHGame();
     }
 };
-const clearBoard = () => {
-    const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
-    const boardElements = board?.children;
-    for (let divElement of boardElements) {
-        divElement.classList.remove(constants.CSS_CLASS_NAME_WHITE);
-        divElement.classList.remove(constants.CSS_CLASS_NAME_BLACK);
-        divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE);
-        divElement.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
-    }
-};
-const clearMoveList = () => {
-    const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
-    while (movesListSelectElement.options.length > 0)
-        movesListSelectElement.options.remove(0);
-};
 const performAllNewGameActions = () => {
-    clearBoard();
-    clearMoveList();
+    _othelloGame.gameBoard.clear();
+    _othelloGame.clearMovesPlayed();
     initializeNewGameBoard();
 };
 const performInitialBlackPieceMove = () => {

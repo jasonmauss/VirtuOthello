@@ -26,27 +26,9 @@ const startNewGame = (game: OthelloGame):void => {
     }
 };
 
-const clearBoard = (): void => {
-    const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
-    const boardElements: HTMLCollectionOf<Element> = 
-        board?.children as HTMLCollectionOf<Element>;
-    for(let divElement of boardElements) {
-        divElement.classList.remove(constants.CSS_CLASS_NAME_WHITE);
-        divElement.classList.remove(constants.CSS_CLASS_NAME_BLACK);
-        divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE);
-        divElement.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
-    }
-};
-
-const clearMoveList = (): void => {
-    const movesListSelectElement: HTMLSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
-    while(movesListSelectElement.options.length > 0)
-        movesListSelectElement.options.remove(0);
-}
-
 const performAllNewGameActions = (): void => {
-    clearBoard();
-    clearMoveList();
+    _othelloGame.gameBoard.clear();
+    _othelloGame.clearMovesPlayed();
     initializeNewGameBoard();
 }
 
