@@ -28,17 +28,42 @@ export class OthelloGame {
             this.gameBoard.initializeNewGame();
         };
         /**
+         * @remarks
+         *
+         * @param boardPosition
+         * @param colorOfPieceToPlay
+         */
+        this.performMove = (boardPosition, colorOfPieceToPlay) => {
+            // a quick hack of logic to determine that the board position clicked on
+            // is actually a valid place to play. This could be improved upon and made more bulletproof.
+            // if(!document.getElementById(boardPosition)?.classList.contains(constants.CSS_CLASS_NAME_PLAYABLE)) return;
+            // hide any currently playable indicators
+            this.gameBoard.hidePlayableIndicators();
+            // display the piece by adding the CSS class to it
+            document.getElementById(boardPosition)?.classList.add(colorOfPieceToPlay);
+            // call this so that the appropriate pieces get flipped
+            this.flipApplicablePiecesAfterMove(boardPosition, colorOfPieceToPlay);
+        };
+        /**
+         * @remarks
+         *
+         * @param movePlayedBoardPosition
+         */
+        this.flipApplicablePiecesAfterMove = (movePlayedBoardPosition, colorOfPiecePlayed) => {
+            const whichColorToShowIndicatorsFor = colorOfPiecePlayed === constants.CSS_CLASS_NAME_BLACK
+                ? constants.CSS_CLASS_NAME_WHITE
+                : constants.CSS_CLASS_NAME_BLACK;
+            // call this afterwards so that the playable indicators are shown again
+            this.gameBoard.displayPlayableIndicators(whichColorToShowIndicatorsFor);
+        };
+        /**
          *  @remarks
          *  Since black always plays first, When someone plays
          *  a "You as white" (YAW) game, black (the computer) needs to play an
          *  initial move.
          */
         this.performInitialBlackPieceMove = () => {
-            document.getElementById('c4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
-            document.getElementById('d4')?.classList.remove(constants.CSS_CLASS_NAME_WHITE);
-            document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
-            // this should get called after any move gets played
-            this.gameBoard.displayPlayableIndicators();
+            this.performMove('c4', constants.CSS_CLASS_NAME_BLACK);
         };
         this.gameType = gameType;
         this.gameBoard = new OthelloGameBoard();

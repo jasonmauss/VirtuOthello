@@ -6,12 +6,27 @@ import * as constants from "./constants.js";
 export class OthelloGameBoard {
     constructor() {
         /**
+         * @remarks
+         *
+         */
+        this.hidePlayableIndicators = () => {
+            const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
+            // only get children that have a class name applied to them since those are
+            // the only ones we need to clear
+            const boardElements = board?.querySelectorAll('.' + constants.CSS_CLASS_NAME_PLAYABLE);
+            for (let divElement of boardElements) {
+                divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE);
+            }
+        };
+        /**
          *  @remarks
          *  Adds classes to certain div elements to display the "playable" position
          *  indicators to the player who's turn it currently is.
+         *  @param forWhichColorPlayer - which color player move indicators should
+         *  be displayed for.
          */
-        this.displayPlayableIndicators = () => {
-            console.log("showing indicators");
+        this.displayPlayableIndicators = (forWhichColorPlayer) => {
+            console.log('showing indicators for ' + forWhichColorPlayer);
         };
     }
     /**
