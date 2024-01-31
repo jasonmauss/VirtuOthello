@@ -27,8 +27,35 @@ export class OthelloGame {
         this.movesPlayed = [];
         const movesListSelectElement: HTMLSelectElement = 
             document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
-            
+
         while(movesListSelectElement.options.length > 0)
             movesListSelectElement.options.remove(0);
-        }
+    }
+
+    /**
+     *  @remarks
+     *  performs all operations necessary to reset the game
+     *  back to being a new game. Clears the board, clears moves
+     *  played, etc.
+     */
+    public performAllNewGameActions = (): void => {
+        this.gameBoard.clear();
+        this.clearMovesPlayed();
+        this.gameBoard.initializeNewGame();
+    }
+
+    /**
+     *  @remarks
+     *  Since black always plays first, When someone plays 
+     *  a "You as white" (YAW) game, black (the computer) needs to play an
+     *  initial move.
+     */
+    public performInitialBlackPieceMove = (): void => {
+        document.getElementById('c4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+        document.getElementById('d4')?.classList.remove(constants.CSS_CLASS_NAME_WHITE);
+        document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+        
+        // this should get called after any move gets played
+        this.gameBoard.displayPlayableIndicators();
+    };
 }

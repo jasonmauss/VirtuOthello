@@ -5,6 +5,26 @@ import * as constants from "./constants.js";
 // has a property which is an instance of this class
 export class OthelloGameBoard {
     constructor() {
+        /**
+         *  @remarks
+         *  Adds classes to certain div elements to display the "playable" position
+         *  indicators to the player who's turn it currently is.
+         */
+        this.displayPlayableIndicators = () => {
+            console.log("showing indicators");
+        };
+    }
+    /**
+     * @remarks
+     * Adds the 4 standard starting pieces on the board no
+     * matter what type of game is being played, HVH, YAW, YAB or SPL
+     *
+     */
+    initializeNewGame() {
+        const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+        const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+        const whiteElementOne = document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+        const whiteElementTwo = document.getElementById('e5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
     }
     /**
      * Adds a piece to the board

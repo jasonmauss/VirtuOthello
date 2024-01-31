@@ -1,5 +1,6 @@
 import { OthelloGameMovePlayed, moveType } from "./OthelloGameMovePlayed.js";
 import * as constants from "./constants.js"
+import { gameType } from "./gameTypeEnum.js";
 // This file represents the game board class which contains
 // and manages an Othello game board. The OthelloGame class
 // has a property which is an instance of this class
@@ -7,6 +8,19 @@ export class OthelloGameBoard {
 
     constructor() {
 
+    }
+
+    /** 
+     * @remarks
+     * Adds the 4 standard starting pieces on the board no
+     * matter what type of game is being played, HVH, YAW, YAB or SPL
+     * 
+     */
+    public initializeNewGame() {
+        const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+        const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
+        const whiteElementOne = document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+        const whiteElementTwo = document.getElementById('e5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
     }
 
     /**
@@ -44,7 +58,7 @@ export class OthelloGameBoard {
                                     '.' + constants.CSS_CLASS_NAME_PLAYABLE + ',' +
                                     '.' + constants.CSS_CLASS_NAME_MOST_RECENT_MOVE
                                     ) as NodeListOf<Element>;
-                                    
+
         for(let divElement of boardElements) {
             divElement.classList.remove(constants.CSS_CLASS_NAME_WHITE);
             divElement.classList.remove(constants.CSS_CLASS_NAME_BLACK);
@@ -70,4 +84,13 @@ export class OthelloGameBoard {
         moveOptionElement.value = `${moveNumber}|${playerColor}|${movePlayed.position}`;
         movesListSelectElement.options.add(moveOptionElement);
     }
+
+    /**
+     *  @remarks
+     *  Adds classes to certain div elements to display the "playable" position
+     *  indicators to the player who's turn it currently is.
+     */
+    public displayPlayableIndicators = (): void => {
+        console.log("showing indicators");
+    };
 }
