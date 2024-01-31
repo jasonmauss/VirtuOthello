@@ -86,11 +86,29 @@ export class OthelloGameBoard {
     }
 
     /**
+     * @remarks
+     * 
+     */
+    public hidePlayableIndicators = ():void => {
+        const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
+        // only get children that have a class name applied to them since those are
+        // the only ones we need to clear
+        const boardElements: NodeListOf<Element> = 
+            board?.querySelectorAll('.' + constants.CSS_CLASS_NAME_PLAYABLE) as NodeListOf<Element>;
+
+        for(let divElement of boardElements) {
+            divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE);
+        }
+    }
+
+    /**
      *  @remarks
      *  Adds classes to certain div elements to display the "playable" position
      *  indicators to the player who's turn it currently is.
+     *  @param forWhichColorPlayer - which color player move indicators should
+     *  be displayed for.
      */
-    public displayPlayableIndicators = (): void => {
-        console.log("showing indicators");
+    public displayPlayableIndicators = (forWhichColorPlayer:string): void => {
+        console.log('showing indicators for ' + forWhichColorPlayer);
     };
 }
