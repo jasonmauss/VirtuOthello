@@ -16,4 +16,5 @@ export const CSS_ELEMENT_ID_NEW_GAME_HVH = 'btnNewGameHumanVsHuman';
 export const CSS_ELEMENT_ID_NEW_GAME_YAB = 'btnNewGameAsBlack';
 export const CSS_ELEMENT_ID_NEW_GAME_YAW = 'btnNewGameAsWhite';
 export const CSS_ELEMENT_ID_NEW_GAME_SPL = 'btnNewGameSelfPlay';
+export const LOGGING_ENABLED = true;
 //# sourceMappingURL=constants.js.map
