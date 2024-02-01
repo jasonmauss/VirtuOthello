@@ -1,7 +1,8 @@
 import { gameType } from "./gameTypeEnum.js"
 import { OthelloGameBoard } from "./OthelloGameBoard.js"
-import { OthelloGameMovePlayed } from "./OthelloGameMovePlayed.js";
+import { OthelloGameMovePlayed, moveType } from "./OthelloGameMovePlayed.js";
 import * as constants from "./constants.js"
+import { OthelloUtils } from "./OthellUtils.js";
 // This class represents the othello game being played.
 // It contains properties and methods relevant to managing
 // the game and being able to determine certain attributes
@@ -59,11 +60,29 @@ export class OthelloGame {
         // hide any currently playable indicators
         this.gameBoard.hidePlayableIndicators();
 
+        const moveTypePlayed:moveType = colorOfPieceToPlay === constants.CSS_CLASS_NAME_BLACK
+            ? moveType.BlackPiece
+            : moveType.WhitePiece;
+
+        const movePlayed = new OthelloGameMovePlayed(moveTypePlayed, boardPosition);
+
         // display the piece by adding the CSS class to it
-        document.getElementById(boardPosition)?.classList.add(colorOfPieceToPlay);
+        this.gameBoard.performMoveElementOperations(movePlayed);
 
         // call this so that the appropriate pieces get flipped
-        this.flipApplicablePiecesAfterMove(boardPosition, colorOfPieceToPlay);
+        const piecesFlipped = this.flipApplicablePiecesAfterMove(boardPosition, colorOfPieceToPlay);
+
+        // Add the move to the log list
+        this.gameBoard.AddMoveToLog(movePlayed, piecesFlipped);
+
+
+        // call this afterwards so that the playable indicators are shown again, but for the other color
+        // since it's the other colors turn now after the move has been played
+        const oppositeColor = colorOfPieceToPlay === constants.CSS_CLASS_NAME_BLACK
+        ? constants.CSS_CLASS_NAME_WHITE
+        : constants.CSS_CLASS_NAME_BLACK;
+
+        this.gameBoard.displayPlayableIndicators(oppositeColor);
     }
 
     /**
@@ -73,15 +92,17 @@ export class OthelloGame {
      * on the board - up/down/left/right and their 4 diagonol equivalents.
      * @param movePlayedBoardPosition
      */
-    public flipApplicablePiecesAfterMove = (movePlayedBoardPosition:string, colorOfPiecePlayed:string): void => {
+    public flipApplicablePiecesAfterMove = (movePlayedBoardPosition:string, colorOfPiecePlayed:string): number => {
 
+        OthelloUtils.consoleLog('flipping applicable pieces after move.');
+        
+        let piecesFlipped:number = 0;
 
         const whichColorToShowIndicatorsFor = colorOfPiecePlayed === constants.CSS_CLASS_NAME_BLACK
             ? constants.CSS_CLASS_NAME_WHITE
             : constants.CSS_CLASS_NAME_BLACK;
 
-        // call this afterwards so that the playable indicators are shown again
-        this.gameBoard.displayPlayableIndicators(whichColorToShowIndicatorsFor);
+        return piecesFlipped;
     }
 
     /**

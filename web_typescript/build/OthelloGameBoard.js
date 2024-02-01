@@ -1,3 +1,4 @@
+import { OthelloUtils } from "./OthellUtils.js";
 import { moveType } from "./OthelloGameMovePlayed.js";
 import * as constants from "./constants.js";
 // This file represents the game board class which contains
@@ -7,13 +8,14 @@ export class OthelloGameBoard {
     constructor() {
         /**
          * @remarks
-         *
+         * This methods hides any playable indicators that might be present
+         * on the board from previous moves played
          */
         this.hidePlayableIndicators = () => {
-            const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
+            OthelloUtils.consoleLog('hiding playable indicators');
             // only get children that have a class name applied to them since those are
             // the only ones we need to clear
-            const boardElements = board?.querySelectorAll('.' + constants.CSS_CLASS_NAME_PLAYABLE);
+            const boardElements = OthelloUtils.boardPositionsByClassNames(constants.CSS_CLASS_NAME_PLAYABLE);
             for (let divElement of boardElements) {
                 divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE);
             }
@@ -26,8 +28,14 @@ export class OthelloGameBoard {
          *  be displayed for.
          */
         this.displayPlayableIndicators = (forWhichColorPlayer) => {
-            console.log('showing indicators for ' + forWhichColorPlayer);
+            OthelloUtils.consoleLog('showing move indicators for ' + forWhichColorPlayer);
+            // Need to find all pieces matching the color provided by the 'forWhichColorPlayer'
+            // argument that have only contiguous opposite color pieces along one of 8 axes.
+            // start by getting a collection of elements that match (have the css class) for the
+            // color passed in.
+            const boardPositionsWithColor = OthelloUtils.boardPositionsByClassNames(forWhichColorPlayer);
         };
+        this.occupiedPositions = new Set();
     }
     /**
      * @remarks
@@ -36,6 +44,7 @@ export class OthelloGameBoard {
      *
      */
     initializeNewGame() {
+        OthelloUtils.consoleLog('initializing new game, placing initial 4 pieces.');
         const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
         const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
         const whiteElementOne = document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
@@ -50,22 +59,24 @@ export class OthelloGameBoard {
      * @param movePlayed - instance of an OthelloGameMovePlayed class that defines the type of move
      * and on which square on the board
     */
-    performMove(movePlayed) {
+    performMoveElementOperations(movePlayed) {
+        OthelloUtils.consoleLog(`Placing ${movePlayed.moveType === moveType.BlackPiece ? "black" : "white"} piece on board at ${movePlayed.position}`);
         const boardPositionElement = document.getElementById(movePlayed.position);
-        boardPositionElement?.classList.add(movePlayed.moveType === moveType.BlackPiece
+        const classToAdd = movePlayed.moveType === moveType.BlackPiece
             ? constants.CSS_CLASS_NAME_BLACK
-            : constants.CSS_CLASS_NAME_WHITE);
-        this.AddMoveToLog(movePlayed);
+            : constants.CSS_CLASS_NAME_WHITE;
+        boardPositionElement?.classList.add(classToAdd);
+        this.occupiedPositions.add(movePlayed.position);
     }
     /**
      * Clears all pieces from the board
      *
      */
     clear() {
-        const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
+        OthelloUtils.consoleLog('clearing board');
         // only get children that have a class name applied to them since those are
         // the only ones we need to clear
-        const boardElements = board?.querySelectorAll('.' + constants.CSS_CLASS_NAME_BLACK + ',' +
+        const boardElements = OthelloUtils.boardPositionsByClassNames('.' + constants.CSS_CLASS_NAME_BLACK + ',' +
             '.' + constants.CSS_CLASS_NAME_WHITE + ',' +
             '.' + constants.CSS_CLASS_NAME_PLAYABLE + ',' +
             '.' + constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
@@ -83,12 +94,15 @@ export class OthelloGameBoard {
      * the type of move played.
      *
      */
-    AddMoveToLog(movePlayed) {
+    AddMoveToLog(movePlayed, piecesFlipped = 0) {
+        OthelloUtils.consoleLog('Adding move to log');
         const playerColor = movePlayed.moveType === moveType.BlackPiece ? 'Black' : 'White';
-        const optionText = `${playerColor} played at position ${movePlayed.position.toUpperCase()}`;
+        let optionText = `${playerColor} played at position ${movePlayed.position.toUpperCase()}`;
+        if (piecesFlipped > 0)
+            optionText += `${piecesFlipped} tile(s) flipped`;
         const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
         const moveNumber = movesListSelectElement.options.length + 1;
-        const moveOptionElement = new HTMLOptionElement();
+        const moveOptionElement = new Option();
         moveOptionElement.text = `Move ${moveNumber}: ${optionText}`;
         moveOptionElement.value = `${moveNumber}|${playerColor}|${movePlayed.position}`;
         movesListSelectElement.options.add(moveOptionElement);
