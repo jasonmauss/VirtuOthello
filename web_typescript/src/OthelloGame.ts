@@ -68,8 +68,10 @@ export class OthelloGame {
 
     /**
      * @remarks
-     * 
-     * @param movePlayedBoardPosition 
+     * This method changes tiles from black to white or vice-versa depending on
+     * the move that was just played. It will look in 8 different directions
+     * on the board - up/down/left/right and their 4 diagonol equivalents.
+     * @param movePlayedBoardPosition
      */
     public flipApplicablePiecesAfterMove = (movePlayedBoardPosition:string, colorOfPiecePlayed:string): void => {
 
