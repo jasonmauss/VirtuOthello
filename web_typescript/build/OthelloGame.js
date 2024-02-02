@@ -2,6 +2,7 @@ import { OthelloGameBoard } from "./OthelloGameBoard.js";
 import { OthelloGameMovePlayed, moveType } from "./OthelloGameMovePlayed.js";
 import * as constants from "./constants.js";
 import { OthelloUtils } from "./OthellUtils.js";
+import { MoveUtils } from "./MoveUtils.js";
 // This class represents the othello game being played.
 // It contains properties and methods relevant to managing
 // the game and being able to determine certain attributes
@@ -53,9 +54,7 @@ export class OthelloGame {
             this.gameBoard.AddMoveToLog(movePlayed, piecesFlipped);
             // call this afterwards so that the playable indicators are shown again, but for the other color
             // since it's the other colors turn now after the move has been played
-            const oppositeColor = colorOfPieceToPlay === constants.CSS_CLASS_NAME_BLACK
-                ? constants.CSS_CLASS_NAME_WHITE
-                : constants.CSS_CLASS_NAME_BLACK;
+            const oppositeColor = OthelloUtils.getOppositeColor(colorOfPieceToPlay);
             this.gameBoard.displayPlayableIndicators(oppositeColor);
         };
         /**
@@ -68,9 +67,12 @@ export class OthelloGame {
         this.flipApplicablePiecesAfterMove = (movePlayedBoardPosition, colorOfPiecePlayed) => {
             OthelloUtils.consoleLog('flipping applicable pieces after move.');
             let piecesFlipped = 0;
-            const whichColorToShowIndicatorsFor = colorOfPiecePlayed === constants.CSS_CLASS_NAME_BLACK
-                ? constants.CSS_CLASS_NAME_WHITE
-                : constants.CSS_CLASS_NAME_BLACK;
+            const positionsToFlip = MoveUtils.getPositionsToFlip(colorOfPiecePlayed, movePlayedBoardPosition);
+            const colorToRemove = OthelloUtils.getOppositeColor(colorOfPiecePlayed);
+            for (let position of positionsToFlip) {
+                document.getElementById(position)?.classList.remove(colorToRemove);
+                document.getElementById(position)?.classList.add(colorOfPiecePlayed);
+            }
             return piecesFlipped;
         };
         /**

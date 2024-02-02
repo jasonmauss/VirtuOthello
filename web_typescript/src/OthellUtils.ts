@@ -27,4 +27,10 @@ export class OthelloUtils {
             console.log(message);
     }
 
+    public static getOppositeColor = (color:string):string => {
+        return color === constants.CSS_CLASS_NAME_BLACK
+            ? constants.CSS_CLASS_NAME_WHITE
+            : constants.CSS_CLASS_NAME_BLACK;
+    }
+
 }

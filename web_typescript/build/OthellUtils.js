@@ -19,4 +19,9 @@ OthelloUtils.consoleLog = (message) => {
     if (constants.LOGGING_ENABLED)
         console.log(message);
 };
+OthelloUtils.getOppositeColor = (color) => {
+    return color === constants.CSS_CLASS_NAME_BLACK
+        ? constants.CSS_CLASS_NAME_WHITE
+        : constants.CSS_CLASS_NAME_BLACK;
+};
 //# sourceMappingURL=OthellUtils.js.map
