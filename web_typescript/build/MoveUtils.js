@@ -53,7 +53,8 @@ MoveUtils.getPositionsToFlip = (colorOfPiecePlayed, movePlayedBoardPosition) => 
 };
 /**
  * @remarks
- *
+ * Translates a board position like "12" to the Othello version or what's
+ * needed for the Element ID selection like "A2"
  * @param rowNum
  * @param columnCharAsNum
  */
