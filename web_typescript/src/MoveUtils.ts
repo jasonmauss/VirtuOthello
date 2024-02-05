@@ -1,3 +1,4 @@
+import { OthelloUtils } from "./OthellUtils.js";
 import * as constants from "./constants.js"
 
 /**
@@ -18,13 +19,41 @@ export class MoveUtils {
         const columnChar:string = movePlayedBoardPosition.charAt(0);
         const columnCharAsNum:number = movePlayedBoardPosition.charCodeAt(0);
         const rowNum:number = Number(movePlayedBoardPosition.charAt(1));
+        const oppositeColorOfPiecePlayed = OthelloUtils.getOppositeColor(colorOfPiecePlayed);
+        const positionsToFlip:string[] = [];
+
+        // hold board positions that might need to be flipped
+        // but we won't know for sure until we encounter colors
+        // at certain board positions.
+        let potentialFlips:string[] = []; 
 
         // search up in the current column if the move played was on
         // row 3 through 8 because a move played on row 2 can't flip
         // any pieces above it. Also only search up to the left or up
         // to the right if this condition is met
         if(rowNum > 2) {
-
+            // If there is a piece above the one played and it's the opposite color...
+            if(MoveUtils.getColorAtBoardPosition(rowNum - 1, columnChar) === oppositeColorOfPiecePlayed) {
+                // add it to potential flips and...
+                potentialFlips.push((rowNum - 1).toString() + columnChar);
+                // then start a loop that keeps going up the current column and...
+                for(let row = rowNum - 2; row > 0; --row) {
+                    // as long as the board position contains the opposite color...
+                    if(MoveUtils.getColorAtBoardPosition(row, columnChar) === oppositeColorOfPiecePlayed) {
+                        // add that board position to potential flips.
+                        potentialFlips.push((row - 1).toString() + columnChar);
+                    }
+                    // If we encounter a board position in the current column that matches the color of
+                    // the piece played, we know we need to add all the pieces we've been tracking in
+                    // the potential flips to 'positionsToFlip' array, clear out the potential flips array,
+                    // and exit the for loop we're in.
+                    if(MoveUtils.getColorAtBoardPosition(row, columnChar) === colorOfPiecePlayed) {
+                        positionsToFlip.push(...potentialFlips);
+                        potentialFlips = [];
+                        break;
+                    }
+                }
+            }
 
             if(columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
                 // go ahead and search up and left diagonally
@@ -65,7 +94,7 @@ export class MoveUtils {
 
         }
 
-        return [];
+        return positionsToFlip;
     }
 
     /**
@@ -77,5 +106,18 @@ export class MoveUtils {
      */
     public static getBoardPosition = (rowNum:number, columnCharAsNum:number):string => {
         return String.fromCharCode(columnCharAsNum) + rowNum.toString();
+    }
+
+    /**
+     * @remarks
+     * Retrieves the color (or lack thereof)
+     * @param rowNum
+     * @param columnChar 
+     */
+    public static getColorAtBoardPosition = (rowNum:number, columnChar:string):string => {
+        const boardElement = document.getElementById(columnChar + rowNum.toString());
+        if(boardElement?.classList.contains(constants.CSS_CLASS_NAME_BLACK)) return constants.CSS_CLASS_NAME_BLACK;
+        if(boardElement?.classList.contains(constants.CSS_CLASS_NAME_WHITE)) return constants.CSS_CLASS_NAME_WHITE;
+        return '';
     }
 }
