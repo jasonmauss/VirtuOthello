@@ -49,6 +49,7 @@ export class OthelloGameBoard {
         const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
         const whiteElementOne = document.getElementById('d4')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
         const whiteElementTwo = document.getElementById('e5')?.classList.add(constants.CSS_CLASS_NAME_WHITE);
+        this.occupiedPositions.add('e4').add('d5').add('d4').add('e5');
     }
     /**
      * Adds a piece to the board
@@ -99,7 +100,7 @@ export class OthelloGameBoard {
         const playerColor = movePlayed.moveType === moveType.BlackPiece ? 'Black' : 'White';
         let optionText = `${playerColor} played at position ${movePlayed.position.toUpperCase()}`;
         if (piecesFlipped > 0)
-            optionText += `${piecesFlipped} tile(s) flipped`;
+            optionText += ` - ${piecesFlipped} piece(s) flipped`;
         const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
         const moveNumber = movesListSelectElement.options.length + 1;
         const moveOptionElement = new Option();

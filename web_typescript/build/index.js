@@ -35,6 +35,12 @@ const newGameSelfPlayClickHandler = (event) => {
     _othelloGame = new OthelloGame(gameType.selfplay);
     newSPLGame();
 };
+const boardPositionDivElementClickHandler = (event) => {
+    const boardPositionClicked = (event?.target).id;
+    event.stopPropagation();
+    console.log(event.target);
+    _othelloGame.performMove(boardPositionClicked, _othelloGame.getColorOfCurrentMove());
+};
 const hvhButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_HVH);
 hvhButton?.addEventListener('click', newGameHumanVsHumanClickHandler);
 const yabButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_YAB);
@@ -43,4 +49,6 @@ const yawButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_YAW)
 yawButton?.addEventListener('click', newGameYouAsWhiteClickHandler);
 const spButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_SPL);
 spButton?.addEventListener('click', newGameSelfPlayClickHandler);
+const gameBoard = document.getElementById(constants.CSS_CLASS_NAME_BOARD);
+gameBoard?.addEventListener('click', boardPositionDivElementClickHandler);
 //# sourceMappingURL=index.js.map

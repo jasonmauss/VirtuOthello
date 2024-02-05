@@ -14,11 +14,13 @@ export class OthelloGame {
     gameType: gameType;
     gameBoard: OthelloGameBoard;
     movesPlayed: OthelloGameMovePlayed[];
+    colorForCurrentMove: string;
 
     constructor (gameType:gameType) {
         this.gameType = gameType;
         this.gameBoard = new OthelloGameBoard();
         this.movesPlayed = [];
+        this.colorForCurrentMove = constants.CSS_CLASS_NAME_BLACK; // black always plays first no matter what
     }
 
 
@@ -57,11 +59,13 @@ export class OthelloGame {
 
         // a quick hack of logic to determine that the board position clicked on
         // is actually a valid place to play. This could be improved upon and made more bulletproof.
+        // Commented out for now.
         // if(!document.getElementById(boardPosition)?.classList.contains(constants.CSS_CLASS_NAME_PLAYABLE)) return;
 
         // hide any currently playable indicators
         this.gameBoard.hidePlayableIndicators();
 
+        // Set the move type based on the color to play passed to this method
         const moveTypePlayed:moveType = colorOfPieceToPlay === constants.CSS_CLASS_NAME_BLACK
             ? moveType.BlackPiece
             : moveType.WhitePiece;
@@ -77,12 +81,15 @@ export class OthelloGame {
         // Add the move to the log list
         this.gameBoard.AddMoveToLog(movePlayed, piecesFlipped);
 
-
         // call this afterwards so that the playable indicators are shown again, but for the other color
         // since it's the other colors turn now after the move has been played
         const oppositeColor = OthelloUtils.getOppositeColor(colorOfPieceToPlay);
 
+        // Display the playable indicators again now for the opponent/other player
         this.gameBoard.displayPlayableIndicators(oppositeColor);
+
+        // Swap the color for who's move it is now
+        this.colorForCurrentMove = OthelloUtils.getOppositeColor(this.colorForCurrentMove);
     }
 
     /**
@@ -96,8 +103,6 @@ export class OthelloGame {
 
         OthelloUtils.consoleLog('flipping applicable pieces after move.');
 
-        let piecesFlipped:number = 0;
-
         const positionsToFlip:string[] = MoveUtils.getPositionsToFlip(colorOfPiecePlayed, movePlayedBoardPosition);
 
         const colorToRemove = OthelloUtils.getOppositeColor(colorOfPiecePlayed);
@@ -107,7 +112,7 @@ export class OthelloGame {
             document.getElementById(position)?.classList.add(colorOfPiecePlayed);
         }
 
-        return piecesFlipped;
+        return positionsToFlip.length;
     }
 
     /**
@@ -119,4 +124,13 @@ export class OthelloGame {
     public performInitialBlackPieceMove = (): void => {
         this.performMove('c4', constants.CSS_CLASS_NAME_BLACK)
     };
+
+    /**
+     * @remarks
+     * Returns the color (black or white) for which player's 
+     * turn it currently is.
+     */
+    public getColorOfCurrentMove = (): string => {
+        return this.colorForCurrentMove;
+    }
 }
