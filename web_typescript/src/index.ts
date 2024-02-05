@@ -1,6 +1,7 @@
 import { OthelloGame } from "./OthelloGame.js";
 import { gameType } from "./gameTypeEnum.js";
 import * as constants from "./constants.js"
+import { OthelloUtils } from "./OthellUtils.js";
 
 let _othelloGame:OthelloGame = new OthelloGame(gameType.humanVsHuman);
 
@@ -45,6 +46,13 @@ const newGameSelfPlayClickHandler = (event:MouseEvent):void => {
     newSPLGame();
 };
 
+const boardPositionDivElementClickHandler = (event:MouseEvent):void => {
+    const boardPositionClicked = (event?.target as HTMLElement).id;
+    event.stopPropagation();
+    console.log(event.target);
+    _othelloGame.performMove(boardPositionClicked, _othelloGame.getColorOfCurrentMove());
+};
+
 const hvhButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_HVH);
 hvhButton?.addEventListener('click', newGameHumanVsHumanClickHandler);
 
@@ -56,3 +64,6 @@ yawButton?.addEventListener('click', newGameYouAsWhiteClickHandler);
 
 const spButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_SPL);
 spButton?.addEventListener('click', newGameSelfPlayClickHandler);
+
+const gameBoard = document.getElementById(constants.CSS_CLASS_NAME_BOARD);
+gameBoard?.addEventListener('click', boardPositionDivElementClickHandler);
