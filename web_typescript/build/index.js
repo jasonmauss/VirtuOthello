@@ -41,6 +41,17 @@ const boardPositionDivElementClickHandler = (event) => {
     console.log(event.target);
     _othelloGame.performMove(boardPositionClicked, _othelloGame.getColorOfCurrentMove());
 };
+const showMoveLogCheckboxClickHandler = (event) => {
+    const checkbox = event.target;
+    const checkboxIsChecked = checkbox.checked;
+    const moveListContainer = document.getElementsByClassName(constants.CSS_CLASS_NAME_MOVES_CONTAINER)[0];
+    if (checkboxIsChecked) {
+        moveListContainer.style.display = 'block';
+    }
+    else {
+        moveListContainer.style.display = 'none';
+    }
+};
 const hvhButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_HVH);
 hvhButton?.addEventListener('click', newGameHumanVsHumanClickHandler);
 const yabButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_YAB);
@@ -51,4 +62,6 @@ const spButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_SPL);
 spButton?.addEventListener('click', newGameSelfPlayClickHandler);
 const gameBoard = document.getElementById(constants.CSS_CLASS_NAME_BOARD);
 gameBoard?.addEventListener('click', boardPositionDivElementClickHandler);
+const showMoveLogCheckbox = document.getElementById(constants.CSS_ELEMENT_ID_SHOW_MOVES_CHK);
+showMoveLogCheckbox?.addEventListener('click', showMoveLogCheckboxClickHandler);
 //# sourceMappingURL=index.js.map

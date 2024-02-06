@@ -14,11 +14,13 @@ export const CSS_CLASS_NAME_WHITE           :string = 'white';
 export const CSS_CLASS_NAME_PLAYABLE        :string = 'playable';
 export const CSS_CLASS_NAME_MOST_RECENT_MOVE:string = 'most-recent-move';
 export const CSS_ELEMENT_ID_MOVES_SELECT    :string = 'moves-select';
+export const CSS_ELEMENT_ID_SHOW_MOVES_CHK  :string = 'chkShowMoveLog';
 export const CSS_ELEMENT_ID_BOARD           :string = 'board';
 export const CSS_ELEMENT_ID_NEW_GAME_HVH    :string = 'btnNewGameHumanVsHuman';
 export const CSS_ELEMENT_ID_NEW_GAME_YAB    :string = 'btnNewGameAsBlack';
 export const CSS_ELEMENT_ID_NEW_GAME_YAW    :string = 'btnNewGameAsWhite';
 export const CSS_ELEMENT_ID_NEW_GAME_SPL    :string = 'btnNewGameSelfPlay';
+export const CSS_CLASS_NAME_MOVES_CONTAINER :string = 'moves-container';
 
 export const LOGGING_ENABLED                :boolean = true;
 
