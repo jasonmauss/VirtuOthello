@@ -10,7 +10,7 @@ export class OthelloUtils {
     
     constructor() {}
 
-    public static boardPositionsByClassNames = (classNames:string): NodeListOf<Element> => {
+    static boardPositionsByClassNames = (classNames:string): NodeListOf<Element> => {
 
         const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
         // get children that have the class name applied to them
@@ -22,12 +22,12 @@ export class OthelloUtils {
         return boardElements;
     }
 
-    public static consoleLog = (message:string):void => {
+    static consoleLog = (message:string):void => {
         if(constants.LOGGING_ENABLED)
             console.log(message);
     }
 
-    public static getOppositeColor = (color:string):string => {
+    static getOppositeColor = (color:string):string => {
         return color === constants.CSS_CLASS_NAME_BLACK
             ? constants.CSS_CLASS_NAME_WHITE
             : constants.CSS_CLASS_NAME_BLACK;

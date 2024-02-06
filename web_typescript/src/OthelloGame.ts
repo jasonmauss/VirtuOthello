@@ -45,7 +45,7 @@ export class OthelloGame {
      *  back to being a new game. Clears the board, clears moves
      *  played, etc.
      */
-    public performAllNewGameActions = (): void => {
+    performAllNewGameActions = (): void => {
         this.gameBoard.clear();
         this.clearMovesPlayed();
         this.gameBoard.initializeNewGame();
@@ -57,7 +57,7 @@ export class OthelloGame {
      * @param boardPosition 
      * @param colorOfPieceToPlay 
      */
-    public performMove = (boardPosition:string, colorOfPieceToPlay:string): void => {
+    performMove = (boardPosition:string, colorOfPieceToPlay:string): void => {
 
         // a quick hack of logic to determine that the board position clicked on
         // is actually a valid place to play. This could be improved upon and made more bulletproof.
@@ -103,7 +103,7 @@ export class OthelloGame {
      * on the board - up/down/left/right and their 4 diagonol equivalents.
      * @param movePlayedBoardPosition
      */
-    public flipApplicablePiecesAfterMove = (movePlayedBoardPosition:string, colorOfPiecePlayed:string): number => {
+    flipApplicablePiecesAfterMove = (movePlayedBoardPosition:string, colorOfPiecePlayed:string): number => {
 
         OthelloUtils.consoleLog('flipping applicable pieces after move.');
 
@@ -125,7 +125,7 @@ export class OthelloGame {
      *  a "You as white" (YAW) game, black (the computer) needs to play an
      *  initial move.
      */
-    public performInitialBlackPieceMove = (): void => {
+    performInitialBlackPieceMove = (): void => {
         this.performMove('c4', constants.CSS_CLASS_NAME_BLACK)
     };
 
@@ -134,7 +134,7 @@ export class OthelloGame {
      * Returns the color (black or white) for which player's 
      * turn it currently is.
      */
-    public getColorOfCurrentMove = (): string => {
+    getColorOfCurrentMove = (): string => {
         return this.colorForCurrentMove;
     }
 }
