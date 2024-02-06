@@ -44,6 +44,7 @@ export class OthelloGame {
             // if(!document.getElementById(boardPosition)?.classList.contains(constants.CSS_CLASS_NAME_PLAYABLE)) return;
             // hide any currently playable indicators
             this.gameBoard.hidePlayableIndicators();
+            this.gameBoard.removeCurrentLatestMoveIndicator();
             // Set the move type based on the color to play passed to this method
             const moveTypePlayed = colorOfPieceToPlay === constants.CSS_CLASS_NAME_BLACK
                 ? moveType.BlackPiece

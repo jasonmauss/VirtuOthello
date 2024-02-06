@@ -35,6 +35,13 @@ export class OthelloGameBoard {
             // color passed in.
             const boardPositionsWithColor = OthelloUtils.boardPositionsByClassNames(forWhichColorPlayer);
         };
+        this.removeCurrentLatestMoveIndicator = () => {
+            // get the element that has the latest move class on it. Note the nullable check on
+            // the currentLatestMoveElement - handles the case where it's the first move of the game
+            // and no elements have that class on them yet.
+            const currentLatestMoveElement = document.getElementsByClassName(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE)[0];
+            currentLatestMoveElement?.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
+        };
         this.occupiedPositions = new Set();
     }
     /**
@@ -67,6 +74,10 @@ export class OthelloGameBoard {
             ? constants.CSS_CLASS_NAME_BLACK
             : constants.CSS_CLASS_NAME_WHITE;
         boardPositionElement?.classList.add(classToAdd);
+        // add this class to the element as well to indicate it was the most recent move
+        boardPositionElement?.classList.add(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
+        // (maintain/append to) the collection of occupied positions so we know which elements
+        // should be allowed to have pieces placed on them or not.
         this.occupiedPositions.add(movePlayed.position);
     }
     /**
