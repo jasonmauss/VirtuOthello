@@ -12,7 +12,7 @@ export class MoveUtils {
     constructor() {}
 
     // 
-    public static getPositionsToFlip = (colorOfPiecePlayed:string, movePlayedBoardPosition:string) : string[] => {
+    static getPositionsToFlip = (colorOfPiecePlayed:string, movePlayedBoardPosition:string) : string[] => {
 
         // break down the board position passed in and take the column character (A through H)
         // and the row number (1 through 8) and use those to perform the searching
@@ -104,7 +104,7 @@ export class MoveUtils {
      * @param rowNum 
      * @param columnCharAsNum 
      */
-    public static getBoardPosition = (rowNum:number, columnCharAsNum:number):string => {
+    static getBoardPosition = (rowNum:number, columnCharAsNum:number):string => {
         return String.fromCharCode(columnCharAsNum) + rowNum.toString();
     }
 
@@ -114,7 +114,7 @@ export class MoveUtils {
      * @param rowNum
      * @param columnChar 
      */
-    public static getColorAtBoardPosition = (rowNum:number, columnChar:string):string => {
+    static getColorAtBoardPosition = (rowNum:number, columnChar:string):string => {
         const boardElement = document.getElementById(columnChar + rowNum.toString());
         if(boardElement?.classList.contains(constants.CSS_CLASS_NAME_BLACK)) return constants.CSS_CLASS_NAME_BLACK;
         if(boardElement?.classList.contains(constants.CSS_CLASS_NAME_WHITE)) return constants.CSS_CLASS_NAME_WHITE;
