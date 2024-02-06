@@ -104,13 +104,9 @@ body.dark-mode .moves-container select {
     cursor: pointer;
 }
 
-.moves-container span {
-    display:block;
-    width:100%;
-}
-
 #moves-select {
     width:100%;
+    display:block;
 }
 
 .board {

@@ -14,6 +14,7 @@ export const CSS_CLASS_NAME_WHITE           :string = 'white';
 export const CSS_CLASS_NAME_PLAYABLE        :string = 'playable';
 export const CSS_CLASS_NAME_MOST_RECENT_MOVE:string = 'most-recent-move';
 export const CSS_ELEMENT_ID_MOVES_SELECT    :string = 'moves-select';
+export const CSS_ELEMENT_ID_MOVES_PLAYED    :string = 'moves-played-text';
 export const CSS_ELEMENT_ID_SHOW_MOVES_CHK  :string = 'chkShowMoveLog';
 export const CSS_ELEMENT_ID_BOARD           :string = 'board';
 export const CSS_ELEMENT_ID_NEW_GAME_HVH    :string = 'btnNewGameHumanVsHuman';

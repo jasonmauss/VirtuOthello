@@ -35,6 +35,8 @@ export class OthelloGame {
 
         while(movesListSelectElement.options.length > 0)
             movesListSelectElement.options.remove(0);
+
+            (document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED) as HTMLSpanElement).innerText = 'moves played';
     }
 
     /**
