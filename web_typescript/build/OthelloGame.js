@@ -18,6 +18,7 @@ export class OthelloGame {
             const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
             while (movesListSelectElement.options.length > 0)
                 movesListSelectElement.options.remove(0);
+            document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED).innerText = 'moves played';
         };
         /**
          *  @remarks

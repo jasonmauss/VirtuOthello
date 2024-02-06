@@ -107,6 +107,8 @@ export class OthelloGameBoard {
         moveOptionElement.text = `Move ${moveNumber}: ${optionText}`;
         moveOptionElement.value = `${moveNumber}|${playerColor}|${movePlayed.position}`;
         movesListSelectElement.options.add(moveOptionElement);
+        document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED).innerText =
+            `${moveNumber} ${moveNumber > 1 ? 'moves' : 'move'} played`;
     }
 }
 //# sourceMappingURL=OthelloGameBoard.js.map
