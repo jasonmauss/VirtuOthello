@@ -94,6 +94,9 @@ export class OthelloGame {
 
         // Swap the color for who's move it is now
         this.colorForCurrentMove = OthelloUtils.getOppositeColor(this.colorForCurrentMove);
+
+        // Update the game score on the UI - number of white and black pieces on the board
+        this.updateGameScore();
     }
 
     /**
@@ -136,5 +139,16 @@ export class OthelloGame {
      */
     getColorOfCurrentMove = (): string => {
         return this.colorForCurrentMove;
+    }
+
+    /**
+     * @remarks
+     * Updates the game score on the UI - the number of white and black pieces on the board
+     */
+    updateGameScore = (): void => {
+        const blackPieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
+        const whitePieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_WHITE).length;
+        (document.getElementById(constants.CSS_CLASS_BLACK_PIECE_COUNT)as HTMLSpanElement).innerText = 'Black : ' + blackPieceCount.toString();
+        (document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)as HTMLSpanElement).innerText = 'White : ' + whitePieceCount.toString();
     }
 }
