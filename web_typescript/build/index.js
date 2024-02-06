@@ -1,6 +1,7 @@
 import { OthelloGame } from "./OthelloGame.js";
 import { gameType } from "./gameTypeEnum.js";
 import * as constants from "./constants.js";
+import { OthelloUtils } from "./OthellUtils.js";
 let _othelloGame = new OthelloGame(gameType.humanVsHuman);
 const newHVHGame = () => {
     console.log('new Game Human vs Human');
@@ -38,7 +39,7 @@ const newGameSelfPlayClickHandler = (event) => {
 const boardPositionDivElementClickHandler = (event) => {
     const boardPositionClicked = (event?.target).id;
     event.stopPropagation();
-    console.log(event.target);
+    OthelloUtils.consoleLog(event.target);
     _othelloGame.performMove(boardPositionClicked, _othelloGame.getColorOfCurrentMove());
 };
 const showMoveLogCheckboxClickHandler = (event) => {

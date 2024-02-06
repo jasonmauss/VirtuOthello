@@ -49,7 +49,7 @@ const newGameSelfPlayClickHandler = (event:MouseEvent):void => {
 const boardPositionDivElementClickHandler = (event:MouseEvent):void => {
     const boardPositionClicked = (event?.target as HTMLElement).id;
     event.stopPropagation();
-    console.log(event.target);
+    OthelloUtils.consoleLog(event.target as HTMLElement);
     _othelloGame.performMove(boardPositionClicked, _othelloGame.getColorOfCurrentMove());
 };
 

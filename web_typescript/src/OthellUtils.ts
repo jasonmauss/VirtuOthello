@@ -22,7 +22,7 @@ export class OthelloUtils {
         return boardElements;
     }
 
-    static consoleLog = (message:string):void => {
+    static consoleLog = (message:string|HTMLElement):void => {
         if(constants.LOGGING_ENABLED)
             console.log(message);
     }
