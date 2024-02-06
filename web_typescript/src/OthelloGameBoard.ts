@@ -19,7 +19,7 @@ export class OthelloGameBoard {
      * matter what type of game is being played, HVH, YAW, YAB or SPL
      * 
      */
-    public initializeNewGame() {
+    initializeNewGame() {
         OthelloUtils.consoleLog('initializing new game, placing initial 4 pieces.');
         const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
         const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
@@ -37,7 +37,7 @@ export class OthelloGameBoard {
      * @param movePlayed - instance of an OthelloGameMovePlayed class that defines the type of move
      * and on which square on the board
     */
-    public performMoveElementOperations(movePlayed:OthelloGameMovePlayed) {
+    performMoveElementOperations(movePlayed:OthelloGameMovePlayed) {
 
         OthelloUtils.consoleLog(`Placing ${movePlayed.moveType === moveType.BlackPiece? "black" : "white"} piece on board at ${movePlayed.position}`);
 
@@ -50,6 +50,11 @@ export class OthelloGameBoard {
         
         boardPositionElement?.classList.add(classToAdd);
 
+        // add this class to the element as well to indicate it was the most recent move
+        boardPositionElement?.classList.add(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
+
+        // (maintain/append to) the collection of occupied positions so we know which elements
+        // should be allowed to have pieces placed on them or not.
         this.occupiedPositions.add(movePlayed.position);
     }
 
@@ -57,7 +62,7 @@ export class OthelloGameBoard {
      * Clears all pieces from the board
      * 
      */
-    public clear() {
+    clear() {
         OthelloUtils.consoleLog('clearing board');
         // only get children that have a class name applied to them since those are
         // the only ones we need to clear
@@ -83,7 +88,7 @@ export class OthelloGameBoard {
      * the type of move played.
      * 
      */
-    public AddMoveToLog(movePlayed: OthelloGameMovePlayed, piecesFlipped:number = 0) {
+    AddMoveToLog(movePlayed: OthelloGameMovePlayed, piecesFlipped:number = 0) {
         OthelloUtils.consoleLog('Adding move to log');
         const playerColor:string = movePlayed.moveType === moveType.BlackPiece ? 'Black' : 'White';
         let optionText:string = `${playerColor} played at position ${movePlayed.position.toUpperCase()}`;
@@ -103,7 +108,7 @@ export class OthelloGameBoard {
      * This methods hides any playable indicators that might be present
      * on the board from previous moves played
      */
-    public hidePlayableIndicators = ():void => {
+    hidePlayableIndicators = ():void => {
 
         OthelloUtils.consoleLog('hiding playable indicators')
 
@@ -124,7 +129,7 @@ export class OthelloGameBoard {
      *  @param forWhichColorPlayer - which color player move indicators should
      *  be displayed for.
      */
-    public displayPlayableIndicators = (forWhichColorPlayer:string): void => {
+    displayPlayableIndicators = (forWhichColorPlayer:string): void => {
         OthelloUtils.consoleLog('showing move indicators for ' + forWhichColorPlayer);
 
         // Need to find all pieces matching the color provided by the 'forWhichColorPlayer'
@@ -137,4 +142,12 @@ export class OthelloGameBoard {
 
             
     };
+
+    removeCurrentLatestMoveIndicator = (): void => {
+        // get the element that has the latest move class on it. Note the nullable check on
+        // the currentLatestMoveElement - handles the case where it's the first move of the game
+        // and no elements have that class on them yet.
+        const currentLatestMoveElement = document.getElementsByClassName(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE)[0] as HTMLDivElement;
+        currentLatestMoveElement?.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
+    }
 }
