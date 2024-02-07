@@ -25,6 +25,7 @@ export class OthelloGame {
 
 
     /**
+     * @remarks
      * clears the moves played in the game
      * and also clears the move log list in the UI
      */
@@ -49,11 +50,12 @@ export class OthelloGame {
         this.gameBoard.clear();
         this.clearMovesPlayed();
         this.gameBoard.initializeNewGame();
+        this.updateGameScore();
     }
 
     /**
      * @remarks
-     * 
+     * calls all of the methods that comprise a move in the game
      * @param boardPosition 
      * @param colorOfPieceToPlay 
      */

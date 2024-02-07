@@ -35,6 +35,11 @@ export class OthelloGameBoard {
             // color passed in.
             const boardPositionsWithColor = OthelloUtils.boardPositionsByClassNames(forWhichColorPlayer);
         };
+        /**
+         * @remarks
+         * Removes the current latest move indicator from the div element
+         * that has the CSS class that causes it to appear in the UI
+         */
         this.removeCurrentLatestMoveIndicator = () => {
             // get the element that has the latest move class on it. Note the nullable check on
             // the currentLatestMoveElement - handles the case where it's the first move of the game
@@ -81,7 +86,9 @@ export class OthelloGameBoard {
         this.occupiedPositions.add(movePlayed.position);
     }
     /**
-     * Clears all pieces from the board
+     * @remarks
+     * Clears all pieces from the board by removing classes from
+     * the game board's div elements
      *
      */
     clear() {
@@ -100,6 +107,7 @@ export class OthelloGameBoard {
         }
     }
     /**
+     * @remarks
      * Adds a move to the moves log for the game
      *
      * @param movePlayed - instance of an OthelloGameMovePlayed class that defines
