@@ -27,6 +27,40 @@ MoveUtils.getPositionsForPlayableIndicators = (forWhichColorPlayer) => {
         const columnChar = position.id.charAt(0);
         const columnCharAsNum = position.id.charCodeAt(0);
         const rowNum = Number(position.id.charAt(1));
+        // search up in the current column if the row of the position
+        // is row 3 through 8 - because a move can only be played above
+        // the current position if there's an opposite piece color above it
+        // as well as an empty position above it (so 2 spots above it)
+        if (rowNum > constants.MIN_ROW_NUM + 1) {
+            if (columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
+                // go ahead and search up and left diagonally if we are at least as far right as the 'c' column
+            }
+            if (columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
+                // go ahead and search up and right diagonally if we are at least as far left as the 'f' column
+            }
+        }
+        // search down in the current column if the piece is
+        // on row 1 through 6 because a piece on row 7 or 8 doesn't
+        // have enough room to play on a position below it. Also only search down to the left
+        // or down to the right if this "row 1-6" condition is met.
+        if (rowNum < constants.MAX_ROW_NUM - 1) {
+            if (columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
+                // go ahead and search down and left diagonally
+            }
+            if (columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
+                // go ahead and search down and right diagonally 
+            }
+        }
+        // search to the left in the current row if the piece is
+        // on column c or greater because a piece on column
+        // B or column A doesn't have enough room to play to the left of it.
+        if (columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
+        }
+        // search to the right in the current row if the piece
+        // is on columns a through f because a move played on column
+        // G or column H doesn't have enough room to play to the right of it.
+        if (columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
+        }
     }
     return Array.from(positionsFound);
 };
@@ -54,7 +88,7 @@ MoveUtils.getPositionsToFlip = (colorOfPiecePlayed, movePlayedBoardPosition) => 
     // row 3 through 8 because a move played on row 2 can't flip
     // any pieces above it. Also only search up to the left or up
     // to the right if this condition is met
-    if (rowNum > 2) {
+    if (rowNum > constants.MIN_ROW_NUM + 1) {
         // If there is a piece above the one played and it's the opposite color...
         if (MoveUtils.getColorAtBoardPosition(rowNum - 1, columnChar) === oppositeColorOfPiecePlayed) {
             // add it to potential flips and...
@@ -78,17 +112,17 @@ MoveUtils.getPositionsToFlip = (colorOfPiecePlayed, movePlayedBoardPosition) => 
             }
         }
         if (columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
-            // go ahead and search up and left diagonally
+            // go ahead and search up and left diagonally if we are at least as far right as the 'c' column
         }
         if (columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
-            // go ahead and search up and right diagonally
+            // go ahead and search up and right diagonally if we are at least as far left as the 'f' column
         }
     }
     // search down in the current column if the move played was
     // on row 1 through 6 because a move played on row 7 can't 
     // flip any pieces below it. Also only search down to the left
     // or down to the right if this condition is met.
-    if (rowNum < 7) {
+    if (rowNum < constants.MAX_ROW_NUM - 1) {
         if (columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
             // go ahead and search down and left diagonally
         }

@@ -29,5 +29,5 @@ export const LOGGING_ENABLED                :boolean = true;
 
 export const MIN_COLUMN_CHAR_AS_NUM         :number = 'a'.charCodeAt(0);
 export const MAX_COLUMN_CHAR_AS_NUM         :number = 'h'.charCodeAt(0);
-export const MIN_ROW_NUM                    :number = 0;
+export const MIN_ROW_NUM                    :number = 1;
 export const MAX_ROW_NUM                    :number = 8;
