@@ -11,7 +11,14 @@ export class MoveUtils {
 
     constructor() {}
 
-    // 
+    /**
+     * @remarks
+     * Based on the color played and the position it was played in, determine which pieces 
+     * need to be "flipped" to the color that was just played
+     * @param colorOfPiecePlayed - what color made the move
+     * @param movePlayedBoardPosition - what position on the board it was played in
+     * @returns - an array of strings that are board positions that should be flipped
+     */
     static getPositionsToFlip = (colorOfPiecePlayed:string, movePlayedBoardPosition:string) : string[] => {
 
         // break down the board position passed in and take the column character (A through H)
@@ -110,9 +117,9 @@ export class MoveUtils {
 
     /**
      * @remarks
-     * Retrieves the color (or lack thereof)
-     * @param rowNum
-     * @param columnChar 
+     * Retrieves the color (or lack thereof) at a certain board position
+     * @param rowNum - the row of the board position
+     * @param columnChar - the column of the board position
      */
     static getColorAtBoardPosition = (rowNum:number, columnChar:string):string => {
         const boardElement = document.getElementById(columnChar + rowNum.toString());
