@@ -1,3 +1,16 @@
 # VirtuOthello
-Tool to help play optimal moves in the game of Othello. I'm going to try and make both a web and desktop version so you can use it however you like.
-This is also a coding exercise for me to learn with so this repo might end up having the same tool written in multiple languages to choose from.
+Virtuoso + Othello = VirtuOthello!
+This repo contains implementations of the game Othello (a.k.a. "Reversi") using multiple languages && platforms.
+
+![Othello Game Board](OthelloGame.png)
+
+The first implementation is being built using TypeScript, for the web browser.
+I also plan to implement the game in:
+- Dart for Flutter
+- C# for Blazor
+- TypeScript for React Native
+- C# for WinForms or WPF
+- TypeScript for React
+- TypeScript for Angular
+
+Feel free to browse the source and star the repo if you're an Othello fan!
