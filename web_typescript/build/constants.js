@@ -25,6 +25,6 @@ export const CSS_CLASS_WHITE_PIECE_COUNT = 'white-piece-count';
 export const LOGGING_ENABLED = true;
 export const MIN_COLUMN_CHAR_AS_NUM = 'a'.charCodeAt(0);
 export const MAX_COLUMN_CHAR_AS_NUM = 'h'.charCodeAt(0);
-export const MIN_ROW_NUM = 0;
+export const MIN_ROW_NUM = 1;
 export const MAX_ROW_NUM = 8;
 //# sourceMappingURL=constants.js.map
