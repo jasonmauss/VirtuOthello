@@ -43,7 +43,7 @@ MoveUtils.getPositionsToFlip = (colorOfPiecePlayed, movePlayedBoardPosition) => 
                 // as long as the board position contains the opposite color...
                 if (MoveUtils.getColorAtBoardPosition(row, columnChar) === oppositeColorOfPiecePlayed) {
                     // add that board position to potential flips.
-                    potentialFlips.push(columnChar + (row - 1).toString());
+                    potentialFlips.push(columnChar + (row).toString());
                 }
                 // If we encounter a board position in the current column that matches the color of
                 // the piece played, we know we need to add all the pieces we've been tracking in
