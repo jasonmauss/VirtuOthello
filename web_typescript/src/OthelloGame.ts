@@ -15,12 +15,16 @@ export class OthelloGame {
     gameBoard: OthelloGameBoard;
     movesPlayed: OthelloGameMovePlayed[];
     colorForCurrentMove: string;
+    gameIsInProgress: boolean;
+    moveIsInProgress: boolean;
 
     constructor (gameType:gameType) {
         this.gameType = gameType;
         this.gameBoard = new OthelloGameBoard();
         this.movesPlayed = [];
         this.colorForCurrentMove = constants.CSS_CLASS_NAME_BLACK; // black always plays first no matter what
+        this.gameIsInProgress = false; // initialize this to false so that whenever a new game begins it has the proper state/value
+        this.moveIsInProgress = false; // initialize this to false since no new game would have a move in progress
     }
 
 
@@ -29,7 +33,7 @@ export class OthelloGame {
      * clears the moves played in the game
      * and also clears the move log list in the UI
      */
-    public clearMovesPlayed = (): void => {
+    clearMovesPlayed = (): void => {
         this.movesPlayed = [];
         const movesListSelectElement: HTMLSelectElement = 
             document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
@@ -49,6 +53,7 @@ export class OthelloGame {
     performAllNewGameActions = (): void => {
         this.gameBoard.clear();
         this.clearMovesPlayed();
+        this.gameIsInProgress = false;
         this.gameBoard.initializeNewGame();
         this.updateGameScore();
     }
@@ -65,6 +70,10 @@ export class OthelloGame {
         // is actually a valid place to play. This could be improved upon and made more bulletproof.
         // Commented out for now.
         // if(!document.getElementById(boardPosition)?.classList.contains(constants.CSS_CLASS_NAME_PLAYABLE)) return;
+
+        // since a move (potentially the first one) is being made, make sure the state of the
+        // game being in progress is updated
+        this.gameIsInProgress = true;
 
         // hide any currently playable indicators
         this.gameBoard.hidePlayableIndicators();

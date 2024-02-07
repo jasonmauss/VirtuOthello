@@ -5,10 +5,18 @@ import { OthelloUtils } from "./OthellUtils.js";
 let _othelloGame = new OthelloGame(gameType.humanVsHuman);
 /**
  * @remarks
+ * If the current game is in progress, or has ended,
+ * prompt the user to confirm that they want to reset the board
+ */
+const isEndingGameInProgressOk = () => {
+    return window.confirm('Are you sure you want to clear the board and start a new game?');
+};
+/**
+ * @remarks
  * Initiates a new Human vs Human game
  */
 const newHVHGame = () => {
-    console.log('new Game Human vs Human');
+    OthelloUtils.consoleLog('new Game Human vs Human');
     _othelloGame.performAllNewGameActions();
 };
 /**
@@ -16,7 +24,7 @@ const newHVHGame = () => {
  * Initiates a new You as Black game
  */
 const newYABGame = () => {
-    console.log('new Game You as Black');
+    OthelloUtils.consoleLog('new Game You as Black');
     _othelloGame.performAllNewGameActions();
 };
 /**
@@ -24,7 +32,7 @@ const newYABGame = () => {
  * Initiates a new You as White game
  */
 const newYAWGame = () => {
-    console.log('new Game You as White');
+    OthelloUtils.consoleLog('new Game You as White');
     _othelloGame.performAllNewGameActions();
     _othelloGame.performInitialBlackPieceMove();
 };
@@ -33,7 +41,7 @@ const newYAWGame = () => {
  * Initiates a new Self-play game
  */
 const newSPLGame = () => {
-    console.log('new Game Selfplay');
+    OthelloUtils.consoleLog('new Game Selfplay');
     _othelloGame.performAllNewGameActions();
 };
 /**
@@ -42,8 +50,10 @@ const newSPLGame = () => {
  * @param event
  */
 const newGameHumanVsHumanClickHandler = (event) => {
-    _othelloGame = new OthelloGame(gameType.humanVsHuman);
-    newHVHGame();
+    if (_othelloGame.gameIsInProgress && isEndingGameInProgressOk() || !_othelloGame.gameIsInProgress) {
+        _othelloGame = new OthelloGame(gameType.humanVsHuman);
+        newHVHGame();
+    }
 };
 /**
  * @remarks
@@ -51,8 +61,10 @@ const newGameHumanVsHumanClickHandler = (event) => {
  * @param event
  */
 const newGameYouAsBlackClickHandler = (event) => {
-    _othelloGame = new OthelloGame(gameType.youAsBlack);
-    newYABGame();
+    if (_othelloGame.gameIsInProgress && isEndingGameInProgressOk() || !_othelloGame.gameIsInProgress) {
+        _othelloGame = new OthelloGame(gameType.youAsBlack);
+        newYABGame();
+    }
 };
 /**
  * @remarks
@@ -60,8 +72,10 @@ const newGameYouAsBlackClickHandler = (event) => {
  * @param event
  */
 const newGameYouAsWhiteClickHandler = (event) => {
-    _othelloGame = new OthelloGame(gameType.youAsWhite);
-    newYAWGame();
+    if (_othelloGame.gameIsInProgress && isEndingGameInProgressOk() || !_othelloGame.gameIsInProgress) {
+        _othelloGame = new OthelloGame(gameType.youAsWhite);
+        newYAWGame();
+    }
 };
 /**
  * @remarks
@@ -69,8 +83,10 @@ const newGameYouAsWhiteClickHandler = (event) => {
  * @param event
  */
 const newGameSelfPlayClickHandler = (event) => {
-    _othelloGame = new OthelloGame(gameType.selfplay);
-    newSPLGame();
+    if (_othelloGame.gameIsInProgress && isEndingGameInProgressOk() || !_othelloGame.gameIsInProgress) {
+        _othelloGame = new OthelloGame(gameType.selfplay);
+        newSPLGame();
+    }
 };
 /**
  * @remarks
@@ -78,10 +94,20 @@ const newGameSelfPlayClickHandler = (event) => {
  * @param event
  */
 const boardPositionDivElementClickHandler = (event) => {
+    // if a player was to click really fast, or double click the board, we don't
+    // want to process another move until we have finished processing the move
+    // that is in progress, so check for a move being in progress and returning
+    // immediately if that's the case. 
+    if (_othelloGame.moveIsInProgress)
+        return;
     const boardPositionClicked = (event?.target).id;
+    // Stop propagation since we don't care to handle the click event of any parent elements
     event.stopPropagation();
     OthelloUtils.consoleLog(event.target);
+    // set the game move stats to being in progress
+    _othelloGame.moveIsInProgress = true;
     _othelloGame.performMove(boardPositionClicked, _othelloGame.getColorOfCurrentMove());
+    _othelloGame.moveIsInProgress = false;
 };
 /**
  * @remarks
