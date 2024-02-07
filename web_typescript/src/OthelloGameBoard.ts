@@ -1,3 +1,4 @@
+import { MoveUtils } from "./MoveUtils.js";
 import { OthelloUtils } from "./OthellUtils.js";
 import { OthelloGameMovePlayed, moveType } from "./OthelloGameMovePlayed.js";
 import * as constants from "./constants.js"
@@ -34,7 +35,7 @@ export class OthelloGameBoard {
      * Accepts an OthelloGameMovePlayed object and uses its
      * properties to determine where to add a piece to the board at.
      *  
-     * @param movePlayed - instance of an OthelloGameMovePlayed class that defines the type of move
+     * @param movePlayed instance of an OthelloGameMovePlayed class that defines the type of move
      * and on which square on the board
     */
     performMoveElementOperations(movePlayed:OthelloGameMovePlayed) {
@@ -87,7 +88,7 @@ export class OthelloGameBoard {
      * @remarks
      * Adds a move to the moves log for the game
      * 
-     * @param movePlayed - instance of an OthelloGameMovePlayed class that defines
+     * @param movePlayed instance of an OthelloGameMovePlayed class that defines
      * the type of move played.
      * 
      */
@@ -129,20 +130,21 @@ export class OthelloGameBoard {
      *  @remarks
      *  Adds classes to certain div elements to display the "playable" position
      *  indicators to the player who's turn it currently is.
-     *  @param forWhichColorPlayer - which color player move indicators should
+     *  @param forWhichColorPlayer which color player move indicators should
      *  be displayed for.
      */
     displayPlayableIndicators = (forWhichColorPlayer:string): void => {
         OthelloUtils.consoleLog('showing move indicators for ' + forWhichColorPlayer);
 
         // Need to find all pieces matching the color provided by the 'forWhichColorPlayer'
-        // argument that have only contiguous opposite color pieces along one of 8 axes.
+        // argument that have only contiguous opposite color pieces along one of 8 axes, followed
+        // by an empty board position.
 
-        // start by getting a collection of elements that match (have the css class) for the
-        // color passed in.
-        const boardPositionsWithColor: NodeListOf<Element> = 
-            OthelloUtils.boardPositionsByClassNames(forWhichColorPlayer);
+        const playableBoardPositions:string[] = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
 
+        for(const position of playableBoardPositions) {
+            document.getElementById(position)?.classList.add(constants.CSS_CLASS_NAME_PLAYABLE);
+        }
             
     };
 

@@ -13,11 +13,39 @@ export class MoveUtils {
 
     /**
      * @remarks
+     * For a given color (black or white), determines which board positions should have 
+     * playable indicators shown, based on where pieces exist and which colors they are
+     * @returns a string array containing board positions where playable indicators should be shown
+     */
+    static getPositionsForPlayableIndicators = (forWhichColorPlayer:string):string[] => {
+        
+        // Use this Set to keep track of positions we've found so we don't send back
+        // any duplicate board positions. Will convert it to an array as the return value
+        const positionsFound:Set<string> = new Set<string>();
+
+        // start by getting a collection of elements that match (have the css class) for the
+        // color passed in.
+        const boardPositionsWithColor: NodeListOf<Element> = OthelloUtils.boardPositionsByClassNames(forWhichColorPlayer);
+        const oppositeColor:string = OthelloUtils.getOppositeColor(forWhichColorPlayer);
+
+        for(let position of boardPositionsWithColor) {
+            const columnChar:string = position.id.charAt(0);
+            const columnCharAsNum:number = position.id.charCodeAt(0);
+            const rowNum:number = Number(position.id.charAt(1));
+            
+
+        }
+
+        return Array.from(positionsFound);
+    };
+
+    /**
+     * @remarks
      * Based on the color played and the position it was played in, determine which pieces 
      * need to be "flipped" to the color that was just played
-     * @param colorOfPiecePlayed - what color made the move
-     * @param movePlayedBoardPosition - what position on the board it was played in
-     * @returns - an array of strings that are board positions that should be flipped
+     * @param colorOfPiecePlayed what color made the move
+     * @param movePlayedBoardPosition what position on the board it was played in
+     * @returns an array of strings that are board positions that should be flipped
      */
     static getPositionsToFlip = (colorOfPiecePlayed:string, movePlayedBoardPosition:string) : string[] => {
 
@@ -106,10 +134,10 @@ export class MoveUtils {
 
     /**
      * @remarks
-     * Translates a board position like "12" to the Othello version or what's
-     * needed for the Element ID selection like "A2"
-     * @param rowNum 
-     * @param columnCharAsNum 
+     * Translates a board position like "97,2" to the Othello version or what's
+     * needed for the Element ID selection like "a2"
+     * @param rowNum the number of row on the board
+     * @param columnCharAsNum the charCode-based column digit, e.g. 97 for lower-case a, 98 for 'b', etc.
      */
     static getBoardPosition = (rowNum:number, columnCharAsNum:number):string => {
         return String.fromCharCode(columnCharAsNum) + rowNum.toString();
@@ -118,8 +146,8 @@ export class MoveUtils {
     /**
      * @remarks
      * Retrieves the color (or lack thereof) at a certain board position
-     * @param rowNum - the row of the board position
-     * @param columnChar - the column of the board position
+     * @param rowNum the row of the board position
+     * @param columnChar the column of the board position
      */
     static getColorAtBoardPosition = (rowNum:number, columnChar:string):string => {
         const boardElement = document.getElementById(columnChar + rowNum.toString());

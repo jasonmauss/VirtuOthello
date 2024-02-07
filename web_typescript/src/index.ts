@@ -126,7 +126,7 @@ const boardPositionDivElementClickHandler = (event:MouseEvent):void => {
 /**
  * @remarks
  * The click handler method for the "Show Move Log" UI checkbox
- * @param event - the click event of the checkbox
+ * @param event the click event of the checkbox
  */
 const showMoveLogCheckboxClickHandler = (event:MouseEvent):void => {
     const checkbox = event.target as HTMLInputElement;

@@ -61,8 +61,8 @@ export class OthelloGame {
     /**
      * @remarks
      * calls all of the methods that comprise a move in the game
-     * @param boardPosition 
-     * @param colorOfPieceToPlay 
+     * @param boardPosition the position (id of the div element) that was clicked on the board e.g. "e6"
+     * @param colorOfPieceToPlay which color should be played, black or white
      */
     performMove = (boardPosition:string, colorOfPieceToPlay:string): void => {
 
@@ -115,7 +115,7 @@ export class OthelloGame {
      * This method changes tiles from black to white or vice-versa depending on
      * the move that was just played. It will look in 8 different directions
      * on the board - up/down/left/right and their 4 diagonol equivalents.
-     * @param movePlayedBoardPosition
+     * @param movePlayedBoardPosition The board position where the move was played e.g. "e6"
      */
     flipApplicablePiecesAfterMove = (movePlayedBoardPosition:string, colorOfPiecePlayed:string): number => {
 
