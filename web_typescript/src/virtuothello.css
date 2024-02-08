@@ -179,7 +179,23 @@ body.dark-mode .moves-container select {
     --b: radial-gradient(red 15%,#0000 16%),;
   }
 
-  .playable {
-    border:solid 2px #000;
+  .playable-black{
+    border:solid 2px #000000;
+  }
+
+  .playable-white{
+    border:solid 2px #FFFFFF;
+  }
+
+  .playable-black,
+  .playable-white {
     cursor: pointer;
+  }
+
+  .playable-black:hover {
+    background: var(--b, ) linear-gradient(225deg, #6c6c6c 10%, #000);
+  }
+
+  .playable-white:hover {
+    background: var(--b, ) linear-gradient(225deg, #959696 10%, #fff);
   }

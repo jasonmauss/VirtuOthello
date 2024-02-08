@@ -26,6 +26,7 @@ const newHVHGame = () => {
 const newYABGame = () => {
     OthelloUtils.consoleLog('new Game You as Black');
     _othelloGame.performAllNewGameActions();
+    _othelloGame.gameBoard.displayPlayableIndicators(constants.CSS_CLASS_NAME_BLACK);
 };
 /**
  * @remarks
