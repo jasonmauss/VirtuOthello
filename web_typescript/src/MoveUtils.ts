@@ -13,6 +13,42 @@ export class MoveUtils {
 
     /**
      * @remarks
+     * An easy way to perform "subtraction" on a column character without
+     * involving charCode math
+     * @param char the current character
+     * @returns the character that comes before the character passed to the method
+     */
+    static subtractColumnChar = (char:string):string => {
+        if(char === 'h') return 'g';
+        if(char === 'g') return 'f';
+        if(char === 'f') return 'e';
+        if(char === 'e') return 'd';
+        if(char === 'd') return 'c';
+        if(char === 'c') return 'b';
+        if(char === 'b') return 'a';
+        return '';
+    }
+
+    /**
+     * @remarks
+     * An easy way to perform "addition" on a column character without
+     * involving charCode math
+     * @param char the current character
+     * @returns the character that comes after the character passed to the method
+     */
+    static addColumnChar = (char:string):string => {
+        if(char === 'a') return 'b';
+        if(char === 'b') return 'c';
+        if(char === 'c') return 'd';
+        if(char === 'd') return 'e';
+        if(char === 'e') return 'f';
+        if(char === 'f') return 'g';
+        if(char === 'g') return 'h';
+        return '';
+    }
+
+    /**
+     * @remarks
      * For a given color (black or white), determines which board positions should have 
      * playable indicators shown, based on where pieces exist and which colors they are
      * @returns a string array containing board positions where playable indicators should be shown
@@ -39,13 +75,43 @@ export class MoveUtils {
             // as well as an empty position above it (so 2 spots above it)
             if(rowNum > constants.MIN_ROW_NUM + 1) {
 
+                if(this.getColorAtBoardPosition(rowNum - 1, columnChar) === oppositeColor) {
+                    // start searching until you find an empty board position
+                    for(let row = rowNum - 2; row > 0; --row) {
+                        // empty string returned indicates no pieces in the board position
+                        if(this.getColorAtBoardPosition(row, columnChar) === '') {
+                            positionsFound.add(columnChar + row.toString());
+                            break;
+                        }
+                    }
+                }
+
                 if(columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
                     // go ahead and search up and left diagonally if we are at least as far right as the 'c' column
-    
+                    if(this.getColorAtBoardPosition(rowNum - 1, this.subtractColumnChar(columnChar)) === oppositeColor) {
+                        let curColumnChar:string = this.subtractColumnChar(columnChar);
+                        for(let row = rowNum - 2; row > 0 && curColumnChar !== ''; --row) {
+                            if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
+                                positionsFound.add(curColumnChar + row.toString());
+                                break;
+                            }
+                            curColumnChar = this.subtractColumnChar(curColumnChar);
+                        }
+                    }
                 }
     
                 if(columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
                     // go ahead and search up and right diagonally if we are at least as far left as the 'f' column
+                    if(this.getColorAtBoardPosition(rowNum - 1, this.addColumnChar(columnChar)) === oppositeColor) {
+                        let curColumnChar:string = this.addColumnChar(columnChar);
+                        for(let row = rowNum - 2; row > 0 && curColumnChar !== ''; --row) {
+                            if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
+                                positionsFound.add(curColumnChar + row.toString());
+                                break;
+                            }
+                            curColumnChar = this.addColumnChar(curColumnChar);
+                        }
+                    }
                 }
 
             }
@@ -55,6 +121,16 @@ export class MoveUtils {
             // have enough room to play on a position below it. Also only search down to the left
             // or down to the right if this "row 1-6" condition is met.
             if(rowNum < constants.MAX_ROW_NUM - 1) {
+
+                if(this.getColorAtBoardPosition(rowNum + 1, columnChar) === oppositeColor) {
+                    for(let row = rowNum + 2; row < 9; ++row) {
+                        // empty string returned indicates no pieces in the board position
+                        if(this.getColorAtBoardPosition(row, columnChar) === '') {
+                            positionsFound.add(columnChar + row.toString());
+                            break;
+                        }
+                    }
+                }
 
                 if(columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
                     // go ahead and search down and left diagonally
@@ -112,13 +188,13 @@ export class MoveUtils {
         // to the right if this condition is met
         if(rowNum > constants.MIN_ROW_NUM + 1) {
             // If there is a piece above the one played and it's the opposite color...
-            if(MoveUtils.getColorAtBoardPosition(rowNum - 1, columnChar) === oppositeColorOfPiecePlayed) {
+            if(this.getColorAtBoardPosition(rowNum - 1, columnChar) === oppositeColorOfPiecePlayed) {
                 // add it to potential flips and...
                 potentialFlips.push(columnChar + (rowNum - 1).toString());
                 // then start a loop that keeps going up the current column and...
                 for(let row = rowNum - 2; row > 0; --row) {
                     // as long as the board position contains the opposite color...
-                    if(MoveUtils.getColorAtBoardPosition(row, columnChar) === oppositeColorOfPiecePlayed) {
+                    if(this.getColorAtBoardPosition(row, columnChar) === oppositeColorOfPiecePlayed) {
                         // add that board position to potential flips.
                         potentialFlips.push(columnChar + (row).toString());
                     }
@@ -126,7 +202,7 @@ export class MoveUtils {
                     // the piece played, we know we need to add all the pieces we've been tracking in
                     // the potential flips to 'positionsToFlip' array, clear out the potential flips array,
                     // and exit the for loop we're in.
-                    if(MoveUtils.getColorAtBoardPosition(row, columnChar) === colorOfPiecePlayed) {
+                    if(this.getColorAtBoardPosition(row, columnChar) === colorOfPiecePlayed) {
                         positionsToFlip.push(...potentialFlips);
                         potentialFlips = [];
                         break;

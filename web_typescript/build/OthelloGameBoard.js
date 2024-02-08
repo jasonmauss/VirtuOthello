@@ -16,9 +16,11 @@ export class OthelloGameBoard {
             OthelloUtils.consoleLog('hiding playable indicators');
             // only get children that have a class name applied to them since those are
             // the only ones we need to clear
-            const boardElements = OthelloUtils.boardPositionsByClassNames(constants.CSS_CLASS_NAME_PLAYABLE);
+            const boardElements = OthelloUtils.boardPositionsByClassNames('.' + constants.CSS_CLASS_NAME_PLAYABLE_BLACK + ',.' +
+                constants.CSS_CLASS_NAME_PLAYABLE_WHITE);
             for (let divElement of boardElements) {
-                divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE);
+                divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE_BLACK);
+                divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE_WHITE);
             }
         };
         /**
@@ -35,7 +37,7 @@ export class OthelloGameBoard {
             // by an empty board position.
             const playableBoardPositions = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
             for (const position of playableBoardPositions) {
-                document.getElementById(position)?.classList.add(constants.CSS_CLASS_NAME_PLAYABLE);
+                document.getElementById(position)?.classList.add(constants.CSS_CLASS_NAME_PLAYABLE + forWhichColorPlayer);
             }
         };
         /**
@@ -59,6 +61,7 @@ export class OthelloGameBoard {
      *
      */
     initializeNewGame() {
+        this.hidePlayableIndicators();
         OthelloUtils.consoleLog('initializing new game, placing initial 4 pieces.');
         const blackElementOne = document.getElementById('e4')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
         const blackElementTwo = document.getElementById('d5')?.classList.add(constants.CSS_CLASS_NAME_BLACK);
@@ -105,7 +108,8 @@ export class OthelloGameBoard {
         for (let divElement of boardElements) {
             divElement.classList.remove(constants.CSS_CLASS_NAME_WHITE);
             divElement.classList.remove(constants.CSS_CLASS_NAME_BLACK);
-            divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE);
+            divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE_BLACK);
+            divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE_WHITE);
             divElement.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
         }
     }
