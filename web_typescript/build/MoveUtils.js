@@ -85,7 +85,7 @@ MoveUtils.getPositionsForPlayableIndicators = (forWhichColorPlayer) => {
             if (_a.getColorAtBoardPosition(rowNum - 1, columnChar) === oppositeColor) {
                 // start searching until you find an empty board position
                 for (let row = rowNum - 2; row > 0; --row) {
-                    // empty string returned indicates no pieces in the board position
+                    // empty string returned indicates no piece in the board position
                     if (_a.getColorAtBoardPosition(row, columnChar) === '') {
                         positionsFound.add(columnChar + row.toString());
                         break;
@@ -97,11 +97,11 @@ MoveUtils.getPositionsForPlayableIndicators = (forWhichColorPlayer) => {
                 if (_a.getColorAtBoardPosition(rowNum - 1, _a.subtractColumnChar(columnChar)) === oppositeColor) {
                     let curColumnChar = _a.subtractColumnChar(columnChar);
                     for (let row = rowNum - 2; row > 0 && curColumnChar !== ''; --row) {
+                        curColumnChar = _a.subtractColumnChar(curColumnChar);
                         if (_a.getColorAtBoardPosition(row, curColumnChar) === '') {
                             positionsFound.add(curColumnChar + row.toString());
                             break;
                         }
-                        curColumnChar = _a.subtractColumnChar(curColumnChar);
                     }
                 }
             }
@@ -110,11 +110,11 @@ MoveUtils.getPositionsForPlayableIndicators = (forWhichColorPlayer) => {
                 if (_a.getColorAtBoardPosition(rowNum - 1, _a.addColumnChar(columnChar)) === oppositeColor) {
                     let curColumnChar = _a.addColumnChar(columnChar);
                     for (let row = rowNum - 2; row > 0 && curColumnChar !== ''; --row) {
+                        curColumnChar = _a.addColumnChar(curColumnChar);
                         if (_a.getColorAtBoardPosition(row, curColumnChar) === '') {
                             positionsFound.add(curColumnChar + row.toString());
                             break;
                         }
-                        curColumnChar = _a.addColumnChar(curColumnChar);
                     }
                 }
             }
@@ -135,20 +135,60 @@ MoveUtils.getPositionsForPlayableIndicators = (forWhichColorPlayer) => {
             }
             if (columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
                 // go ahead and search down and left diagonally
+                if (_a.getColorAtBoardPosition(rowNum + 1, _a.subtractColumnChar(columnChar)) === oppositeColor) {
+                    let curColumnChar = _a.subtractColumnChar(columnChar);
+                    for (let row = rowNum + 2; row < 9 && curColumnChar !== ''; ++row) {
+                        curColumnChar = _a.subtractColumnChar(curColumnChar);
+                        if (_a.getColorAtBoardPosition(row, curColumnChar) === '') {
+                            positionsFound.add(curColumnChar + row.toString());
+                            break;
+                        }
+                    }
+                }
             }
             if (columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
                 // go ahead and search down and right diagonally 
+                if (_a.getColorAtBoardPosition(rowNum + 1, _a.addColumnChar(columnChar)) === oppositeColor) {
+                    let curColumnChar = _a.addColumnChar(columnChar);
+                    for (let row = rowNum + 2; row < 9 && curColumnChar !== ''; ++row) {
+                        curColumnChar = _a.addColumnChar(curColumnChar);
+                        if (_a.getColorAtBoardPosition(row, curColumnChar) === '') {
+                            positionsFound.add(curColumnChar + row.toString());
+                            break;
+                        }
+                    }
+                }
             }
         }
         // search to the left in the current row if the piece is
         // on column c or greater because a piece on column
         // B or column A doesn't have enough room to play to the left of it.
         if (columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
+            if (_a.getColorAtBoardPosition(rowNum, _a.subtractColumnChar(columnChar)) === oppositeColor) {
+                // start searching to the left until you find an empty board position
+                for (let curColumnChar = _a.subtractColumnChar(_a.subtractColumnChar(columnChar)); curColumnChar !== ''; curColumnChar = _a.subtractColumnChar(curColumnChar)) {
+                    // empty string returned indicates no piece in the board position
+                    if (_a.getColorAtBoardPosition(rowNum, curColumnChar) === '') {
+                        positionsFound.add(curColumnChar + rowNum.toString());
+                        break;
+                    }
+                }
+            }
         }
         // search to the right in the current row if the piece
         // is on columns a through f because a move played on column
         // G or column H doesn't have enough room to play to the right of it.
         if (columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
+            if (_a.getColorAtBoardPosition(rowNum, _a.addColumnChar(columnChar)) === oppositeColor) {
+                // start searching to the right until you find an empty board position
+                for (let curColumnChar = _a.addColumnChar(_a.addColumnChar(columnChar)); curColumnChar !== ''; curColumnChar = _a.addColumnChar(curColumnChar)) {
+                    // empty string returned indicates no piece in the board position
+                    if (_a.getColorAtBoardPosition(rowNum, curColumnChar) === '') {
+                        positionsFound.add(curColumnChar + rowNum.toString());
+                        break;
+                    }
+                }
+            }
         }
     }
     return Array.from(positionsFound);
