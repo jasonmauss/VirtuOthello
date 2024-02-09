@@ -83,6 +83,11 @@ export class MoveUtils {
                             positionsFound.add(columnChar + row.toString());
                             break;
                         }
+                        // if we end up finding the same color again before finding an empty
+                        // board position then exit the loop
+                        if(this.getColorAtBoardPosition(row, columnChar) === forWhichColorPlayer) {
+                            break;
+                        }
                     }
                 }
 
@@ -94,6 +99,11 @@ export class MoveUtils {
                             curColumnChar = this.subtractColumnChar(curColumnChar);
                             if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
                                 positionsFound.add(curColumnChar + row.toString());
+                                break;
+                            }
+                            // if we end up finding the same color again before finding an empty
+                            // board position then exit the loop
+                            if(this.getColorAtBoardPosition(row, curColumnChar) === forWhichColorPlayer) {
                                 break;
                             }
                         }
@@ -108,6 +118,11 @@ export class MoveUtils {
                             curColumnChar = this.addColumnChar(curColumnChar);
                             if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
                                 positionsFound.add(curColumnChar + row.toString());
+                                break;
+                            }
+                            // if we end up finding the same color again before finding an empty
+                            // board position then exit the loop
+                            if(this.getColorAtBoardPosition(row, curColumnChar) === forWhichColorPlayer) {
                                 break;
                             }
                         }
@@ -129,6 +144,11 @@ export class MoveUtils {
                             positionsFound.add(columnChar + row.toString());
                             break;
                         }
+                        // if we end up finding the same color again before finding an empty
+                        // board position then exit the loop
+                        if(this.getColorAtBoardPosition(row, columnChar) === forWhichColorPlayer) {
+                            break;
+                        }
                     }
                 }
 
@@ -140,6 +160,11 @@ export class MoveUtils {
                             curColumnChar = this.subtractColumnChar(curColumnChar);
                             if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
                                 positionsFound.add(curColumnChar + row.toString());
+                                break;
+                            }
+                            // if we end up finding the same color again before finding an empty
+                            // board position then exit the loop
+                            if(this.getColorAtBoardPosition(row, curColumnChar) === forWhichColorPlayer) {
                                 break;
                             }
                         }
@@ -154,6 +179,11 @@ export class MoveUtils {
                             curColumnChar = this.addColumnChar(curColumnChar);
                             if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
                                 positionsFound.add(curColumnChar + row.toString());
+                                break;
+                            }
+                            // if we end up finding the same color again before finding an empty
+                            // board position then exit the loop
+                            if(this.getColorAtBoardPosition(row, curColumnChar) === forWhichColorPlayer) {
                                 break;
                             }
                         }
@@ -174,6 +204,11 @@ export class MoveUtils {
                             positionsFound.add(curColumnChar + rowNum.toString());
                             break;
                         }
+                        // if we end up finding the same color again before finding an empty
+                        // board position then exit the loop
+                        if(this.getColorAtBoardPosition(rowNum, curColumnChar) === forWhichColorPlayer) {
+                            break;
+                        }
                     }
                 }
             }
@@ -188,6 +223,11 @@ export class MoveUtils {
                         // empty string returned indicates no piece in the board position
                         if(this.getColorAtBoardPosition(rowNum, curColumnChar) === '') {
                             positionsFound.add(curColumnChar + rowNum.toString());
+                            break;
+                        }
+                        // if we end up finding the same color again before finding an empty
+                        // board position then exit the loop
+                        if(this.getColorAtBoardPosition(rowNum, curColumnChar) === forWhichColorPlayer) {
                             break;
                         }
                     }
@@ -246,20 +286,34 @@ export class MoveUtils {
                         potentialFlips = [];
                         break;
                     }
+                    // If there was a piece above the one played that was opposite color, but then we encountered an empty position
+                    // clear potential flips and exit the for loop we're in
+                    if(this.getColorAtBoardPosition(row, columnChar) === '') {
+                        potentialFlips = [];
+                        break;
+                    }
                 }
             }
 
             if(columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
                 // go ahead and search up and left diagonally if we are at least as far right as the 'c' column
                 if(this.getColorAtBoardPosition(rowNum - 1, this.subtractColumnChar(columnChar)) === oppositeColorOfPiecePlayed) {
+                    // add it to potential flips and...
+                    potentialFlips.push(this.subtractColumnChar(columnChar) + (rowNum - 1).toString());
                     let curColumnChar:string = this.subtractColumnChar(columnChar);
                     for(let row = rowNum - 2; row > 0 && curColumnChar !== ''; --row) {
                         curColumnChar = this.subtractColumnChar(curColumnChar);
                         if(this.getColorAtBoardPosition(row, curColumnChar) === oppositeColorOfPiecePlayed) {
                             potentialFlips.push(curColumnChar + row.toString());
                         }
-                        if(this.getColorAtBoardPosition(row,curColumnChar) === colorOfPiecePlayed) {
+                        if(this.getColorAtBoardPosition(row, curColumnChar) === colorOfPiecePlayed) {
                             positionsToFlip.push(...potentialFlips);
+                            potentialFlips = [];
+                            break;
+                        }
+                        // If there was a piece above and to the left of the one played that was opposite color, but 
+                        // then we encountered an empty position, just clear potential flips and exit the for loop we're in
+                        if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
                             potentialFlips = [];
                             break;
                         }
@@ -270,14 +324,22 @@ export class MoveUtils {
             if(columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
                 // go ahead and search up and right diagonally if we are at least as far left as the 'f' column
                 if(this.getColorAtBoardPosition(rowNum - 1, this.addColumnChar(columnChar)) === oppositeColorOfPiecePlayed) {
+                    // add it to potential flips and...
+                    potentialFlips.push(this.addColumnChar(columnChar) + (rowNum - 1).toString());
                     let curColumnChar:string = this.addColumnChar(columnChar);
                     for(let row = rowNum - 2; row > 0 && curColumnChar !== ''; --row) {
                         curColumnChar = this.addColumnChar(curColumnChar);
                         if(this.getColorAtBoardPosition(row, curColumnChar) === oppositeColorOfPiecePlayed) {
                             potentialFlips.push(curColumnChar + row.toString());
                         }
-                        if(this.getColorAtBoardPosition(row,curColumnChar) === colorOfPiecePlayed) {
+                        if(this.getColorAtBoardPosition(row, curColumnChar) === colorOfPiecePlayed) {
                             positionsToFlip.push(...potentialFlips);
+                            potentialFlips = [];
+                            break;
+                        }
+                        // If there was a piece above and to the right of the one played that was opposite color, but 
+                        // then we encountered an empty position, just clear potential flips and exit the for loop we're in
+                        if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
                             potentialFlips = [];
                             break;
                         }
@@ -311,20 +373,34 @@ export class MoveUtils {
                         potentialFlips = [];
                         break;
                     }
+                    // If there was a piece below the one played that was opposite color, but 
+                    // then we encountered an empty position, just clear potential flips and exit the for loop we're in
+                    if(this.getColorAtBoardPosition(row, columnChar) === '') {
+                        potentialFlips = [];
+                        break;
+                    }
                 }
             }
 
             if(columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
                 // go ahead and search down and left diagonally
                 if(this.getColorAtBoardPosition(rowNum + 1, this.subtractColumnChar(columnChar)) === oppositeColorOfPiecePlayed) {
+                    // add it to potential flips
+                    potentialFlips.push(this.subtractColumnChar(columnChar) + (rowNum + 1).toString());
                     let curColumnChar:string = this.subtractColumnChar(columnChar);
                     for(let row = rowNum + 2; row < 9 && curColumnChar !== ''; ++row) {
                         curColumnChar = this.subtractColumnChar(curColumnChar);
                         if(this.getColorAtBoardPosition(row, curColumnChar) === oppositeColorOfPiecePlayed) {
                             potentialFlips.push(curColumnChar + row.toString());
                         }
-                        if(this.getColorAtBoardPosition(row,curColumnChar) === colorOfPiecePlayed) {
+                        if(this.getColorAtBoardPosition(row, curColumnChar) === colorOfPiecePlayed) {
                             positionsToFlip.push(...potentialFlips);
+                            potentialFlips = [];
+                            break;
+                        }
+                        // If there was a piece below and to the left of the one played that was opposite color, but 
+                        // then we encountered an empty position in the next diagonol position, just clear potential flips and exit the for loop we're in
+                        if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
                             potentialFlips = [];
                             break;
                         }
@@ -335,14 +411,22 @@ export class MoveUtils {
             if(columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
                 // go ahead and search down and right diagonally 
                 if(this.getColorAtBoardPosition(rowNum + 1, this.addColumnChar(columnChar)) === oppositeColorOfPiecePlayed) {
+                    // add it to potential flips
+                    potentialFlips.push(this.addColumnChar(columnChar) + (rowNum + 1).toString());
                     let curColumnChar:string = this.addColumnChar(columnChar);
                     for(let row = rowNum + 2; row < 9 && curColumnChar !== ''; ++row) {
                         curColumnChar = this.addColumnChar(curColumnChar);
                         if(this.getColorAtBoardPosition(row, curColumnChar) === oppositeColorOfPiecePlayed) {
                             potentialFlips.push(curColumnChar + row.toString());
                         }
-                        if(this.getColorAtBoardPosition(row,curColumnChar) === colorOfPiecePlayed) {
+                        if(this.getColorAtBoardPosition(row, curColumnChar) === colorOfPiecePlayed) {
                             positionsToFlip.push(...potentialFlips);
+                            potentialFlips = [];
+                            break;
+                        }
+                        // If there was a piece below and to the right of the one played that was opposite color, but 
+                        // then we encountered an empty position in the next diagonol position, just clear potential flips and exit the for loop we're in
+                        if(this.getColorAtBoardPosition(row, curColumnChar) === '') {
                             potentialFlips = [];
                             break;
                         }
@@ -356,7 +440,25 @@ export class MoveUtils {
         // B can't flip any pieces to the left of it.
         if(columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
             if(this.getColorAtBoardPosition(rowNum, this.subtractColumnChar(columnChar)) === oppositeColorOfPiecePlayed) {
-
+                // add it to potential flips
+                potentialFlips.push(this.subtractColumnChar(columnChar) + rowNum.toString());
+                // start searching to the left until you find the same color as the piece played (or run out of places)
+                for(let curColumnChar = this.subtractColumnChar(this.subtractColumnChar(columnChar)); curColumnChar !== ''; curColumnChar = this.subtractColumnChar(curColumnChar)) {
+                    if(this.getColorAtBoardPosition(rowNum, curColumnChar) === oppositeColorOfPiecePlayed) {
+                        potentialFlips.push(curColumnChar + rowNum.toString());
+                    }
+                    if(this.getColorAtBoardPosition(rowNum, curColumnChar) === colorOfPiecePlayed) {
+                        positionsToFlip.push(...potentialFlips);
+                        potentialFlips = [];
+                        break;
+                    }
+                    // If there was a piece to the left of the one played that was opposite color, but 
+                    // then we encountered an empty position in the next left position, just clear potential flips and exit the for loop we're in
+                    if(this.getColorAtBoardPosition(rowNum, curColumnChar) === '') {
+                        potentialFlips = [];
+                        break;
+                    }
+                }
             }
         }
 
@@ -365,7 +467,25 @@ export class MoveUtils {
         // G can't flip any pieces to the right of it.
         if(columnCharAsNum < constants.MAX_COLUMN_CHAR_AS_NUM - 1) {
             if(this.getColorAtBoardPosition(rowNum, this.addColumnChar(columnChar)) === oppositeColorOfPiecePlayed) {
-                
+                // add it to potential flips
+                potentialFlips.push(this.addColumnChar(columnChar) + rowNum.toString());
+                // start searching to the right until you find the same color as the piece played (or run out of places)
+                for(let curColumnChar = this.addColumnChar(this.addColumnChar(columnChar)); curColumnChar !== ''; curColumnChar = this.addColumnChar(curColumnChar)) {
+                    if(this.getColorAtBoardPosition(rowNum, curColumnChar) === oppositeColorOfPiecePlayed) {
+                        potentialFlips.push(curColumnChar + rowNum.toString());
+                    }
+                    if(this.getColorAtBoardPosition(rowNum, curColumnChar) === colorOfPiecePlayed) {
+                        positionsToFlip.push(...potentialFlips);
+                        potentialFlips = [];
+                        break;
+                    }
+                    // If there was a piece to the right of the one played that was opposite color, but 
+                    // then we encountered an empty position in the next left position, just clear potential flips and exit the for loop we're in
+                    if(this.getColorAtBoardPosition(rowNum, curColumnChar) === '') {
+                        potentialFlips = [];
+                        break;
+                    }
+                }
             }
         }
 
