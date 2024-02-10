@@ -101,7 +101,13 @@ const boardPositionDivElementClickHandler = (event) => {
     // immediately if that's the case. 
     if (_othelloGame.moveIsInProgress)
         return;
-    const boardPositionClicked = (event?.target).id;
+    // if the element doesn't have either a "playable-black" or "playable-white"
+    // class applied, it's not a valid move, so exit.
+    const elementClicked = event?.target;
+    if (!elementClicked.classList.contains(constants.CSS_CLASS_NAME_PLAYABLE_BLACK) &&
+        !elementClicked.classList.contains(constants.CSS_CLASS_NAME_PLAYABLE_WHITE))
+        return;
+    const boardPositionClicked = elementClicked.id;
     // Stop propagation since we don't care to handle the click event of any parent elements
     event.stopPropagation();
     OthelloUtils.consoleLog(event.target);
