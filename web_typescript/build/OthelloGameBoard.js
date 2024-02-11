@@ -9,6 +9,29 @@ export class OthelloGameBoard {
     constructor() {
         /**
          * @remarks
+         * Adds a move to the moves log for the game
+         *
+         * @param movePlayed instance of an OthelloGameMovePlayed class that defines
+         * the type of move played.
+         *
+         */
+        this.AddMoveToLog = (movePlayed, piecesFlipped) => {
+            OthelloUtils.consoleLog('Adding move to log');
+            const playerColor = movePlayed.moveType === moveType.BlackPiece ? 'Black' : 'White';
+            let optionText = `${playerColor} played at position ${movePlayed.position.toUpperCase()}`;
+            if (piecesFlipped.length > 0)
+                optionText += ` - ${piecesFlipped.length} piece(s) flipped`;
+            const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
+            const moveNumber = movesListSelectElement.options.length + 1;
+            const moveOptionElement = new Option();
+            moveOptionElement.text = `Move ${moveNumber}: ${optionText}`;
+            moveOptionElement.value = `${moveNumber}|${playerColor}|${movePlayed.position}|${piecesFlipped.length}|${piecesFlipped.toString()}`;
+            movesListSelectElement.options.add(moveOptionElement);
+            document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED).innerText =
+                `${moveNumber} ${moveNumber > 1 ? 'moves' : 'move'} played`;
+        };
+        /**
+         * @remarks
          * This methods hides any playable indicators that might be present
          * on the board from previous moves played
          */
@@ -112,29 +135,6 @@ export class OthelloGameBoard {
             divElement.classList.remove(constants.CSS_CLASS_NAME_PLAYABLE_WHITE);
             divElement.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
         }
-    }
-    /**
-     * @remarks
-     * Adds a move to the moves log for the game
-     *
-     * @param movePlayed instance of an OthelloGameMovePlayed class that defines
-     * the type of move played.
-     *
-     */
-    AddMoveToLog(movePlayed, piecesFlipped = 0) {
-        OthelloUtils.consoleLog('Adding move to log');
-        const playerColor = movePlayed.moveType === moveType.BlackPiece ? 'Black' : 'White';
-        let optionText = `${playerColor} played at position ${movePlayed.position.toUpperCase()}`;
-        if (piecesFlipped > 0)
-            optionText += ` - ${piecesFlipped} piece(s) flipped`;
-        const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
-        const moveNumber = movesListSelectElement.options.length + 1;
-        const moveOptionElement = new Option();
-        moveOptionElement.text = `Move ${moveNumber}: ${optionText}`;
-        moveOptionElement.value = `${moveNumber}|${playerColor}|${movePlayed.position}`;
-        movesListSelectElement.options.add(moveOptionElement);
-        document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED).innerText =
-            `${moveNumber} ${moveNumber > 1 ? 'moves' : 'move'} played`;
     }
 }
 //# sourceMappingURL=OthelloGameBoard.js.map
