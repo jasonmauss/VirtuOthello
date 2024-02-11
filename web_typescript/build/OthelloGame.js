@@ -87,7 +87,7 @@ export class OthelloGame {
                 document.getElementById(position)?.classList.remove(colorToRemove);
                 document.getElementById(position)?.classList.add(colorOfPiecePlayed);
             }
-            return positionsToFlip.length;
+            return positionsToFlip;
         };
         /**
          *  @remarks

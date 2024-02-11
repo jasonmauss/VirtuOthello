@@ -117,7 +117,7 @@ export class OthelloGame {
      * on the board - up/down/left/right and their 4 diagonol equivalents.
      * @param movePlayedBoardPosition The board position where the move was played e.g. "e6"
      */
-    flipApplicablePiecesAfterMove = (movePlayedBoardPosition:string, colorOfPiecePlayed:string): number => {
+    flipApplicablePiecesAfterMove = (movePlayedBoardPosition:string, colorOfPiecePlayed:string): string[] => {
 
         OthelloUtils.consoleLog('flipping applicable pieces after move.');
 
@@ -130,7 +130,7 @@ export class OthelloGame {
             document.getElementById(position)?.classList.add(colorOfPiecePlayed);
         }
 
-        return positionsToFlip.length;
+        return positionsToFlip;
     }
 
     /**

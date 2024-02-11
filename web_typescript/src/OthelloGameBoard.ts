@@ -94,16 +94,16 @@ export class OthelloGameBoard {
      * the type of move played.
      * 
      */
-    AddMoveToLog(movePlayed: OthelloGameMovePlayed, piecesFlipped:number = 0) {
+    AddMoveToLog = (movePlayed: OthelloGameMovePlayed, piecesFlipped:string[]):void => {
         OthelloUtils.consoleLog('Adding move to log');
         const playerColor:string = movePlayed.moveType === moveType.BlackPiece ? 'Black' : 'White';
         let optionText:string = `${playerColor} played at position ${movePlayed.position.toUpperCase()}`;
-        if(piecesFlipped > 0) optionText += ` - ${piecesFlipped} piece(s) flipped`;
+        if(piecesFlipped.length > 0) optionText += ` - ${piecesFlipped.length} piece(s) flipped`;
         const movesListSelectElement: HTMLSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
         const moveNumber:number = movesListSelectElement.options.length + 1;
         const moveOptionElement: HTMLOptionElement = new Option();
         moveOptionElement.text = `Move ${moveNumber}: ${optionText}`;
-        moveOptionElement.value = `${moveNumber}|${playerColor}|${movePlayed.position}`;
+        moveOptionElement.value = `${moveNumber}|${playerColor}|${movePlayed.position}|${piecesFlipped.length}|${piecesFlipped.toString()}`;
         movesListSelectElement.options.add(moveOptionElement);
         (document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED) as HTMLSpanElement).innerText = 
             `${moveNumber} ${moveNumber > 1 ? 'moves' : 'move'} played`;
