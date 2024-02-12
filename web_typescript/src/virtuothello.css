@@ -104,6 +104,33 @@ body.dark-mode .moves-container select {
     cursor: pointer;
 }
 
+.new-game-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1em;
+    border-bottom: solid 2px #CCC;
+    padding-bottom: 10px;
+}
+
+.moves-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#moves-played-container{
+
+}
+
+#btnToggleMoveLogVisibility{
+    line-height: 32px;
+    font-size: 1.1em;
+    margin-right: 5px;
+    float: right;
+}
+
 #moves-select {
     width:100%;
     display:block;
