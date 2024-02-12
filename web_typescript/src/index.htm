@@ -117,15 +117,13 @@
             </div>
             <div>
                 <div class="tools-container">
-                    <label>New Game</label>
-                    <button id="btnNewGameHumanVsHuman" class="tools-btn">Human vs Human</button>
-                    <button id="btnNewGameAsBlack" class="tools-btn">You as Black</button>
-                    <button id="btnNewGameAsWhite" class="tools-btn">You as White</button>
-                    <button id="btnNewGameSelfPlay" class="tools-btn">Selfplay</button>
-                    <br /><hr>
-                    <input type="checkbox" id="chkShowMoveLog" checked="checked" />
-                    <span>Show Move Log</span>
-
+                    <div class="new-game-buttons">
+                        <label>New Game</label>
+                        <button id="btnNewGameHumanVsHuman" class="tools-btn">Human vs Human</button>
+                        <button id="btnNewGameAsBlack" class="tools-btn">You as Black</button>
+                        <button id="btnNewGameAsWhite" class="tools-btn">You as White</button>
+                        <button id="btnNewGameSelfPlay" class="tools-btn">Selfplay</button>
+                    </div>
                     <div class="game-score-container">
                         <span>Score is</span>
                         <span class="piece-count-text" id="black-piece-count">Black : 2</span>
@@ -133,12 +131,20 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div class="moves-container">
-                    <span id="moves-played-text">Moves played</span><span> (click to highlight move, double-click to rollback to)</span>
-                    <select id="moves-select" class="moves-list" multiple="multiple" size="5">
-                        
-                    </select>
+            <div class="moves-container">
+                <div>
+                    <div id="moves-played-container">
+                        <span id="moves-played-text">Moves played</span>
+                        <span> (click to highlight move, double-click to rollback to)</span>
+                        <button id="btnToggleMoveLogVisibility">Hide</button>
+                    </div>
+                </div>
+                <div>
+                    <div id="moves-select-container">
+                        <select id="moves-select" class="moves-list" multiple="multiple" size="5">
+                            
+                        </select>
+                    </div>  
                 </div>
             </div>
         </div>

@@ -121,15 +121,18 @@ const boardPositionDivElementClickHandler = (event) => {
  * The click handler method for the "Show Move Log" UI checkbox
  * @param event the click event of the checkbox
  */
-const showMoveLogCheckboxClickHandler = (event) => {
-    const checkbox = event.target;
-    const checkboxIsChecked = checkbox.checked;
-    const moveListContainer = document.getElementsByClassName(constants.CSS_CLASS_NAME_MOVES_CONTAINER)[0];
-    if (checkboxIsChecked) {
-        moveListContainer.style.display = 'block';
+const toggleMoveLogVisibilityClickHandler = (event) => {
+    const toggleVisibilityButton = event.target;
+    console.log(toggleVisibilityButton.innerText);
+    const movesListIsVisible = toggleVisibilityButton.innerText === 'Hide';
+    const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
+    if (movesListIsVisible) {
+        movesListSelectElement.style.display = 'none';
+        toggleVisibilityButton.innerText = 'Show';
     }
     else {
-        moveListContainer.style.display = 'none';
+        movesListSelectElement.style.display = 'block';
+        toggleVisibilityButton.innerText = 'Hide';
     }
 };
 /**
@@ -145,6 +148,6 @@ const spButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_SPL);
 spButton?.addEventListener('click', newGameSelfPlayClickHandler);
 const gameBoard = document.getElementById(constants.CSS_CLASS_NAME_BOARD);
 gameBoard?.addEventListener('click', boardPositionDivElementClickHandler);
-const showMoveLogCheckbox = document.getElementById(constants.CSS_ELEMENT_ID_SHOW_MOVES_CHK);
-showMoveLogCheckbox?.addEventListener('click', showMoveLogCheckboxClickHandler);
+const toggleMoveLogVisibility = document.getElementById(constants.CSS_ELEMENT_ID_TOGGLE_MOVE_LOG);
+toggleMoveLogVisibility?.addEventListener('click', toggleMoveLogVisibilityClickHandler);
 //# sourceMappingURL=index.js.map
