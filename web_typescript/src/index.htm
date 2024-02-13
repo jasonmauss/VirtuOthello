@@ -119,13 +119,12 @@
                 <div class="tools-container">
                     <div class="new-game-buttons">
                         <label>New Game</label>
-                        <button id="btnNewGameHumanVsHuman" class="tools-btn">Human vs Human</button>
-                        <button id="btnNewGameAsBlack" class="tools-btn">You as Black</button>
-                        <button id="btnNewGameAsWhite" class="tools-btn">You as White</button>
-                        <button id="btnNewGameSelfPlay" class="tools-btn">Selfplay</button>
+                        <button id="btnNewGameHumanVsHuman" class="tools-btn" title="Play a game against someone sitting next to you">Human vs Human</button>
+                        <button id="btnNewGameAsBlack" class="tools-btn" title="Place black pieces. You'll move first.">You as Black</button>
+                        <button id="btnNewGameAsWhite" class="tools-btn" title="Place white pieces. You'll move second.">You as White</button>
+                        <button id="btnNewGameSelfPlay" class="tools-btn" title="Watch the AI play against itself. This goes fast!">Selfplay</button>
                     </div>
                     <div class="game-score-container">
-                        <span>Score is</span>
                         <span class="piece-count-text" id="black-piece-count">Black : 2</span>
                         <span class="piece-count-text" id="white-piece-count">White : 2</span>
                     </div>
@@ -136,12 +135,12 @@
                     <div id="moves-played-container">
                         <span id="moves-played-text">Moves played</span>
                         <span> (click to highlight move, double-click to rollback to)</span>
-                        <button id="btnToggleMoveLogVisibility">Hide</button>
+                        <button id="btnToggleMoveLogVisibility" title="Click to toggle moves list">Hide</button>
                     </div>
                 </div>
                 <div>
                     <div id="moves-select-container">
-                        <select id="moves-select" class="moves-list" multiple="multiple" size="5">
+                        <select id="moves-select" class="moves-list" multiple="multiple" size="6">
                             
                         </select>
                     </div>  

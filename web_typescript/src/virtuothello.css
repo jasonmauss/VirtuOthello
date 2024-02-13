@@ -84,18 +84,16 @@ body.dark-mode .moves-container select {
     font-weight:bold;
 }
 
+.tools-container{
+    flex-direction: row;
+}
+
 .tools-container, .moves-container {
     margin: 15px 0px 15px 30px;
     border: solid black 1px;
     padding: 5px;
     line-height: 34px;
     font-size: 1.2em;
-}
-
-.tools-container input[type=checkbox] {
-    width:20px;
-    height:20px;
-    vertical-align: middle;
 }
 
 .tools-container button {
@@ -114,14 +112,15 @@ body.dark-mode .moves-container select {
 }
 
 .moves-container{
-    display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 100%;
 }
 
 #moves-played-container{
-
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0px 8px 5px;
 }
 
 #btnToggleMoveLogVisibility{
@@ -129,6 +128,7 @@ body.dark-mode .moves-container select {
     font-size: 1.1em;
     margin-right: 5px;
     float: right;
+    cursor: pointer;
 }
 
 #moves-select {
@@ -137,9 +137,10 @@ body.dark-mode .moves-container select {
 }
 
 .game-score-container{
-    display: inline;
-    float: right;
-    margin-right: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+    padding: 7px 5px 5px 5px;
 }
 
 .game-score-container span {
