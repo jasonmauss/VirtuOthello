@@ -8,7 +8,7 @@ import { MoveUtils } from "./MoveUtils.js";
 // the game and being able to determine certain attributes
 // needed to maintain the game board, etc.
 export class OthelloGame {
-    constructor(gameType) {
+    constructor(gameType, players) {
         /**
          * @remarks
          * clears the moves played in the game
@@ -122,6 +122,7 @@ export class OthelloGame {
         this.colorForCurrentMove = constants.CSS_CLASS_NAME_BLACK; // black always plays first no matter what
         this.gameIsInProgress = false; // initialize this to false so that whenever a new game begins it has the proper state/value
         this.moveIsInProgress = false; // initialize this to false since no new game would have a move in progress
+        this.players = players; // two players should be passed in here, no more and no less. The rest of the code will ignore more than a second player
     }
 }
 //# sourceMappingURL=OthelloGame.js.map

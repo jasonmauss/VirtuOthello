@@ -2,7 +2,8 @@ import { OthelloGame } from "./OthelloGame.js";
 import { gameType } from "./gameTypeEnum.js";
 import * as constants from "./constants.js";
 import { OthelloUtils } from "./OthellUtils.js";
-let _othelloGame = new OthelloGame(gameType.humanVsHuman);
+import { OthelloPlayer, playerColor, playerType } from "./OthelloPlayer.js";
+let _othelloGame = new OthelloGame(gameType.humanVsHuman, []);
 /**
  * @remarks
  * If the current game is in progress, or has ended,
@@ -52,7 +53,9 @@ const newSPLGame = () => {
  */
 const newGameHumanVsHumanClickHandler = (event) => {
     if (_othelloGame.gameIsInProgress && isEndingGameInProgressOk() || !_othelloGame.gameIsInProgress) {
-        _othelloGame = new OthelloGame(gameType.humanVsHuman);
+        let player1 = new OthelloPlayer(playerType.Human, playerColor.black);
+        let player2 = new OthelloPlayer(playerType.Human, playerColor.white);
+        _othelloGame = new OthelloGame(gameType.humanVsHuman, [player1, player2]);
         newHVHGame();
     }
 };
@@ -63,7 +66,9 @@ const newGameHumanVsHumanClickHandler = (event) => {
  */
 const newGameYouAsBlackClickHandler = (event) => {
     if (_othelloGame.gameIsInProgress && isEndingGameInProgressOk() || !_othelloGame.gameIsInProgress) {
-        _othelloGame = new OthelloGame(gameType.youAsBlack);
+        let player1 = new OthelloPlayer(playerType.Human, playerColor.black);
+        let player2 = new OthelloPlayer(playerType.AI, playerColor.white);
+        _othelloGame = new OthelloGame(gameType.youAsBlack, [player1, player2]);
         newYABGame();
     }
 };
@@ -74,7 +79,9 @@ const newGameYouAsBlackClickHandler = (event) => {
  */
 const newGameYouAsWhiteClickHandler = (event) => {
     if (_othelloGame.gameIsInProgress && isEndingGameInProgressOk() || !_othelloGame.gameIsInProgress) {
-        _othelloGame = new OthelloGame(gameType.youAsWhite);
+        let player1 = new OthelloPlayer(playerType.AI, playerColor.black);
+        let player2 = new OthelloPlayer(playerType.Human, playerColor.white);
+        _othelloGame = new OthelloGame(gameType.youAsWhite, [player1, player2]);
         newYAWGame();
     }
 };
@@ -85,7 +92,9 @@ const newGameYouAsWhiteClickHandler = (event) => {
  */
 const newGameSelfPlayClickHandler = (event) => {
     if (_othelloGame.gameIsInProgress && isEndingGameInProgressOk() || !_othelloGame.gameIsInProgress) {
-        _othelloGame = new OthelloGame(gameType.selfplay);
+        let player1 = new OthelloPlayer(playerType.AI, playerColor.black);
+        let player2 = new OthelloPlayer(playerType.AI, playerColor.white);
+        _othelloGame = new OthelloGame(gameType.selfplay, [player1, player2]);
         newSPLGame();
     }
 };
