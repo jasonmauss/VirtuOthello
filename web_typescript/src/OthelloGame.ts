@@ -4,6 +4,7 @@ import { OthelloGameMovePlayed, moveType } from "./OthelloGameMovePlayed.js";
 import * as constants from "./constants.js"
 import { OthelloUtils } from "./OthellUtils.js";
 import { MoveUtils } from "./MoveUtils.js";
+import { OthelloPlayer } from "./OthelloPlayer.js";
 
 // This class represents the othello game being played.
 // It contains properties and methods relevant to managing
@@ -17,14 +18,16 @@ export class OthelloGame {
     colorForCurrentMove: string;
     gameIsInProgress: boolean;
     moveIsInProgress: boolean;
+    players: OthelloPlayer[];
 
-    constructor (gameType:gameType) {
+    constructor (gameType:gameType, players: OthelloPlayer[]) {
         this.gameType = gameType;
         this.gameBoard = new OthelloGameBoard();
         this.movesPlayed = [];
         this.colorForCurrentMove = constants.CSS_CLASS_NAME_BLACK; // black always plays first no matter what
         this.gameIsInProgress = false; // initialize this to false so that whenever a new game begins it has the proper state/value
         this.moveIsInProgress = false; // initialize this to false since no new game would have a move in progress
+        this.players = players; // two players should be passed in here, no more and no less. The rest of the code will ignore more than a second player
     }
 
 
