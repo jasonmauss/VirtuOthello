@@ -148,7 +148,7 @@ body.dark-mode .moves-container select {
 }
 
 #black-piece-count {
-    border:solid 1px #000000;
+    border:solid 2px #000000;
     background-color:#000000;
     color:#FFFFFF;
     line-height: 32px;
@@ -157,12 +157,17 @@ body.dark-mode .moves-container select {
 }
 
 #white-piece-count {
-    border:solid 1px #FFFFFF;
+    border:solid 2px #FFFFFF;
     background-color:#FFFFFF;
     color:#000000;
     line-height: 32px;
     vertical-align: middle;
     padding:5px;
+}
+
+#black-piece-count.is-their-turn,
+#white-piece-count.is-their-turn {
+    border:solid 2px red;
 }
 
 .board {

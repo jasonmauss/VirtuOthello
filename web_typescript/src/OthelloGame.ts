@@ -4,7 +4,7 @@ import { OthelloGameMovePlayed, moveType } from "./OthelloGameMovePlayed.js";
 import * as constants from "./constants.js"
 import { OthelloUtils } from "./OthellUtils.js";
 import { MoveUtils } from "./MoveUtils.js";
-import { OthelloPlayer } from "./OthelloPlayer.js";
+import { OthelloPlayer, playerColor } from "./OthelloPlayer.js";
 
 // This class represents the othello game being played.
 // It contains properties and methods relevant to managing
@@ -162,7 +162,20 @@ export class OthelloGame {
     updateGameScore = (): void => {
         const blackPieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
         const whitePieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_WHITE).length;
-        (document.getElementById(constants.CSS_CLASS_BLACK_PIECE_COUNT)as HTMLSpanElement).innerText = 'Black : ' + blackPieceCount.toString();
-        (document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)as HTMLSpanElement).innerText = 'White : ' + whitePieceCount.toString();
+        let playerBlack:OthelloPlayer = this.players.filter(x => x.playerColor === playerColor.black)[0];
+        let playerWhite:OthelloPlayer = this.players.filter(x => x.playerColor === playerColor.white)[0];
+        
+        (document.getElementById(constants.CSS_CLASS_BLACK_PIECE_COUNT)as HTMLSpanElement).innerText = 
+            `Black (${playerBlack.playerName}) : ${blackPieceCount.toString()}`;
+        (document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)as HTMLSpanElement).innerText =
+            `White (${playerWhite.playerName}) : ${whitePieceCount.toString()}`;
+
+        if(this.getColorOfCurrentMove() === constants.CSS_CLASS_NAME_BLACK) {
+            document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)?.classList.remove(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
+            document.getElementById(constants.CSS_CLASS_BLACK_PIECE_COUNT)?.classList.add(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
+        } else {
+            document.getElementById(constants.CSS_CLASS_BLACK_PIECE_COUNT)?.classList.remove(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
+            document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)?.classList.add(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
+        }
     }
 }

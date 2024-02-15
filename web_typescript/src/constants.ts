@@ -15,6 +15,7 @@ export const CSS_CLASS_NAME_PLAYABLE        :string = 'playable-';
 export const CSS_CLASS_NAME_PLAYABLE_BLACK  :string = 'playable-black';
 export const CSS_CLASS_NAME_PLAYABLE_WHITE  :string = 'playable-white';
 export const CSS_CLASS_NAME_MOST_RECENT_MOVE:string = 'most-recent-move';
+export const CSS_CLASS_NAME_IS_THEIR_TURN   :string = 'is-their-turn';
 export const CSS_ELEMENT_ID_MOVES_SELECT    :string = 'moves-select';
 export const CSS_ELEMENT_ID_MOVES_PLAYED    :string = 'moves-played-text';
 export const CSS_ELEMENT_ID_TOGGLE_MOVE_LOG :string = 'btnToggleMoveLogVisibility';
