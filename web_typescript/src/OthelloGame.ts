@@ -160,8 +160,8 @@ export class OthelloGame {
      * Updates the game score on the UI - the number of white and black pieces on the board
      */
     updateGameScore = (): void => {
-        const blackPieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
-        const whitePieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_WHITE).length;
+        const blackPieceCount:number = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
+        const whitePieceCount:number = document.getElementsByClassName(constants.CSS_CLASS_NAME_WHITE).length;
         let playerBlack:OthelloPlayer = this.players.filter(x => x.playerColor === playerColor.black)[0];
         let playerWhite:OthelloPlayer = this.players.filter(x => x.playerColor === playerColor.white)[0];
         
@@ -177,5 +177,35 @@ export class OthelloGame {
             document.getElementById(constants.CSS_CLASS_BLACK_PIECE_COUNT)?.classList.remove(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
             document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)?.classList.add(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
         }
+    }
+
+    generateGameOverMessage = (): string => {
+
+        const blackPieceCount:number = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
+        const whitePieceCount:number = document.getElementsByClassName(constants.CSS_CLASS_NAME_WHITE).length;
+        const playerBlack:OthelloPlayer = this.players.filter(x => x.playerColor === playerColor.black)[0];
+        const playerWhite:OthelloPlayer = this.players.filter(x => x.playerColor === playerColor.white)[0];
+
+        if(blackPieceCount === whitePieceCount) return constants.GAME_FINISH_MESSAGE_TIE;
+
+        if(this.gameType === constants.GAME_TYPE_HUMAN_VS_HUMAN || constants.GAME_TYPE_SELF_PLAY) {
+            return blackPieceCount > whitePieceCount 
+                ? constants.GAME_FINISH_MESSAGE_BLACK_WINS
+                : constants.GAME_FINISH_MESSAGE_WHITE_WINS;
+        }
+
+        if(this.gameType === constants.GAME_TYPE_YOU_AS_BLACK) {
+            return blackPieceCount > whitePieceCount
+                ? constants.GAME_FINISH_MESSAGE_YOU_WIN
+                : constants.GAME_FINISH_MESSAGE_YOU_LOSE;
+        }
+
+        if(this.gameType === constants.GAME_TYPE_YOU_AS_WHITE) {
+            return whitePieceCount > blackPieceCount
+                ? constants.GAME_FINISH_MESSAGE_YOU_WIN
+                : constants.GAME_FINISH_MESSAGE_YOU_LOSE;
+        }
+
+        return '';
     }
 }

@@ -28,6 +28,12 @@ export const CSS_CLASS_NAME_MOVES_CONTAINER :string = 'moves-container';
 export const CSS_CLASS_BLACK_PIECE_COUNT    :string = 'black-piece-count';
 export const CSS_CLASS_WHITE_PIECE_COUNT    :string = 'white-piece-count';
 
+export const GAME_FINISH_MESSAGE_TIE        :string = 'Tie Game!';
+export const GAME_FINISH_MESSAGE_BLACK_WINS :string = 'Black Wins!';
+export const GAME_FINISH_MESSAGE_WHITE_WINS :string = 'White Wins!';
+export const GAME_FINISH_MESSAGE_YOU_WIN    :string = 'You Win!';
+export const GAME_FINISH_MESSAGE_YOU_LOSE   :string = 'You Lose!';
+
 export const LOGGING_ENABLED                :boolean = true;
 
 export const MIN_COLUMN_CHAR_AS_NUM         :number = 'a'.charCodeAt(0);

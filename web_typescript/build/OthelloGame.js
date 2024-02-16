@@ -129,6 +129,30 @@ export class OthelloGame {
                 document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)?.classList.add(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
             }
         };
+        this.generateGameOverMessage = () => {
+            const blackPieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
+            const whitePieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_WHITE).length;
+            const playerBlack = this.players.filter(x => x.playerColor === playerColor.black)[0];
+            const playerWhite = this.players.filter(x => x.playerColor === playerColor.white)[0];
+            if (blackPieceCount === whitePieceCount)
+                return constants.GAME_FINISH_MESSAGE_TIE;
+            if (this.gameType === constants.GAME_TYPE_HUMAN_VS_HUMAN || constants.GAME_TYPE_SELF_PLAY) {
+                return blackPieceCount > whitePieceCount
+                    ? constants.GAME_FINISH_MESSAGE_BLACK_WINS
+                    : constants.GAME_FINISH_MESSAGE_WHITE_WINS;
+            }
+            if (this.gameType === constants.GAME_TYPE_YOU_AS_BLACK) {
+                return blackPieceCount > whitePieceCount
+                    ? constants.GAME_FINISH_MESSAGE_YOU_WIN
+                    : constants.GAME_FINISH_MESSAGE_YOU_LOSE;
+            }
+            if (this.gameType === constants.GAME_TYPE_YOU_AS_WHITE) {
+                return whitePieceCount > blackPieceCount
+                    ? constants.GAME_FINISH_MESSAGE_YOU_WIN
+                    : constants.GAME_FINISH_MESSAGE_YOU_LOSE;
+            }
+            return '';
+        };
         this.gameType = gameType;
         this.gameBoard = new OthelloGameBoard();
         this.movesPlayed = [];
