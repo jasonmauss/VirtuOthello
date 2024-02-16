@@ -170,6 +170,12 @@ body.dark-mode .moves-container select {
     border:solid 2px red;
 }
 
+#game-message{
+    line-height: 32px;
+    vertical-align: middle;
+    padding: 7px;
+}
+
 .board {
     --t: 3px; /* line thickness */ 
     display: grid;

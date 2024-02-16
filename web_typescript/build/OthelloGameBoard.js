@@ -75,6 +75,38 @@ export class OthelloGameBoard {
             const currentLatestMoveElement = document.getElementsByClassName(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE)[0];
             currentLatestMoveElement?.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
         };
+        /**
+         * @remarks
+         * Call this to know how many pieces are on the board.
+         * @returns the total combined number of both black and white pieces on the board.
+         */
+        this.totalBoardPieces = () => {
+            const blackPieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
+            const whitePieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_WHITE).length;
+            return blackPieceCount + whitePieceCount;
+        };
+        /**
+         * @remarks
+         * This method is really only useful when you don't care or know which color there are indicators shown for, you
+         * just want to know how many are displayed. This is used mainly to determine if a turn-skip scenario is in play.
+         * @returns the total number of playable indicators shown on the board for both colors combined. But at any given
+         * time there will likely only be indicators shown for one color or the other
+         */
+        this.playableIndicatorCount = () => {
+            return OthelloUtils.boardPositionsByClassNames('.' + constants.CSS_CLASS_NAME_PLAYABLE_BLACK +
+                ',.' + constants.CSS_CLASS_NAME_PLAYABLE_WHITE).length;
+        };
+        /**
+         * @remarks
+         * This method allows you to know how many playable indicators would be shown for a certain
+         * color without the indicators being displayed. Helpful for determining a skip-turn scenario.
+         * @param whichColor The color you want to know the playable indicator count for
+         * @returns the number of playable board positions there are for a particular color
+         */
+        this.playableSpacesForColor = (whichColor) => {
+            const playableBoardPositions = MoveUtils.getPositionsForPlayableIndicators(whichColor);
+            return playableBoardPositions.length;
+        };
         this.occupiedPositions = new Set();
     }
     /**
