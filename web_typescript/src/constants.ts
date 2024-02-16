@@ -24,6 +24,7 @@ export const CSS_ELEMENT_ID_NEW_GAME_HVH    :string = 'btnNewGameHumanVsHuman';
 export const CSS_ELEMENT_ID_NEW_GAME_YAB    :string = 'btnNewGameAsBlack';
 export const CSS_ELEMENT_ID_NEW_GAME_YAW    :string = 'btnNewGameAsWhite';
 export const CSS_ELEMENT_ID_NEW_GAME_SPL    :string = 'btnNewGameSelfPlay';
+export const CSS_ELEMENT_ID_GAME_MESSAGE    :string = 'game-message';
 export const CSS_CLASS_NAME_MOVES_CONTAINER :string = 'moves-container';
 export const CSS_CLASS_BLACK_PIECE_COUNT    :string = 'black-piece-count';
 export const CSS_CLASS_WHITE_PIECE_COUNT    :string = 'white-piece-count';

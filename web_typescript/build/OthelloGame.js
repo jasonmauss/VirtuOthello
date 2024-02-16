@@ -30,6 +30,7 @@ export class OthelloGame {
          */
         this.performAllNewGameActions = () => {
             this.gameBoard.clear();
+            this.setGameMessage('');
             this.clearMovesPlayed();
             this.gameIsInProgress = false;
             this.gameBoard.initializeNewGame();
@@ -72,6 +73,23 @@ export class OthelloGame {
             this.colorForCurrentMove = OthelloUtils.getOppositeColor(this.colorForCurrentMove);
             // Update the game score on the UI - number of white and black pieces on the board
             this.updateGameScore();
+            // After each move has been played, check to see how many pieces are on the board.
+            // If there are 64 pieces, then the game is over. If there are not 64 pieces, then
+            // check the count of playable indicators shown. Since it's possible for there to be
+            // less than 64 pieces, but also no playable indicators (e.g. it's Black's move, but
+            // they can't legally play a piece anywhere), we need to see if we are in a situation
+            // where a turn skip scenario is at play.
+            if (this.gameBoard.totalBoardPieces() === 64) {
+                this.setGameMessage(this.generateGameOverMessage());
+            }
+            else {
+                if (this.gameBoard.playableIndicatorCount() === 0) {
+                    if (this.gameBoard.playableSpacesForColor(OthelloUtils.getOppositeColor(this.colorForCurrentMove)) > 0) {
+                        // we are in a turn skip scenario if we reach this point
+                        //
+                    }
+                }
+            }
         };
         /**
          * @remarks
@@ -128,6 +146,9 @@ export class OthelloGame {
                 document.getElementById(constants.CSS_CLASS_BLACK_PIECE_COUNT)?.classList.remove(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
                 document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)?.classList.add(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
             }
+        };
+        this.setGameMessage = (message) => {
+            document.getElementById(constants.CSS_ELEMENT_ID_GAME_MESSAGE).innerText = message;
         };
         this.generateGameOverMessage = () => {
             const blackPieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
