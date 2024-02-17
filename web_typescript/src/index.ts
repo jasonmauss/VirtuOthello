@@ -57,7 +57,7 @@ const newSPLGame = ():void => {
 
 /**
  * @remarks
- * The click handler method for the "Human vs Human new game UI Button
+ * The click handler method for the "Human vs Human" new game UI Button
  * @param event 
  */
 const newGameHumanVsHumanClickHandler = (event:MouseEvent):void => {

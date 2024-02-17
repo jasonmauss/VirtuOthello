@@ -2,10 +2,10 @@
 // of "magic strings" or "magic numbers" that might 
 // need to exist for the codebase. Defining them all 
 // here in one place.
-export const GAME_TYPE_HUMAN_VS_HUMAN = 1;
-export const GAME_TYPE_YOU_AS_BLACK = 2;
-export const GAME_TYPE_YOU_AS_WHITE = 3;
-export const GAME_TYPE_SELF_PLAY = 4;
+export const GAME_TYPE_HUMAN_VS_HUMAN = 'HumanVsHuman';
+export const GAME_TYPE_YOU_AS_BLACK = 'YouAsBlack';
+export const GAME_TYPE_YOU_AS_WHITE = 'YouAsWhite';
+export const GAME_TYPE_SELF_PLAY = 'SelfPlay';
 export const CSS_CLASS_NAME_BOARD = 'board';
 export const CSS_CLASS_NAME_BLACK = 'black';
 export const CSS_CLASS_NAME_WHITE = 'white';

@@ -86,8 +86,23 @@ export class OthelloGame {
                 if (this.gameBoard.playableIndicatorCount() === 0) {
                     if (this.gameBoard.playableSpacesForColor(OthelloUtils.getOppositeColor(this.colorForCurrentMove)) > 0) {
                         // we are in a turn skip scenario if we reach this point
-                        //
+                        this.setGameMessage('Skipping ' + this.colorForCurrentMove + '!');
+                        // Give the player(s) time to read the skipping message (2 seconds)
+                        // then turn control of making a move back over to the other color player
+                        window.setTimeout(() => {
+                            this.gameBoard.displayPlayableIndicators(this.colorForCurrentMove);
+                        }, 2000);
                     }
+                    else {
+                        // Even though there aren't 64 pieces on the board, neither color can make a move
+                        // so the game has ended (this usually only happens late in games of Othello)
+                        this.setGameMessage(this.generateGameOverMessage());
+                    }
+                }
+                else {
+                    // the game isn't over and playable indicators are shown
+                    // so it's ok to indicate that it's the other color's turn now.
+                    this.UpdateColorPlayersTurnBorderIndicator();
                 }
             }
         };
@@ -138,6 +153,12 @@ export class OthelloGame {
                 `Black (${playerBlack.playerName}) : ${blackPieceCount.toString()}`;
             document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT).innerText =
                 `White (${playerWhite.playerName}) : ${whitePieceCount.toString()}`;
+        };
+        /**
+         * @remarks
+         * Updates the border around white or black score to indicate which color player's turn it is to place a piece on the board
+         */
+        this.UpdateColorPlayersTurnBorderIndicator = () => {
             if (this.getColorOfCurrentMove() === constants.CSS_CLASS_NAME_BLACK) {
                 document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)?.classList.remove(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
                 document.getElementById(constants.CSS_CLASS_BLACK_PIECE_COUNT)?.classList.add(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
@@ -147,9 +168,18 @@ export class OthelloGame {
                 document.getElementById(constants.CSS_CLASS_WHITE_PIECE_COUNT)?.classList.add(constants.CSS_CLASS_NAME_IS_THEIR_TURN);
             }
         };
+        /**
+         * @remarks
+         *
+         * @param message
+         */
         this.setGameMessage = (message) => {
             document.getElementById(constants.CSS_ELEMENT_ID_GAME_MESSAGE).innerText = message;
         };
+        /**
+         * @remarks
+         * @returns
+         */
         this.generateGameOverMessage = () => {
             const blackPieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_BLACK).length;
             const whitePieceCount = document.getElementsByClassName(constants.CSS_CLASS_NAME_WHITE).length;
@@ -157,7 +187,7 @@ export class OthelloGame {
             const playerWhite = this.players.filter(x => x.playerColor === playerColor.white)[0];
             if (blackPieceCount === whitePieceCount)
                 return constants.GAME_FINISH_MESSAGE_TIE;
-            if (this.gameType === constants.GAME_TYPE_HUMAN_VS_HUMAN || constants.GAME_TYPE_SELF_PLAY) {
+            if (this.gameType === constants.GAME_TYPE_HUMAN_VS_HUMAN || this.gameType === constants.GAME_TYPE_SELF_PLAY) {
                 return blackPieceCount > whitePieceCount
                     ? constants.GAME_FINISH_MESSAGE_BLACK_WINS
                     : constants.GAME_FINISH_MESSAGE_WHITE_WINS;
