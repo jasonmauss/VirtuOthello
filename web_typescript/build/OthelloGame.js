@@ -69,8 +69,6 @@ export class OthelloGame {
             const oppositeColor = OthelloUtils.getOppositeColor(colorOfPieceToPlay);
             // Display the playable indicators again now for the opponent/other player
             this.gameBoard.displayPlayableIndicators(oppositeColor);
-            // Swap the color for who's move it is now
-            this.colorForCurrentMove = OthelloUtils.getOppositeColor(this.colorForCurrentMove);
             // Update the game score on the UI - number of white and black pieces on the board
             this.updateGameScore();
             // After each move has been played, check to see how many pieces are on the board.
@@ -84,14 +82,12 @@ export class OthelloGame {
             }
             else {
                 if (this.gameBoard.playableIndicatorCount() === 0) {
-                    if (this.gameBoard.playableSpacesForColor(OthelloUtils.getOppositeColor(this.colorForCurrentMove)) > 0) {
+                    if (this.gameBoard.playableSpacesForColor(colorOfPieceToPlay) > 0) {
                         // we are in a turn skip scenario if we reach this point
-                        this.setGameMessage('Skipping ' + this.colorForCurrentMove + '!');
                         // Give the player(s) time to read the skipping message (2 seconds)
                         // then turn control of making a move back over to the other color player
-                        window.setTimeout(() => {
-                            this.gameBoard.displayPlayableIndicators(this.colorForCurrentMove);
-                        }, 2000);
+                        this.fadeInFadeOutGameMessage('Skipping ' + oppositeColor + '!');
+                        this.gameBoard.displayPlayableIndicators(colorOfPieceToPlay);
                     }
                     else {
                         // Even though there aren't 64 pieces on the board, neither color can make a move
@@ -102,6 +98,8 @@ export class OthelloGame {
                 else {
                     // the game isn't over and playable indicators are shown
                     // so it's ok to indicate that it's the other color's turn now.
+                    // Swap the color for who's move it is now
+                    this.colorForCurrentMove = OthelloUtils.getOppositeColor(colorOfPieceToPlay);
                     this.UpdateColorPlayersTurnBorderIndicator();
                 }
             }
@@ -175,6 +173,31 @@ export class OthelloGame {
          */
         this.setGameMessage = (message) => {
             document.getElementById(constants.CSS_ELEMENT_ID_GAME_MESSAGE).innerText = message;
+        };
+        /**
+         * @remarks Displays a game message in the UI but also fades it in and out to draw the players eye to the message
+         * @param message the message to be displayed and faded in and out
+         */
+        this.fadeInFadeOutGameMessage = (message) => {
+            this.setGameMessage(message);
+            const gameMessageElement = document.getElementById(constants.CSS_ELEMENT_ID_GAME_MESSAGE);
+            gameMessageElement?.classList.add('fade-out');
+            window.setTimeout(() => {
+                gameMessageElement?.classList.remove('fade-out');
+                gameMessageElement?.classList.add('fade-in');
+                window.setTimeout(() => {
+                    gameMessageElement?.classList.remove('fade-in');
+                    gameMessageElement?.classList.add('fade-out');
+                    window.setTimeout(() => {
+                        gameMessageElement?.classList.remove('fade-out');
+                        gameMessageElement?.classList.add('fade-in');
+                        window.setTimeout(() => {
+                            this.setGameMessage('');
+                            gameMessageElement?.classList.remove('fade-in');
+                        }, 1000);
+                    }, 1000);
+                }, 1000);
+            }, 1000);
         };
         /**
          * @remarks Takes an assessment of the pieces on the board combined with the types of players
