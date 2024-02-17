@@ -3,10 +3,10 @@
 // need to exist for the codebase. Defining them all 
 // here in one place.
 
-export const GAME_TYPE_HUMAN_VS_HUMAN       :number = 1;
-export const GAME_TYPE_YOU_AS_BLACK         :number = 2;
-export const GAME_TYPE_YOU_AS_WHITE         :number = 3;
-export const GAME_TYPE_SELF_PLAY            :number = 4;
+export const GAME_TYPE_HUMAN_VS_HUMAN       :string = 'HumanVsHuman';
+export const GAME_TYPE_YOU_AS_BLACK         :string = 'YouAsBlack';
+export const GAME_TYPE_YOU_AS_WHITE         :string = 'YouAsWhite';
+export const GAME_TYPE_SELF_PLAY            :string = 'SelfPlay';
 
 export const CSS_CLASS_NAME_BOARD           :string = 'board';
 export const CSS_CLASS_NAME_BLACK           :string = 'black';
