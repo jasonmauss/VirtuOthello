@@ -222,16 +222,17 @@ export class OthelloGame {
 
     /**
      * @remarks
-     * 
-     * @param message 
+     * Updates the game message in the UI
+     * @param message The message to be displayed in the UI
      */
     setGameMessage = (message:string): void => {
         (document.getElementById(constants.CSS_ELEMENT_ID_GAME_MESSAGE) as HTMLSpanElement).innerText = message;
     }
 
     /**
-     * @remarks
-     * @returns 
+     * @remarks Takes an assessment of the pieces on the board combined with the types of players
+     * playing the game and generates an appropriate message to display in the UI as a "game over" message
+     * @returns A message of "Black Wins", "White Wins", or "You Win", "You Lose" depending on color and Human/AI players
      */
     generateGameOverMessage = (): string => {
 
