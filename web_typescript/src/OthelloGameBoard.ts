@@ -201,4 +201,9 @@ export class OthelloGameBoard {
         return playableBoardPositions.length;
     }
 
+    highlightMove = (moveData:string): void => {
+        const moveDataDetails:string[] = moveData.split('|');
+        
+    }
+
 }

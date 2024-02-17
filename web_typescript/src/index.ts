@@ -161,6 +161,35 @@ const toggleMoveLogVisibilityClickHandler = (event:MouseEvent):void => {
 };
 
 /**
+ * @remarks The click handler method for when option elements in the
+ * 'Moves Played' select list are clicked on.
+ * @param event The click event being handled
+ */
+const moveSelectedClickHandler = (event:Event):void => {
+    const moveSelectOption = event.target as HTMLOptionElement;
+    // Ensure there is not an empty value before calling highlight move
+    if(moveSelectOption.value) {
+        OthelloUtils.consoleLog('move selected for highlight: ' + moveSelectOption.value);
+        _othelloGame.gameBoard.highlightMove(moveSelectOption.value);
+    }
+    
+};
+
+/**
+ * @remarks The double click handler method for when an option element in
+ * the 'Moves Played' select list gets double clicked, to roll back to that move
+ * @param event The double click event being handled
+ */
+const moveSelectedDoubleclickHandler = (event:Event):void => {
+    const moveSelectOption = event.target as HTMLOptionElement;
+    // Ensure there is not an empty value before calling highlight move
+    if(moveSelectOption.value && confirm('Are you sure you want to rollback to this move?')) {
+        OthelloUtils.consoleLog('move selected for rollback: ' + moveSelectOption.value);
+        _othelloGame.gameBoard.highlightMove(moveSelectOption.value);
+    }
+};
+
+/**
  * This section of the below wires up click event listeners to the handling methods above
  */
 
@@ -181,3 +210,7 @@ gameBoard?.addEventListener('click', boardPositionDivElementClickHandler);
 
 const toggleMoveLogVisibility = document.getElementById(constants.CSS_ELEMENT_ID_TOGGLE_MOVE_LOG);
 toggleMoveLogVisibility?.addEventListener('click', toggleMoveLogVisibilityClickHandler);
+
+const moveSelectList = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
+moveSelectList?.addEventListener('change', moveSelectedClickHandler);
+moveSelectList?.addEventListener('dblclick', moveSelectedDoubleclickHandler);

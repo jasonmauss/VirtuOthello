@@ -107,6 +107,9 @@ export class OthelloGameBoard {
             const playableBoardPositions = MoveUtils.getPositionsForPlayableIndicators(whichColor);
             return playableBoardPositions.length;
         };
+        this.highlightMove = (moveData) => {
+            const moveDataDetails = moveData.split('|');
+        };
         this.occupiedPositions = new Set();
     }
     /**
