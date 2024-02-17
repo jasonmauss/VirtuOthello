@@ -145,6 +145,32 @@ const toggleMoveLogVisibilityClickHandler = (event) => {
     }
 };
 /**
+ * @remarks The click handler method for when option elements in the
+ * 'Moves Played' select list are clicked on.
+ * @param event The click event being handled
+ */
+const moveSelectedClickHandler = (event) => {
+    const moveSelectOption = event.target;
+    // Ensure there is not an empty value before calling highlight move
+    if (moveSelectOption.value) {
+        OthelloUtils.consoleLog('move selected for highlight: ' + moveSelectOption.value);
+        _othelloGame.gameBoard.highlightMove(moveSelectOption.value);
+    }
+};
+/**
+ * @remarks The double click handler method for when an option element in
+ * the 'Moves Played' select list gets double clicked, to roll back to that move
+ * @param event The double click event being handled
+ */
+const moveSelectedDoubleclickHandler = (event) => {
+    const moveSelectOption = event.target;
+    // Ensure there is not an empty value before calling highlight move
+    if (moveSelectOption.value && confirm('Are you sure you want to rollback to this move?')) {
+        OthelloUtils.consoleLog('move selected for rollback: ' + moveSelectOption.value);
+        _othelloGame.gameBoard.highlightMove(moveSelectOption.value);
+    }
+};
+/**
  * This section of the below wires up click event listeners to the handling methods above
  */
 const hvhButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_HVH);
@@ -159,4 +185,7 @@ const gameBoard = document.getElementById(constants.CSS_CLASS_NAME_BOARD);
 gameBoard?.addEventListener('click', boardPositionDivElementClickHandler);
 const toggleMoveLogVisibility = document.getElementById(constants.CSS_ELEMENT_ID_TOGGLE_MOVE_LOG);
 toggleMoveLogVisibility?.addEventListener('click', toggleMoveLogVisibilityClickHandler);
+const moveSelectList = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
+moveSelectList?.addEventListener('change', moveSelectedClickHandler);
+moveSelectList?.addEventListener('dblclick', moveSelectedDoubleclickHandler);
 //# sourceMappingURL=index.js.map
