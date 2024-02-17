@@ -276,6 +276,7 @@ export class MoveUtils {
                     if(this.getColorAtBoardPosition(row, columnChar) === oppositeColorOfPiecePlayed) {
                         // add that board position to potential flips.
                         potentialFlips.push(columnChar + row.toString());
+                        continue;
                     }
                     // If we encounter a board position in the current column that matches the color of
                     // the piece played, we know we need to add all the pieces we've been tracking in
@@ -293,6 +294,9 @@ export class MoveUtils {
                         break;
                     }
                 }
+                // clear potentialFlips once outside of the for loop in case some potential positions were added
+                // but never ended up getting added to the positionsToFlip array before the for loop exited
+                potentialFlips = [];
             }
 
             if(columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
@@ -305,6 +309,7 @@ export class MoveUtils {
                         curColumnChar = this.subtractColumnChar(curColumnChar);
                         if(this.getColorAtBoardPosition(row, curColumnChar) === oppositeColorOfPiecePlayed) {
                             potentialFlips.push(curColumnChar + row.toString());
+                            continue;
                         }
                         if(this.getColorAtBoardPosition(row, curColumnChar) === colorOfPiecePlayed) {
                             positionsToFlip.push(...potentialFlips);
@@ -318,6 +323,9 @@ export class MoveUtils {
                             break;
                         }
                     }
+                    // clear potentialFlips once outside of the for loop in case some potential positions were added
+                    // but never ended up getting added to the positionsToFlip array before the for loop exited
+                    potentialFlips = [];
                 }
             }
 
@@ -331,6 +339,7 @@ export class MoveUtils {
                         curColumnChar = this.addColumnChar(curColumnChar);
                         if(this.getColorAtBoardPosition(row, curColumnChar) === oppositeColorOfPiecePlayed) {
                             potentialFlips.push(curColumnChar + row.toString());
+                            continue;
                         }
                         if(this.getColorAtBoardPosition(row, curColumnChar) === colorOfPiecePlayed) {
                             positionsToFlip.push(...potentialFlips);
@@ -344,6 +353,9 @@ export class MoveUtils {
                             break;
                         }
                     }
+                    // clear potentialFlips once outside of the for loop in case some potential positions were added
+                    // but never ended up getting added to the positionsToFlip array before the for loop exited
+                    potentialFlips = [];
                 }
             }
         }
@@ -363,6 +375,7 @@ export class MoveUtils {
                     if(this.getColorAtBoardPosition(row, columnChar) === oppositeColorOfPiecePlayed) {
                         // add that board position to potential flips
                         potentialFlips.push(columnChar + row.toString());
+                        continue;
                     }
                     // If we encounter a board position in the current column that matches the color of
                     // the piece played, we know we need to add all the pieces we've been tracking in
@@ -380,7 +393,12 @@ export class MoveUtils {
                         break;
                     }
                 }
+                // clear potentialFlips once outside of the for loop in case some potential positions were added
+                // but never ended up getting added to the positionsToFlip array before the for loop exited
+                potentialFlips = [];
+                
             }
+            
 
             if(columnCharAsNum > constants.MIN_COLUMN_CHAR_AS_NUM + 1) {
                 // go ahead and search down and left diagonally
@@ -392,6 +410,7 @@ export class MoveUtils {
                         curColumnChar = this.subtractColumnChar(curColumnChar);
                         if(this.getColorAtBoardPosition(row, curColumnChar) === oppositeColorOfPiecePlayed) {
                             potentialFlips.push(curColumnChar + row.toString());
+                            continue;
                         }
                         if(this.getColorAtBoardPosition(row, curColumnChar) === colorOfPiecePlayed) {
                             positionsToFlip.push(...potentialFlips);
@@ -405,6 +424,9 @@ export class MoveUtils {
                             break;
                         }
                     }
+                    // clear potentialFlips once outside of the for loop in case some potential positions were added
+                    // but never ended up getting added to the positionsToFlip array before the for loop exited
+                    potentialFlips = [];
                 }
             }
 
@@ -418,6 +440,7 @@ export class MoveUtils {
                         curColumnChar = this.addColumnChar(curColumnChar);
                         if(this.getColorAtBoardPosition(row, curColumnChar) === oppositeColorOfPiecePlayed) {
                             potentialFlips.push(curColumnChar + row.toString());
+                            continue;
                         }
                         if(this.getColorAtBoardPosition(row, curColumnChar) === colorOfPiecePlayed) {
                             positionsToFlip.push(...potentialFlips);
@@ -431,6 +454,9 @@ export class MoveUtils {
                             break;
                         }
                     }
+                    // clear potentialFlips once outside of the for loop in case some potential positions were added
+                    // but never ended up getting added to the positionsToFlip array before the for loop exited
+                    potentialFlips = [];
                 }
             }
         }
@@ -446,6 +472,7 @@ export class MoveUtils {
                 for(let curColumnChar = this.subtractColumnChar(this.subtractColumnChar(columnChar)); curColumnChar !== ''; curColumnChar = this.subtractColumnChar(curColumnChar)) {
                     if(this.getColorAtBoardPosition(rowNum, curColumnChar) === oppositeColorOfPiecePlayed) {
                         potentialFlips.push(curColumnChar + rowNum.toString());
+                        continue;
                     }
                     if(this.getColorAtBoardPosition(rowNum, curColumnChar) === colorOfPiecePlayed) {
                         positionsToFlip.push(...potentialFlips);
@@ -459,6 +486,9 @@ export class MoveUtils {
                         break;
                     }
                 }
+                // clear potentialFlips once outside of the for loop in case some potential positions were added
+                // but never ended up getting added to the positionsToFlip array before the for loop exited
+                potentialFlips = [];
             }
         }
 
@@ -473,6 +503,7 @@ export class MoveUtils {
                 for(let curColumnChar = this.addColumnChar(this.addColumnChar(columnChar)); curColumnChar !== ''; curColumnChar = this.addColumnChar(curColumnChar)) {
                     if(this.getColorAtBoardPosition(rowNum, curColumnChar) === oppositeColorOfPiecePlayed) {
                         potentialFlips.push(curColumnChar + rowNum.toString());
+                        continue;
                     }
                     if(this.getColorAtBoardPosition(rowNum, curColumnChar) === colorOfPiecePlayed) {
                         positionsToFlip.push(...potentialFlips);
@@ -486,6 +517,9 @@ export class MoveUtils {
                         break;
                     }
                 }
+                // clear potentialFlips once outside of the for loop in case some potential positions were added
+                // but never ended up getting added to the positionsToFlip array before the for loop exited
+                potentialFlips = [];
             }
         }
 
@@ -509,10 +543,11 @@ export class MoveUtils {
      * @param rowNum the row of the board position
      * @param columnChar the column of the board position
      */
-    static getColorAtBoardPosition = (rowNum:number, columnChar:string):string => {
+    static getColorAtBoardPosition = (rowNum:number, columnChar:string):string | null => {
         const boardElement = document.getElementById(columnChar + rowNum.toString());
         if(boardElement?.classList.contains(constants.CSS_CLASS_NAME_BLACK)) return constants.CSS_CLASS_NAME_BLACK;
         if(boardElement?.classList.contains(constants.CSS_CLASS_NAME_WHITE)) return constants.CSS_CLASS_NAME_WHITE;
+        if(rowNum === 9 || columnChar === 'i') return null;
         return '';
     }
 }
