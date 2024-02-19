@@ -127,7 +127,7 @@ export class OthelloGame {
 
                     // Give the player(s) time to read the skipping message (2 seconds)
                     // then turn control of making a move back over to the other color player
-                    this.fadeInFadeOutGameMessage('Skipping ' + oppositeColor + '!');
+                    this.fadeInFadeOutGameMessage('Skipping ' + oppositeColor + '!', 9);
                     this.gameBoard.displayPlayableIndicators(colorOfPieceToPlay);
 
                     
@@ -232,27 +232,30 @@ export class OthelloGame {
     /**
      * @remarks Displays a game message in the UI but also fades it in and out to draw the players eye to the message
      * @param message the message to be displayed and faded in and out
+     * @param fadeInOutCycles the number of times the message should fade in and out. For example, of value
+     * of 4 would cause the message to fade in and out 2 times.
      */
-    fadeInFadeOutGameMessage = (message:string): void => {
+    fadeInFadeOutGameMessage = (message:string, fadeInOutCycles:number): void => {
         this.setGameMessage(message);
         const gameMessageElement = document.getElementById(constants.CSS_ELEMENT_ID_GAME_MESSAGE);
-        gameMessageElement?.classList.add('fade-out');
-        window.setTimeout(() => {
-            gameMessageElement?.classList.remove('fade-out');
+        if(gameMessageElement?.classList.contains('fade-out')) {
+            gameMessageElement?.classList.remove('fade-out');    
             gameMessageElement?.classList.add('fade-in');
+        } else {
+            gameMessageElement?.classList.remove('fade-in');    
+            gameMessageElement?.classList.add('fade-out');
+        }
+
+        if(fadeInOutCycles === 0) {
+            gameMessageElement?.classList.remove('fade-in');    
+            gameMessageElement?.classList.remove('fade-out');
+            this.setGameMessage('');
+        } else {
             window.setTimeout(() => {
-                gameMessageElement?.classList.remove('fade-in');
-                gameMessageElement?.classList.add('fade-out');
-                window.setTimeout(() => {
-                    gameMessageElement?.classList.remove('fade-out');
-                    gameMessageElement?.classList.add('fade-in');
-                    window.setTimeout(() => {
-                        this.setGameMessage('');
-                        gameMessageElement?.classList.remove('fade-in');
-                    }, 1000);
-                }, 1000);
-            }, 1000);
-        }, 1000);
+                this.fadeInFadeOutGameMessage(message, --fadeInOutCycles);
+            }, 500);
+        }
+
     }
 
     /**
