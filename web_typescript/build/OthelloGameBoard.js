@@ -17,7 +17,9 @@ export class OthelloGameBoard {
          */
         this.AddMoveToLog = (movePlayed, piecesFlipped) => {
             OthelloUtils.consoleLog('Adding move to log');
-            const playerColor = movePlayed.moveType === moveType.BlackPiece ? 'Black' : 'White';
+            const playerColor = movePlayed.moveType === moveType.BlackPiece
+                ? constants.CSS_CLASS_NAME_BLACK
+                : constants.CSS_CLASS_NAME_WHITE;
             let optionText = `${playerColor} played at position ${movePlayed.position.toUpperCase()}`;
             if (piecesFlipped.length > 0)
                 optionText += ` - ${piecesFlipped.length} piece(s) flipped`;
@@ -106,6 +108,66 @@ export class OthelloGameBoard {
         this.playableSpacesForColor = (whichColor) => {
             const playableBoardPositions = MoveUtils.getPositionsForPlayableIndicators(whichColor);
             return playableBoardPositions.length;
+        };
+        /**
+         * @remarks breaks down the move metadata and collects the other move metadata from moves that came
+         * after the selected move so rollback can complete
+         * @param moveMetadata
+         */
+        this.rollbackToMove = (moveMetadata) => {
+            const moveDataDetails = moveMetadata.split('|');
+            const moveSelectList = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
+            // If they selected (double clicked) the last move in the list, we need to inform
+            // the player that they can't rollback to the latest move - they are already there.
+            if (Number(moveDataDetails[0]) === moveSelectList.options.length) {
+                window.alert('The last move played cannot be rolled back to.');
+                return;
+            }
+            // collect move metadata from the list of <option> elements that come at the position
+            // selected + 1, as well as all the moves that came after that. The reason for selected + 1 is that
+            // we are rolling back to that move, but not rolling back that move itself.
+            const optionMetadataParsed = [];
+            const optionIndexSelected = Number(moveDataDetails[0]);
+            for (let optionIndex = moveSelectList.options.length - 1; optionIndex > optionIndexSelected; --optionIndex) {
+                const optionElement = moveSelectList.options.item(optionIndex);
+                const optionElementValueArray = optionElement.value.split('|');
+                // in order to rollback moves we need to collect three things - which color the pieces got changed to,
+                // which board position the move/piece was played on (because it needs to be removed), and which board positions
+                // need to have their color set to the opposite of the color played to rollback that particular turn.
+                let optionMetadataString = optionElementValueArray[1] + ',' + optionElementValueArray[2] + ',' + optionElementValueArray[4];
+                optionMetadataParsed.push(optionMetadataString);
+            }
+            // call this with an initial index targeting the last item in the list (length - 1) so that it
+            // can keep subtracting 1 from the index as it rolls back moves
+            this.performBoardMovesRollback(optionMetadataParsed, optionMetadataParsed.length - 1);
+        };
+        /**
+         * @remarks performs the actual rollback interaction with the board html elements
+         * @param parsedOptionMetadata the move metadata parsed from the <option> element's values
+         * @param rollbackIndex - which index we are starting at, this will get decremented as it's called
+         * recursively each time.
+         */
+        this.performBoardMovesRollback = (parsedOptionMetadata, rollbackIndex) => {
+            if (rollbackIndex == 0)
+                return;
+            const optionMetadata = parsedOptionMetadata[rollbackIndex];
+            const colorToChangePiecesBackTo = OthelloUtils.getOppositeColor(optionMetadata[0]);
+            const boardPositionToRemovePieceFrom = optionMetadata[1];
+            const boardPositionsToFlipBackToPreviousColor = optionMetadata[2].split(',');
+            // remove the piece that was played
+            document.getElementById(boardPositionToRemovePieceFrom)?.classList.remove(optionMetadata[0]);
+            boardPositionsToFlipBackToPreviousColor.forEach((elementId) => {
+                document.getElementById(elementId)?.classList.remove(optionMetadata[0]);
+                document.getElementById(elementId)?.classList.add(colorToChangePiecesBackTo);
+            });
+            // remove the move <option> element from the list (it will always be the last one in the list when we
+            // are doing this type of rollback so we can just provide the length - 1 for the index.
+            const moveSelectList = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
+            moveSelectList.options.remove(moveSelectList.options.length - 1);
+            // process the rest of the moves in the list with a half second (500ms) pause between moves rolled back
+            window.setTimeout(() => {
+                this.performBoardMovesRollback(parsedOptionMetadata, --rollbackIndex);
+            }, 500);
         };
         /**
          *
