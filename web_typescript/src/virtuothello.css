@@ -236,6 +236,10 @@ body.dark-mode .moves-container select {
     --b: radial-gradient(red 15%,#0000 16%),;
   }
 
+  .highlight-move {
+    --b: radial-gradient(rgb(2, 255, 2) 15%,#0000 16%),;
+  }
+
   .playable-black{
     border:solid 2px #000000;
   }
