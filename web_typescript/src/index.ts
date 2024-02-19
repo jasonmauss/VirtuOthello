@@ -158,6 +158,7 @@ const toggleMoveLogVisibilityClickHandler = (event:MouseEvent):void => {
         movesListSelectElement.style.display = 'block';
         toggleVisibilityButton.innerText = 'Hide'
     }
+
 };
 
 /**
