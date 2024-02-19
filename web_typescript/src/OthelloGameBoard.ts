@@ -9,9 +9,11 @@ import { gameType } from "./gameTypeEnum.js";
 export class OthelloGameBoard {
 
     occupiedPositions:Set<string>;
+    private latestMoveElement: HTMLDivElement | null;
 
     constructor() {
         this.occupiedPositions = new Set<string>();
+        this.latestMoveElement = null;
     }
 
     /** 
@@ -201,9 +203,59 @@ export class OthelloGameBoard {
         return playableBoardPositions.length;
     }
 
-    highlightMove = (moveData:string): void => {
-        const moveDataDetails:string[] = moveData.split('|');
-        
+    /**
+     * 
+     * @param moveData @remarks
+     * breaks down the move metadata and hands it off to be highlighted
+     */
+    highlightMove = (moveMetadata:string): void => {
+        const moveDataDetails:string[] = moveMetadata.split('|');
+        const boardPositionsToHighlight:string[] = [];
+        boardPositionsToHighlight.push(moveDataDetails[2]);
+        boardPositionsToHighlight.push(...moveDataDetails[4].split(','));
+        const querySelectorString = boardPositionsToHighlight.map((value) => '#' + value).join(',');
+        this.performBoardPositionHighlighting(document.querySelectorAll(querySelectorString), 8);
+    }
+
+    /**
+     * @remarks Highlights board positions passed in by fading in and out an indicator dot on the pieces
+     * @param boardPositions the board positions that should be highlighted
+     */
+    performBoardPositionHighlighting = (boardPositions:NodeListOf<Element>, toggleCycles:number): void => {
+
+        // for every board position passed in - toggle the highlight move class on it
+        boardPositions.forEach((x) => {
+            // if one of the elements passed in has the most recent move class on it,
+            // we need to remove that and hold a reference to that element so we can put it back on later
+            if(x.classList.contains(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE)) {
+                this.latestMoveElement = x as HTMLDivElement;
+                x.classList.remove(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
+            }
+            
+            // if this is the last toggle cycle, make sure the highlight is removed
+            if(toggleCycles === 0) {
+                x.classList.remove(constants.CSS_CLASS_NAME_HIGHLIGHT_MOVE);
+            } else {
+                // otherwise, just toggle it
+                x.classList.toggle(constants.CSS_CLASS_NAME_HIGHLIGHT_MOVE);
+            }
+        });
+
+        // This method is recursive and calls itself, decrementing the toggleCycles count each time.
+        // If toggleCycles reaches zero, we restore the most recent move class back (if needed).
+        if(toggleCycles === 0) {
+            if(this.latestMoveElement) {
+                this.latestMoveElement?.classList.add(constants.CSS_CLASS_NAME_MOST_RECENT_MOVE);
+                this.latestMoveElement = null; // set this back to it's default value of null
+            }
+            return;
+        } else {
+            // continue to call itself every half second (500 ms) with one less toggle cycle left
+            window.setTimeout(() => {
+                this.performBoardPositionHighlighting(boardPositions, --toggleCycles);
+            }, 500);
+        }
+
     }
 
 }
