@@ -186,7 +186,7 @@ const moveSelectedDoubleclickHandler = (event:Event):void => {
     // Ensure there is not an empty value before calling highlight move
     if(moveSelectOption.value && confirm('Are you sure you want to rollback to this move?')) {
         OthelloUtils.consoleLog('move selected for rollback: ' + moveSelectOption.value);
-        _othelloGame.gameBoard.highlightMove(moveSelectOption.value);
+        _othelloGame.gameBoard.rollbackToMove(moveSelectOption.value);
     }
 };
 
