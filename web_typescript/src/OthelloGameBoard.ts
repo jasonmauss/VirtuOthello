@@ -231,7 +231,7 @@ export class OthelloGameBoard {
             // in order to rollback moves we need to collect three things - which color the pieces got changed to,
             // which board position the move/piece was played on (because it needs to be removed), and which board positions
             // need to have their color set to the opposite of the color played to rollback that particular turn.
-            let optionMetadataString = optionElementValueArray[1] + ',' + optionElementValueArray[2] + ',' + optionElementValueArray[4];
+            let optionMetadataString = optionElementValueArray[1] + ',' + optionElementValueArray[2] + ',' + [optionElementValueArray[4]];
             optionMetadataParsed.push(optionMetadataString);
         }
 
