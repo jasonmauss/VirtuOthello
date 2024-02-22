@@ -22,7 +22,7 @@ export class OthelloGame {
 
     constructor (gameType:gameType, players: OthelloPlayer[]) {
         this.gameType = gameType;
-        this.gameBoard = new OthelloGameBoard();
+        this.gameBoard = new OthelloGameBoard(this);
         this.movesPlayed = [];
         this.colorForCurrentMove = constants.CSS_CLASS_NAME_BLACK; // black always plays first no matter what
         this.gameIsInProgress = false; // initialize this to false so that whenever a new game begins it has the proper state/value
@@ -187,6 +187,27 @@ export class OthelloGame {
      */
     getColorOfCurrentMove = (): string => {
         return this.colorForCurrentMove;
+    }
+
+    /**
+     * @remarks Returns the color (black or white) for which player's 
+     * turn it currently is based on the move list instead of internal state
+     */
+    getColorOfCurrentMoveFromMoveList = (): string => {
+        const moveSelectList:HTMLSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
+        const lastOptionIndex = moveSelectList.options.length - 1
+        const optionElement:HTMLOptionElement = moveSelectList.options.item(lastOptionIndex) as HTMLOptionElement;
+        const optionElementValueArray:string[] = optionElement.value.split('|');
+        return optionElementValueArray[1].toLowerCase();
+    }
+
+    /**
+     * @remarks
+     * Sets the color of the player who's turn it is
+     * @param color
+     */
+    setColorOfCurrentMove = (color:string): void => {
+        this.colorForCurrentMove = color;
     }
 
     /**
