@@ -139,6 +139,25 @@ export class OthelloGame {
             return this.colorForCurrentMove;
         };
         /**
+         * @remarks Returns the color (black or white) for which player's
+         * turn it currently is based on the move list instead of internal state
+         */
+        this.getColorOfCurrentMoveFromMoveList = () => {
+            const moveSelectList = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
+            const lastOptionIndex = moveSelectList.options.length - 1;
+            const optionElement = moveSelectList.options.item(lastOptionIndex);
+            const optionElementValueArray = optionElement.value.split('|');
+            return optionElementValueArray[1].toLowerCase();
+        };
+        /**
+         * @remarks
+         * Sets the color of the player who's turn it is
+         * @param color
+         */
+        this.setColorOfCurrentMove = (color) => {
+            this.colorForCurrentMove = color;
+        };
+        /**
          * @remarks
          * Updates the game score on the UI - the number of white and black pieces on the board
          */
@@ -232,7 +251,7 @@ export class OthelloGame {
             return '';
         };
         this.gameType = gameType;
-        this.gameBoard = new OthelloGameBoard();
+        this.gameBoard = new OthelloGameBoard(this);
         this.movesPlayed = [];
         this.colorForCurrentMove = constants.CSS_CLASS_NAME_BLACK; // black always plays first no matter what
         this.gameIsInProgress = false; // initialize this to false so that whenever a new game begins it has the proper state/value
