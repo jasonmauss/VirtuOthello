@@ -141,10 +141,12 @@ export class OthelloGameBoard {
             this.removeCurrentLatestMoveIndicator();
             // collect move metadata from the list of <option> elements that come at the position
             // selected + 1, as well as all the moves that came after that. The reason for selected + 1 is that
-            // we are rolling back to that move, but not rolling back that move itself.
+            // we are rolling back to that move, but not rolling back that move itself. Since the "optionIndexSelected" is 1-based
+            // and the <option> elements in the select list are zero-based, we start the for loop at just optionIndexSelected, not
+            // optionIndexSelected + 1
             const optionMetadataParsed = [];
             const optionIndexSelected = Number(moveDataDetails[0]);
-            for (let optionIndex = moveSelectList.options.length - 1; optionIndex >= optionIndexSelected; --optionIndex) {
+            for (let optionIndex = optionIndexSelected; optionIndex < moveSelectList.options.length; ++optionIndex) {
                 const optionElement = moveSelectList.options.item(optionIndex);
                 const optionElementValueArray = optionElement.value.split('|');
                 // in order to rollback moves we need to collect three things - which color the pieces got changed to,
@@ -159,13 +161,18 @@ export class OthelloGameBoard {
             // call this with an initial index targeting the last item in the list (length - 1) so that it
             // can keep subtracting 1 from the index as it rolls back moves
             this.performBoardMovesRollback(optionMetadataParsed, optionMetadataParsed.length - 1);
+        };
+        /**
+         * @remarks This method is to be called after a series of move undo/rollback
+         * steps have been made and various state needs to be restored to the UI elements
+         * to reflect the new state of the board pieces
+         */
+        this.performPostMovesRollbackOperations = () => {
             const currentMoveColor = this.parentOthelloGame.getColorOfCurrentMoveFromMoveList();
             this.parentOthelloGame.setColorOfCurrentMove(currentMoveColor);
             this.displayPlayableIndicators(currentMoveColor);
             this.parentOthelloGame.updateGameScore();
             this.parentOthelloGame.UpdateColorPlayersTurnBorderIndicator();
-            // now that the moves have been rolled back, certain UI elements of the game need to be updated to reflect
-            // the new state of the board pieces
             this.restoreCurrentLatestMoveIndicator();
         };
         /**
@@ -175,8 +182,10 @@ export class OthelloGameBoard {
          * recursively each time.
          */
         this.performBoardMovesRollback = (parsedOptionMetadata, rollbackIndex) => {
-            if (rollbackIndex < 0)
+            if (rollbackIndex < 0) {
+                this.performPostMovesRollbackOperations();
                 return;
+            }
             const optionMetadata = parsedOptionMetadata[rollbackIndex];
             const colorToChangePiecesBackTo = OthelloUtils.getOppositeColor(optionMetadata[0]);
             const boardPositionToRemovePieceFrom = optionMetadata[1];
