@@ -279,6 +279,10 @@ export class OthelloGameBoard {
         this.displayPlayableIndicators(currentMoveColor);
         this.parentOthelloGame.updateGameScore();
         this.parentOthelloGame.UpdateColorPlayersTurnBorderIndicator();
+        const movesListSelectElement: HTMLSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
+        const moveNumber:number = movesListSelectElement.options.length;
+        (document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED) as HTMLSpanElement).innerText = 
+            `${moveNumber} ${moveNumber > 1 ? 'moves' : 'move'} played`;
         this.restoreCurrentLatestMoveIndicator();
     }
 
