@@ -60,6 +60,7 @@ export class OthelloGame {
         this.gameIsInProgress = false;
         this.gameBoard.initializeNewGame();
         this.updateGameScore();
+        this.UpdateColorPlayersTurnBorderIndicator();
     }
 
     /**

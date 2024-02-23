@@ -172,8 +172,8 @@ const moveSelectedDoubleclickHandler = (event) => {
 };
 /**
  * @remarks We are using this event in order to differentiate between a single click and
- * a double click on the move select list. Without a mechanism like this, it's almost impossible
- * to handle the click and dblclick events correctly
+ * a double click on the move select list option elements. Without a mechanism like this,
+ * it's almost impossible to handle the click and dblclick events correctly
  * @param event The event that triggered the handler
  */
 let waitingForDoubleClick = false;
