@@ -171,6 +171,28 @@ const moveSelectedDoubleclickHandler = (event) => {
     }
 };
 /**
+ * @remarks We are using this event in order to differentiate between a single click and
+ * a double click on the move select list. Without a mechanism like this, it's almost impossible
+ * to handle the click and dblclick events correctly
+ * @param event The event that triggered the handler
+ */
+let waitingForDoubleClick = false;
+let timeout = undefined;
+let doubleClickDelay = 600; // the max milliseconds that almost any OS or browser implements by default for a double-click delay
+const handleClickType = (event) => {
+    if (waitingForDoubleClick) {
+        clearTimeout(timeout);
+        moveSelectedDoubleclickHandler(event);
+        waitingForDoubleClick = false;
+        return;
+    }
+    waitingForDoubleClick = true;
+    timeout = setTimeout(() => {
+        moveSelectedClickHandler(event);
+        waitingForDoubleClick = false;
+    }, doubleClickDelay);
+};
+/**
  * This section of the below wires up click event listeners to the handling methods above
  */
 const hvhButton = document.getElementById(constants.CSS_ELEMENT_ID_NEW_GAME_HVH);
@@ -186,6 +208,5 @@ gameBoard?.addEventListener('click', boardPositionDivElementClickHandler);
 const toggleMoveLogVisibility = document.getElementById(constants.CSS_ELEMENT_ID_TOGGLE_MOVE_LOG);
 toggleMoveLogVisibility?.addEventListener('click', toggleMoveLogVisibilityClickHandler);
 const moveSelectList = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
-moveSelectList?.addEventListener('change', moveSelectedClickHandler);
-moveSelectList?.addEventListener('dblclick', moveSelectedDoubleclickHandler);
+moveSelectList?.addEventListener('click', handleClickType);
 //# sourceMappingURL=index.js.map

@@ -182,12 +182,38 @@ const moveSelectedClickHandler = (event:Event):void => {
  * @param event The double click event being handled
  */
 const moveSelectedDoubleclickHandler = (event:Event):void => {
+
     const moveSelectOption = event.target as HTMLOptionElement;
     // Ensure there is not an empty value before calling highlight move
     if(moveSelectOption.value && confirm('Are you sure you want to rollback to this move?')) {
         OthelloUtils.consoleLog('move selected for rollback: ' + moveSelectOption.value);
         _othelloGame.gameBoard.rollbackToMove(moveSelectOption.value);
     }
+};
+
+/**
+ * @remarks We are using this event in order to differentiate between a single click and
+ * a double click on the move select list. Without a mechanism like this, it's almost impossible 
+ * to handle the click and dblclick events correctly 
+ * @param event The event that triggered the handler
+ */
+let waitingForDoubleClick:boolean = false;
+let timeout:number | undefined = undefined;
+let doubleClickDelay:number = 600; // the max milliseconds that almost any OS or browser implements by default for a double-click delay
+
+const handleClickType = (event:Event): void => {
+    if(waitingForDoubleClick) {
+        clearTimeout(timeout);
+        moveSelectedDoubleclickHandler(event);
+        waitingForDoubleClick = false;
+        return;
+    }
+    waitingForDoubleClick = true;
+    timeout = setTimeout(() => {
+        moveSelectedClickHandler(event);
+        waitingForDoubleClick = false;
+    }, doubleClickDelay)
+    
 };
 
 /**
@@ -213,5 +239,4 @@ const toggleMoveLogVisibility = document.getElementById(constants.CSS_ELEMENT_ID
 toggleMoveLogVisibility?.addEventListener('click', toggleMoveLogVisibilityClickHandler);
 
 const moveSelectList = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
-moveSelectList?.addEventListener('change', moveSelectedClickHandler);
-moveSelectList?.addEventListener('dblclick', moveSelectedDoubleclickHandler);
+moveSelectList?.addEventListener('click', handleClickType);

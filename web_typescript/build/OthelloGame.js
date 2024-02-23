@@ -147,7 +147,10 @@ export class OthelloGame {
             const lastOptionIndex = moveSelectList.options.length - 1;
             const optionElement = moveSelectList.options.item(lastOptionIndex);
             const optionElementValueArray = optionElement.value.split('|');
-            return optionElementValueArray[1].toLowerCase();
+            // The color for the current player is going to be the opposite of the color that made the last
+            // move that wasn't rolled back to. For example, if the last move in the list was made by black, then
+            // the current color returned should be white, which is why we're using the getOppositeColor method here
+            return OthelloUtils.getOppositeColor(optionElementValueArray[1].toLowerCase());
         };
         /**
          * @remarks
