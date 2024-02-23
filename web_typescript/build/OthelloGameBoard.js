@@ -173,6 +173,10 @@ export class OthelloGameBoard {
             this.displayPlayableIndicators(currentMoveColor);
             this.parentOthelloGame.updateGameScore();
             this.parentOthelloGame.UpdateColorPlayersTurnBorderIndicator();
+            const movesListSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT);
+            const moveNumber = movesListSelectElement.options.length;
+            document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED).innerText =
+                `${moveNumber} ${moveNumber > 1 ? 'moves' : 'move'} played`;
             this.restoreCurrentLatestMoveIndicator();
         };
         /**
