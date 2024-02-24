@@ -1,5 +1,5 @@
 # VirtuOthello
-Virtuoso + Othello = VirtuOthello!
+Virtuoso (or Virtual?) + Othello = VirtuOthello!
 This repo contains implementations of the game Othello (a.k.a. "Reversi") using multiple languages and platforms.
 
 ![Othello Game Board](OthelloGame.png)
