@@ -322,9 +322,9 @@ export class OthelloGameBoard {
     }
 
     /**
+     * @remarks breaks down the move metadata and hands it off to be highlighted
+     * @param moveData The move metadata collected from the option element value
      * 
-     * @param moveData @remarks
-     * breaks down the move metadata and hands it off to be highlighted
      */
     highlightMove = (moveMetadata:string): void => {
         const moveDataDetails:string[] = moveMetadata.split('|');

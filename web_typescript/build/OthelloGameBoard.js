@@ -210,9 +210,9 @@ export class OthelloGameBoard {
             }, 500);
         };
         /**
+         * @remarks breaks down the move metadata and hands it off to be highlighted
+         * @param moveData The move metadata collected from the option element value
          *
-         * @param moveData @remarks
-         * breaks down the move metadata and hands it off to be highlighted
          */
         this.highlightMove = (moveMetadata) => {
             const moveDataDetails = moveMetadata.split('|');
