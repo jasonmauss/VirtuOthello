@@ -19,6 +19,7 @@ const isEndingGameInProgressOk = () => {
 const newHVHGame = () => {
     OthelloUtils.consoleLog('new Game Human vs Human');
     _othelloGame.performAllNewGameActions();
+    _othelloGame.gameBoard.displayPlayableIndicators(constants.CSS_CLASS_NAME_BLACK);
 };
 /**
  * @remarks
