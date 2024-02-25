@@ -279,6 +279,7 @@ export class OthelloGameBoard {
         this.displayPlayableIndicators(currentMoveColor);
         this.parentOthelloGame.updateGameScore();
         this.parentOthelloGame.UpdateColorPlayersTurnBorderIndicator();
+        this.parentOthelloGame.setGameMessage(''); // just in case another message was there before such as rolling back from a finished game that had a game end message
         const movesListSelectElement: HTMLSelectElement = document.getElementById(constants.CSS_ELEMENT_ID_MOVES_SELECT) as HTMLSelectElement;
         const moveNumber:number = movesListSelectElement.options.length;
         (document.getElementById(constants.CSS_ELEMENT_ID_MOVES_PLAYED) as HTMLSpanElement).innerText = 
