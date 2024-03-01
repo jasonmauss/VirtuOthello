@@ -39,6 +39,12 @@ export class OthelloGame {
         };
         /**
          * @remarks
+         * This method is called on to perform a move when it is an AI players turn to move.
+         */
+        this.performAIMove = () => {
+        };
+        /**
+         * @remarks
          * calls all of the methods that comprise a move in the game
          * @param boardPosition the position (id of the div element) that was clicked on the board e.g. "e6"
          * @param colorOfPieceToPlay which color should be played, black or white
@@ -104,6 +110,9 @@ export class OthelloGame {
                     this.UpdateColorPlayersTurnBorderIndicator();
                 }
             }
+            // TODO: if there are still moves that can be made, figure out which players turn it is and set
+            // that player as the current mover. If that players is an AI player, call the method
+            // to initiate an AI move.
         };
         /**
          * @remarks
@@ -129,7 +138,7 @@ export class OthelloGame {
          *  initial move.
          */
         this.performInitialBlackPieceMove = () => {
-            this.performMove('c4', constants.CSS_CLASS_NAME_BLACK);
+            this.performAIMove();
         };
         /**
          * @remarks
@@ -261,6 +270,7 @@ export class OthelloGame {
         this.gameIsInProgress = false; // initialize this to false so that whenever a new game begins it has the proper state/value
         this.moveIsInProgress = false; // initialize this to false since no new game would have a move in progress
         this.players = players; // two players should be passed in here, no more and no less. The rest of the code will ignore more than a second player
+        this.currentPlayerToMove = players[0]; // the player in the first (index 0) position should always be the player representing the color black, in order for this to always reliably work.
     }
 }
 //# sourceMappingURL=OthelloGame.js.map

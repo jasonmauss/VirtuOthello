@@ -19,6 +19,7 @@ export class OthelloGame {
     gameIsInProgress: boolean;
     moveIsInProgress: boolean;
     players: OthelloPlayer[];
+    currentPlayerToMove: OthelloPlayer;
 
     constructor (gameType:gameType, players: OthelloPlayer[]) {
         this.gameType = gameType;
@@ -28,6 +29,7 @@ export class OthelloGame {
         this.gameIsInProgress = false; // initialize this to false so that whenever a new game begins it has the proper state/value
         this.moveIsInProgress = false; // initialize this to false since no new game would have a move in progress
         this.players = players; // two players should be passed in here, no more and no less. The rest of the code will ignore more than a second player
+        this.currentPlayerToMove = players[0]; // the player in the first (index 0) position should always be the player representing the color black, in order for this to always reliably work.
     }
 
 
@@ -61,6 +63,14 @@ export class OthelloGame {
         this.gameBoard.initializeNewGame();
         this.updateGameScore();
         this.UpdateColorPlayersTurnBorderIndicator();
+    }
+
+    /**
+     * @remarks
+     * This method is called on to perform a move when it is an AI players turn to move.
+     */
+    performAIMove = (): void => {
+
     }
 
     /**
@@ -145,7 +155,12 @@ export class OthelloGame {
                 this.colorForCurrentMove = OthelloUtils.getOppositeColor(colorOfPieceToPlay);
                 this.UpdateColorPlayersTurnBorderIndicator();
             }
-        }   
+        }
+
+        // TODO: if there are still moves that can be made, figure out which players turn it is and set
+        // that player as the current mover. If that players is an AI player, call the method
+        // to initiate an AI move.
+        
     }
 
     /**
@@ -178,7 +193,7 @@ export class OthelloGame {
      *  initial move.
      */
     performInitialBlackPieceMove = (): void => {
-        this.performMove('c4', constants.CSS_CLASS_NAME_BLACK)
+        this.performAIMove();
     };
 
     /**
