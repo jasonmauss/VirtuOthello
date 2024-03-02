@@ -70,7 +70,8 @@ export class OthelloGame {
      * This method is called on to perform a move when it is an AI players turn to move.
      */
     performAIMove = (): void => {
-
+        // Determine which players turn it is and if they're Human or AI
+        
     }
 
     /**
@@ -160,7 +161,7 @@ export class OthelloGame {
         // TODO: if there are still moves that can be made, figure out which players turn it is and set
         // that player as the current mover. If that players is an AI player, call the method
         // to initiate an AI move.
-        
+
     }
 
     /**
