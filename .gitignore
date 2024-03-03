@@ -1,3 +1,6 @@
 web_typescript/node_modules
 .DS_Store
+web_typescript/build/*.js
+web_typescript/build/*.js.map
 web_typescript/build/*
+web_typescript/build/index.js

@@ -48,6 +48,7 @@ const newSPLGame = () => {
     _othelloGame.performAllNewGameActions();
     // TODO: Since this is an AI vs AI game, need something here to
     // kick off the game and keep it going.
+    _othelloGame.performAIMove();
 };
 /**
  * @remarks

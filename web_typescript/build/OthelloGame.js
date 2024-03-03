@@ -43,6 +43,7 @@ export class OthelloGame {
          */
         this.performAIMove = () => {
             // Determine which players turn it is and if they're Human or AI
+            // now that move actions have been performed, switch which players turn it is
         };
         /**
          * @remarks
