@@ -73,6 +73,14 @@ export class OthelloGame {
         // Determine which players turn it is and if they're Human or AI
 
         // now that move actions have been performed, switch which players turn it is
+
+    }
+
+    /**
+     * @remarks
+     * This method swaps which player is to make the next move
+     */
+    swapCurrentMovePlayer = () => {
         
     }
 
@@ -163,6 +171,7 @@ export class OthelloGame {
         // TODO: if there are still moves that can be made, figure out which players turn it is and set
         // that player as the current mover. If that players is an AI player, call the method
         // to initiate an AI move.
+        this.swapCurrentMovePlayer();
 
     }
 
