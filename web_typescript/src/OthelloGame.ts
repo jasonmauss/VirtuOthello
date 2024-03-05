@@ -81,7 +81,11 @@ export class OthelloGame {
      * This method swaps which player is to make the next move
      */
     swapCurrentMovePlayer = () => {
-        
+        if(this.currentPlayerToMove.playerColor === playerColor.black) {
+            this.currentPlayerToMove = this.players[1]; // 1 is always white, 0 is always black
+        } else {
+            this.currentPlayerToMove = this.players[0]; // 0 is always black, 1 is always white
+        }
     }
 
     /**
