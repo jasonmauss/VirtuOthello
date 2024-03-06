@@ -72,7 +72,11 @@ export class OthelloGame {
     performAIMove = (): void => {
         // Determine which players turn it is and if they're Human or AI
 
-        // now that move actions have been performed, switch which players turn it is
+        // now that move actions have been performed, switch which players turn it is.
+        // If the game type is "self play" (AI vs another AI), then after calling the post AI move 
+        // method, have this method call itself again instead of waiting for a human player
+
+        this.setColorOfCurrentMove(OthelloUtils.getOppositeColor(this.getColorOfCurrentMove()));
 
     }
 
