@@ -65,18 +65,54 @@ export class OthelloGame {
         this.UpdateColorPlayersTurnBorderIndicator();
     }
 
+    getAIMoveBoardPosition = ():string => {
+
+        return '';
+
+    }
+
     /**
      * @remarks
      * This method is called on to perform a move when it is an AI players turn to move.
      */
-    performAIMove = (): void => {
-        // Determine which players turn it is and if they're Human or AI
+    performAIMove = (colorOfPieceToPlay:string): void => {
+
+        this.performCommonMoveOperations();
 
         // now that move actions have been performed, switch which players turn it is.
         // If the game type is "self play" (AI vs another AI), then after calling the post AI move 
         // method, have this method call itself again instead of waiting for a human player
 
         this.setColorOfCurrentMove(OthelloUtils.getOppositeColor(this.getColorOfCurrentMove()));
+
+        // Set the move type based on the color to play passed to this method
+        const moveTypePlayed:moveType = colorOfPieceToPlay === constants.CSS_CLASS_NAME_BLACK
+            ? moveType.BlackPiece
+            : moveType.WhitePiece;
+
+        const boardPosition:string = this.getAIMoveBoardPosition();
+
+        const movePlayed = new OthelloGameMovePlayed(moveTypePlayed, boardPosition);
+
+        // display the piece by adding the CSS class to it
+        this.gameBoard.performMoveElementOperations(movePlayed);
+
+        // call this so that the appropriate pieces get flipped
+        const piecesFlipped = this.flipApplicablePiecesAfterMove(boardPosition, colorOfPieceToPlay);
+
+        // Add the move to the log list
+        this.gameBoard.AddMoveToLog(movePlayed, piecesFlipped);
+
+        // call this afterwards so that the playable indicators are shown again, but for the other color
+        // since it's the other colors turn now after the move has been played
+        const oppositeColor = OthelloUtils.getOppositeColor(colorOfPieceToPlay);
+        
+        // only show playable indicators if the other player is Human
+        // TODO: show playable indicators only if other player is human
+
+        // Update the game score on the UI - number of white and black pieces on the board
+        this.updateGameScore();
+
 
     }
 
@@ -93,6 +129,28 @@ export class OthelloGame {
     }
 
     /**
+     * @remarks Performs operations common to either Human or AI moves. This method
+     * was created so code didn't get repeated in both the 'performMove' and 'performAIMove' methods
+     */
+    performCommonMoveOperations = (): void => {
+
+        // since a move (potentially the first one) is being made, make sure the state of the
+        // game being in progress is updated
+        this.gameIsInProgress = true;
+
+        // hide any currently playable indicators
+        this.gameBoard.hidePlayableIndicators();
+
+        // remove the latest move indicator
+        this.gameBoard.removeCurrentLatestMoveIndicator();
+
+    }
+
+    performCommonPostMoveOperations = (): void => {
+
+    }
+
+    /**
      * @remarks
      * calls all of the methods that comprise a move in the game
      * @param boardPosition the position (id of the div element) that was clicked on the board e.g. "e6"
@@ -105,14 +163,7 @@ export class OthelloGame {
         // Commented out for now.
         // if(!document.getElementById(boardPosition)?.classList.contains(constants.CSS_CLASS_NAME_PLAYABLE)) return;
 
-        // since a move (potentially the first one) is being made, make sure the state of the
-        // game being in progress is updated
-        this.gameIsInProgress = true;
-
-        // hide any currently playable indicators
-        this.gameBoard.hidePlayableIndicators();
-
-        this.gameBoard.removeCurrentLatestMoveIndicator();
+        this.performCommonMoveOperations();
 
         // Set the move type based on the color to play passed to this method
         const moveTypePlayed:moveType = colorOfPieceToPlay === constants.CSS_CLASS_NAME_BLACK
@@ -213,7 +264,7 @@ export class OthelloGame {
      *  initial move.
      */
     performInitialBlackPieceMove = (): void => {
-        this.performAIMove();
+        this.performAIMove(constants.CSS_CLASS_NAME_BLACK);
     };
 
     /**
