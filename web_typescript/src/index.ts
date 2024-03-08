@@ -53,9 +53,9 @@ const newYAWGame = ():void => {
 const newSPLGame = ():void => {
     OthelloUtils.consoleLog('new Game Selfplay');
     _othelloGame.performAllNewGameActions();
-    // TODO: Since this is an AI vs AI game, need something here to
+    // Since this is an AI vs AI game, need something here to
     // kick off the game and keep it going.
-    _othelloGame.performAIMove();
+    _othelloGame.performAIMove(constants.CSS_CLASS_NAME_BLACK);
     
 };
 
