@@ -258,16 +258,6 @@ export class OthelloGame {
     }
 
     /**
-     *  @remarks
-     *  Since black always plays first, When someone plays 
-     *  a "You as white" (YAW) game, black (the computer) needs to play an
-     *  initial move.
-     */
-    performInitialBlackPieceMove = (): void => {
-        this.performAIMove(constants.CSS_CLASS_NAME_BLACK);
-    };
-
-    /**
      * @remarks
      * Returns the color (black or white) for which player's 
      * turn it currently is.
