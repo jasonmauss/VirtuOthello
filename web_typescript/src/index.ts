@@ -43,7 +43,9 @@ const newYABGame = ():void => {
 const newYAWGame = ():void => {
     OthelloUtils.consoleLog('new Game You as White');
     _othelloGame.performAllNewGameActions();
-    _othelloGame.performInitialBlackPieceMove();
+    // Since this is a game of human (white) vs AI (black) and black
+    // always moves first, star the game with an AI move
+    _othelloGame.performAIMove(constants.CSS_CLASS_NAME_BLACK);
 };
 
 /**
