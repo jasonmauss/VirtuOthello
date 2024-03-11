@@ -35,4 +35,14 @@ export class OthelloAI {
         return 0;
 
     }
+
+    evaluateMove = (gameboard:OthelloGameBoard):number => {
+        return 0;
+
+    }
+
+    cloneGameBoard = (gameBoardToClone:OthelloGameBoard):OthelloGameBoard => {
+
+    }
+    
 };
