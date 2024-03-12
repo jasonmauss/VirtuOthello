@@ -41,8 +41,8 @@ export class OthelloAI {
 
     }
 
-    cloneGameBoard = (gameBoardToClone:OthelloGameBoard):OthelloGameBoard => {
-
+    cloneGameBoard = (gameBoardToClone:OthelloGameBoard):OthelloGameBoard|null => {
+        return null;
     }
-    
+
 };
