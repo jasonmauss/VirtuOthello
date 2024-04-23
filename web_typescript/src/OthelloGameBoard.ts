@@ -11,7 +11,7 @@ export class OthelloGameBoard {
 
     occupiedPositions:Set<string>;
     private latestMoveElement: HTMLDivElement | null;
-    private parentOthelloGame: OthelloGame;
+    public parentOthelloGame: OthelloGame;
 
     constructor(othelloGame:OthelloGame) {
         this.occupiedPositions = new Set<string>();
