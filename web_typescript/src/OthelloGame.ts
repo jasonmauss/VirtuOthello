@@ -5,6 +5,7 @@ import * as constants from "./constants.js"
 import { OthelloUtils } from "./OthellUtils.js";
 import { MoveUtils } from "./MoveUtils.js";
 import { OthelloPlayer, playerColor } from "./OthelloPlayer.js";
+import { OthelloAI } from "./OthelloAI.js";
 
 // This class represents the othello game being played.
 // It contains properties and methods relevant to managing
@@ -67,7 +68,9 @@ export class OthelloGame {
 
     getAIMoveBoardPosition = ():string => {
 
-        return '';
+        const aiPlayer:OthelloAI = new OthelloAI(this);
+        
+        return aiPlayer.makeMove();
 
     }
 
