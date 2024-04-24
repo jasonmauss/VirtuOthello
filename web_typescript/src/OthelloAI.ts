@@ -36,6 +36,12 @@ export class OthelloAI {
         this.othelloGame = othelloGame;
     }
 
+    makeMove = ():string => {
+
+        return '';
+        
+    }
+
     /**
      * @remarks: Minimax uses the minimax algorithm to compute the best move
      * @param gameBoard The state of the game board so that evaluations can be made
