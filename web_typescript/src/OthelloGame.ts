@@ -66,11 +66,11 @@ export class OthelloGame {
         this.UpdateColorPlayersTurnBorderIndicator();
     }
 
-    getAIMoveBoardPosition = ():string => {
+    getAIMoveBoardPosition = (colorOfPieceToPlay:string):string => {
 
         const aiPlayer:OthelloAI = new OthelloAI(this);
         
-        return aiPlayer.makeMove();
+        return aiPlayer.makeMove(colorOfPieceToPlay);
 
     }
 
@@ -93,7 +93,7 @@ export class OthelloGame {
             ? moveType.BlackPiece
             : moveType.WhitePiece;
 
-        const boardPosition:string = this.getAIMoveBoardPosition();
+        const boardPosition:string = this.getAIMoveBoardPosition(colorOfPieceToPlay);
 
         const movePlayed = new OthelloGameMovePlayed(moveTypePlayed, boardPosition);
 
