@@ -1,3 +1,4 @@
+import { MoveUtils } from "./MoveUtils";
 import { OthelloGame } from "./OthelloGame";
 import { OthelloGameBoard } from "./OthelloGameBoard";
 import * as constants from "./constants.js"
@@ -36,10 +37,12 @@ export class OthelloAI {
         this.othelloGame = othelloGame;
     }
 
-    makeMove = ():string => {
+    makeMove = (forWhichColorPlayer:string):string => {
 
-        return '';
+        const playableMoves = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
         
+        return '';
+
     }
 
     /**
