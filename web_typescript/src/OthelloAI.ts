@@ -40,7 +40,26 @@ export class OthelloAI {
     makeMove = (forWhichColorPlayer:string):string => {
 
         const playableMoves = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
-        
+        if(playableMoves.length === 0) {
+            return '';
+        }
+
+        if(forWhichColorPlayer === constants.CSS_CLASS_NAME_WHITE) {
+
+            for(const move of playableMoves) {
+
+            }
+
+        } else {
+            
+            for(const move of playableMoves) {
+
+            }
+
+        }
+
+
+
         return '';
 
     }
