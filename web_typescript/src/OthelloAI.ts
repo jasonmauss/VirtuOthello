@@ -44,8 +44,10 @@ export class OthelloAI {
             return '';
         }
 
-        if(forWhichColorPlayer === constants.CSS_CLASS_NAME_WHITE) {
+        const boardStateAsArray:number[] = MoveUtils.getBoardStateAsArray();
 
+        if(forWhichColorPlayer === constants.CSS_CLASS_NAME_WHITE) {
+            
             for(const move of playableMoves) {
 
             }

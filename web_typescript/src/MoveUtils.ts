@@ -550,4 +550,9 @@ export class MoveUtils {
         if(rowNum === 9 || columnChar === 'i') return null;
         return '';
     }
+
+    
+    static getBoardStateAsArray = (): number[] => {
+        return [];
+    }
 }
