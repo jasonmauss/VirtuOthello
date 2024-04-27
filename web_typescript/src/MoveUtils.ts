@@ -551,8 +551,37 @@ export class MoveUtils {
         return '';
     }
 
-    
-    static getBoardStateAsArray = (): number[] => {
-        return [];
+    /**
+     * @remarks
+     * Gets the state of the board in an array
+     * @returns a two dimensional array containing values that depict the current state of the board
+     */
+    static getBoardStateAsArray = (): number[][] => {
+
+        const boardStateArray:number[][] = [];
+        for(let i = 0; i < 8; i++) {
+            boardStateArray.push([]);
+            for(let j = i; j < 8; j++) {
+                boardStateArray[i].push(j);
+            }
+        }
+
+        // get a reference to the board
+        const board = document.getElementById(constants.CSS_ELEMENT_ID_BOARD);
+
+        // get all child <div> elements and look at their class names to determine 
+        // current state of the board
+        const boardElements: NodeListOf<Element> = 
+            board?.querySelectorAll('div') as NodeListOf<Element>;
+
+        for(let element of boardElements) {
+            if(element.classList.length === 0) {
+
+            } else {
+
+            }
+        }
+
+        return boardStateArray;
     }
 }
