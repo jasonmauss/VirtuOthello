@@ -559,6 +559,7 @@ export class MoveUtils {
     static getBoardStateAsArray = (): number[][] => {
 
         const boardStateArray:number[][] = [];
+
         for(let i = 0; i < 8; i++) {
             boardStateArray.push([]);
             for(let j = i; j < 8; j++) {
@@ -575,13 +576,59 @@ export class MoveUtils {
             board?.querySelectorAll('div') as NodeListOf<Element>;
 
         for(let element of boardElements) {
+            const elementId = element.id;
+            let [x, y]:number[] = MoveUtils.getArrayCoordinatesFromBoardElementId(elementId);
+
             if(element.classList.length === 0) {
-
+                boardStateArray[x][y] = element.classList.contains(constants.CSS_CLASS_NAME_WHITE) ? 1 : -1;
             } else {
-
+                boardStateArray[x][y] = 0;
             }
         }
 
         return boardStateArray;
+    }
+
+    /**
+     * @remarks Takes a board position elementId such as "a1" or "h8" and turns it into a two-dimensional
+     * array position such as [0,0] for "a1", or [7,7] for "h8"
+     * @param elementId The two-character elementId of a board position
+     */
+
+    static getArrayCoordinatesFromBoardElementId = (elementId:string): number[] => {
+
+        const firstChar = elementId[0];
+        const secondChar = elementId[1];
+        let firstIndex = 0;
+
+        switch(firstChar) {
+            case 'a':
+                // since firstIndex was already initialized to 0, just break;
+                break;
+            case 'b':
+                firstIndex = 1;
+                break;
+            case 'c':
+                firstIndex = 2;
+                break;
+            case 'd':
+                firstIndex = 3;
+                break;
+            case 'e':
+                firstIndex = 4;
+                break;
+            case 'f':
+                firstIndex = 5;
+                break;
+            case 'g':
+                firstIndex = 6;
+                break;
+            case 'h':
+                firstIndex = 7;
+                break;
+        }
+
+        return [firstIndex, Number(secondChar) - 1];
+
     }
 }
