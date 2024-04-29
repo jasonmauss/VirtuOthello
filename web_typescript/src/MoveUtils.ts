@@ -628,6 +628,8 @@ export class MoveUtils {
                 break;
         }
 
+        // the second char passed in will be 1 number higher than what
+        // we want to return so just convert it to a number and subtract one.
         return [firstIndex, Number(secondChar) - 1];
 
     }
