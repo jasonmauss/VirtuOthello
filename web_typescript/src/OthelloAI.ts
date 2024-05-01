@@ -39,7 +39,7 @@ export class OthelloAI {
 
     makeMove = (forWhichColorPlayer:string):string => {
 
-        const playableMoves = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
+        const playableMoves:string[] = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
         if(playableMoves.length === 0) {
             return '';
         }
@@ -49,12 +49,16 @@ export class OthelloAI {
         if(forWhichColorPlayer === constants.CSS_CLASS_NAME_WHITE) {
             
             for(const move of playableMoves) {
+                let nextMoveGameBoardState = this.cloneGameBoardState(boardStateAsArray);
+                this.applyPlayableMoveToBoardStateArray(MoveUtils.getArrayCoordinatesFromBoardElementId(move));
 
             }
 
         } else {
             
             for(const move of playableMoves) {
+                let nextMoveGameBoardState = this.cloneGameBoardState(boardStateAsArray);
+                this.applyPlayableMoveToBoardStateArray(MoveUtils.getArrayCoordinatesFromBoardElementId(move));
 
             }
 
@@ -80,13 +84,38 @@ export class OthelloAI {
 
     }
 
+    /**
+     * @remarks
+     * @param gameboard 
+     * @returns 
+     */
     evaluateMove = (gameboard:OthelloGameBoard):number => {
         return 0;
 
     }
 
-    cloneGameBoard = (gameBoardToClone:OthelloGameBoard):OthelloGameBoard|null => {
-        return null;
+    /**
+     * @remarks clones an existing board so that the original board state array can be 
+     * retained as-is
+     * @param gameBoardStateToClone 
+     * @returns 
+     */
+    cloneGameBoardState = (gameBoardStateToClone:number[][]):number[][] => {
+        const stateClone:number[][] = [];
+        for(let i = 0; i < 8; ++i) {
+            for(let j = 0; j < 8; ++j) {
+                stateClone[i][j] = gameBoardStateToClone[i][j];
+            }
+        }
+        return stateClone;
+    }
+
+    /**
+     * @remarks 
+     * @param boardPositionCoordinates 
+     */
+    applyPlayableMoveToBoardStateArray = (boardPositionCoordinates:number[]):void => {
+
     }
 
 };
