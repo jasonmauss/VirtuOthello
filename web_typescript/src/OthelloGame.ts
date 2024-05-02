@@ -70,7 +70,7 @@ export class OthelloGame {
 
         const aiPlayer:OthelloAI = new OthelloAI(this);
         
-        return aiPlayer.makeMove(colorOfPieceToPlay);
+        return aiPlayer.makeMove(colorOfPieceToPlay, constants.DEFAULT_AI_DEPTH);
 
     }
 
