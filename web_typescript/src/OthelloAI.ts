@@ -37,7 +37,7 @@ export class OthelloAI {
         this.othelloGame = othelloGame;
     }
 
-    makeMove = (forWhichColorPlayer:string):string => {
+    makeMove = (forWhichColorPlayer:string, aiPlayerMoveAnalysisDepth:number):string => {
 
         const playableMoves:string[] = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
         if(playableMoves.length === 0) {
@@ -51,7 +51,14 @@ export class OthelloAI {
             for(const move of playableMoves) {
                 let nextMoveGameBoardState = this.cloneGameBoardState(boardStateAsArray);
                 this.applyPlayableMoveToBoardStateArray(MoveUtils.getArrayCoordinatesFromBoardElementId(move));
-
+                let moveOutcomeScore:number = this.minimax(nextMoveGameBoardState, aiPlayerMoveAnalysisDepth - 1, this.alpha, this.beta);
+                if(moveOutcomeScore > this.alpha || this.alpha === Number.NEGATIVE_INFINITY) {
+                    this.alpha = moveOutcomeScore;
+                    this.optimalMove = move;
+                    if(this.alpha >= this.beta) {
+                        break;
+                    }
+                }
             }
 
         } else {
@@ -59,14 +66,21 @@ export class OthelloAI {
             for(const move of playableMoves) {
                 let nextMoveGameBoardState = this.cloneGameBoardState(boardStateAsArray);
                 this.applyPlayableMoveToBoardStateArray(MoveUtils.getArrayCoordinatesFromBoardElementId(move));
-
+                let moveOutcomeScore:number = this.minimax(nextMoveGameBoardState, aiPlayerMoveAnalysisDepth - 1, this.alpha, this.beta);
+                if(moveOutcomeScore < this.beta || this.beta === Number.POSITIVE_INFINITY) {
+                    this.beta = moveOutcomeScore;
+                    this.optimalMove = move;
+                    if(this.beta <= this.alpha) {
+                        break;
+                    }
+                }
             }
 
         }
 
 
 
-        return '';
+        return this.optimalMove;
 
     }
 
@@ -76,9 +90,9 @@ export class OthelloAI {
      * @param depth The depth we want to take move evaluations to
      * @param alpha one part of the alpha beta tree pruning
      * @param beta the other part of the alpha beta tree pruning
-     * 
+     * @returns a score value based on the analysis performed
      */
-    minimax = (gameBoard:OthelloGameBoard, depth:number, alpha:number, beta:number):number => {
+    minimax = (boardStateAsArray:number[][], depth:number, alpha:number, beta:number):number => {
         
         return 0;
 
