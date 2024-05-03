@@ -103,9 +103,17 @@ export class OthelloAI {
      * @param gameboard 
      * @returns 
      */
-    evaluateMove = (gameboard:OthelloGameBoard):number => {
-        return 0;
+    evaluateMove = (boardStateAsArray:number[][], forWhichColorPlayer:string):number => {
+        
+        let evaluationScore = 0;
 
+        const playableMoves:string[] = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
+
+        if(playableMoves.length === 0) {
+            
+        }
+
+        return evaluationScore;
     }
 
     /**
@@ -125,7 +133,8 @@ export class OthelloAI {
     }
 
     /**
-     * @remarks 
+     * @remarks Takes the coordinates for a board position in a two-dimensional array
+     * and applies a move to it and flips all applicable board positions based on the move made.
      * @param boardPositionCoordinates 
      */
     applyPlayableMoveToBoardStateArray = (boardPositionCoordinates:number[]):void => {
