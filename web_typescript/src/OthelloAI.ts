@@ -99,7 +99,8 @@ export class OthelloAI {
     }
 
     /**
-     * @remarks
+     * @remarks evaluates the board and formulates a score based on
+     * the white and black pieces present.
      * @param gameboard 
      * @returns 
      */
@@ -110,7 +111,7 @@ export class OthelloAI {
         const playableMoves:string[] = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
 
         if(playableMoves.length === 0) {
-            
+
         }
 
         return evaluationScore;
