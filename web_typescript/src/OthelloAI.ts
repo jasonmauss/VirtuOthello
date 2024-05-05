@@ -108,10 +108,16 @@ export class OthelloAI {
         
         let evaluationScore = 0;
 
-        const playableMoves:string[] = MoveUtils.getPositionsForPlayableIndicators(forWhichColorPlayer);
+        const playableMoves:number[][] = MoveUtils.getPlayableMovesInBoardStateArray(boardStateAsArray);
 
         if(playableMoves.length === 0) {
 
+        }
+
+        for(let i = 0; i < 8; ++i) {
+            for(let j = 0; j < 8; ++j) {
+                evaluationScore += boardStateAsArray[i][j] * boardPositionValueMap[i][j];
+            }
         }
 
         return evaluationScore;

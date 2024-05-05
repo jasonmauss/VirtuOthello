@@ -633,4 +633,13 @@ export class MoveUtils {
         return [firstIndex, Number(secondChar) - 1];
 
     }
+
+    /**
+     * @remarks gets playable board positions based on the game board state as a two-dimensional array
+     * @param gameBoardStateAsArray the board state as a two-dimensional array
+     * @returns playable move positions within the array
+     */
+    static getPlayableMovesInBoardStateArray = (gameBoardStateAsArray:number[][]): number[][] => {
+        return [];
+    }
 }
