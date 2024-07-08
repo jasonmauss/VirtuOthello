@@ -43,3 +43,9 @@ export const MAX_COLUMN_CHAR_AS_NUM         :number = 'h'.charCodeAt(0);
 export const MIN_ROW_NUM                    :number = 1;
 export const MAX_ROW_NUM                    :number = 8;
 export const DEFAULT_AI_DEPTH               :number = 100;
+export const NO_PLAYER_NUMBER               :number = 0;
+export const BLACK_PLAYER_NUMBER            :number = -1;
+export const WHITE_PLAYER_NUMBER            :number = 1;
+export const GAME_BOARD_COLUMNS             :number = 8;
+export const GAME_BOARD_ROWS                :number = 8;
+
